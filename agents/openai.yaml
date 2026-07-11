@@ -1,0 +1,3 @@
+display_name: Math Modeling Playbook
+short_description: Reusable mathematical modeling contest workflow, model selection, and algorithm templates.
+default_prompt: Help me analyze and solve this mathematical modeling competition problem.
