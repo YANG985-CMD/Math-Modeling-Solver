@@ -1,6 +1,6 @@
 ---
 name: math-modeling-playbook
-description: Evidence-gated mathematical modeling workflow for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, baseline design, executable Python or MATLAB solutions, robustness analysis, reproducibility, claim-to-evidence tracing, and competition-paper drafting.
+description: Evidence-gated mathematical modeling workflow for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade scientific figures, argument-first competition-paper writing, reproducibility, and claim-to-evidence tracing.
 ---
 
 # Math Modeling Playbook
@@ -14,6 +14,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Establish a simple baseline before adding model complexity.
 - Keep training, validation, and test information separated; treat temporal and grouped data with structure-aware splits.
 - Tie every important conclusion to a result file, table, figure, formula, or verified source.
+- Generate quantitative figures from traceable data and code. Never use AI-generated imagery as empirical evidence.
 - Record units, assumptions, random seeds, software versions, commands, and input provenance.
 - Report uncertainty, failure cases, and claim boundaries.
 
@@ -30,7 +31,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
    - Method: candidates, baseline, feasibility probe, and selection rationale are recorded.
    - Computation: code actually ran and can be reproduced.
    - Evidence: baseline comparison, robustness evidence, and canonical numbers are frozen.
-   - Manuscript: claims, figures, tables, symbols, units, and citations are consistent.
+   - Manuscript: the argument, claims, figures, tables, terminology, units, and citations are consistent.
 5. If an upstream assumption, dataset, method, or parameter changes, mark downstream artifacts stale and rerun the affected gates.
 6. Audit before delivery:
 
@@ -56,9 +57,10 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - End-to-end work: read <code>references/evidence-gated-workflow.md</code> and <code>references/standard-workflow.md</code>.
 - Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>.
 - Validation, sensitivity, or uncertainty: read <code>references/validation-playbook.md</code>.
+- Scientific figures, multi-panel layouts, or export QA: read <code>references/figure-contract-and-qa.md</code>.
 - Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
 - Combination models: read <code>references/advanced-model-combinations.md</code>.
-- Paper writing: read <code>references/paper-writing.md</code> and the templates under <code>assets/templates/</code>.
+- Paper planning or writing: read <code>references/argument-first-paper-writing.md</code>, <code>references/paper-writing.md</code>, and the templates under <code>assets/templates/</code>.
 - Time-limited work: read <code>references/competition-timeline.md</code>.
 - Prompt design: read <code>references/ai-prompt-patterns.md</code>.
 
@@ -68,7 +70,8 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Model plan: assumptions, mathematical formulation, candidate comparison, baseline, feasibility probe, metrics, validation design, and fallback.
 - Code: input contract, executable source, deterministic command, outputs, error checks, and reproducibility record.
 - Results: baseline comparison, uncertainty or robustness evidence, limitations, and a claim-evidence map.
-- Paper: consistent notation and units, evidence-backed results, figure/table references, limitations, and no unsupported claims.
+- Figure: one-sentence visual message, non-redundant panel map, source-data links, uncertainty/statistics, editable export, and final-size QA.
+- Paper: one-sentence argument, section and paragraph jobs, terminology ledger, evidence-backed results, consistent figures/tables, limitations, and no unsupported claims.
 
 ## Complexity Escalation Test
 

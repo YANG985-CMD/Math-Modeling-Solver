@@ -1,10 +1,10 @@
 # Math Modeling Playbook
 
-面向数学建模竞赛与应用项目的证据门控 Agent Skill。它不仅给出“该用什么模型”，还要求模型真正运行、结果能够复现、结论能够追溯、论文数字保持一致。
+面向数学建模竞赛与应用项目的证据门控 Agent Skill。它不仅给出“该用什么模型”，还要求模型真正运行、结果能够复现、图表能够追溯、论文论证与数字保持一致。
 
 > 项目目标：把判题、建模、编程、验证和写作连成一条可审计的流水线，让复杂方法服务于证据，而不是服务于“看起来高级”。
 
-## v2.0 核心升级
+## v2.1 核心升级
 
 | 能力 | 解决的问题 | 产出 |
 | --- | --- | --- |
@@ -16,6 +16,9 @@
 | 可复现运行清单 | 换电脑或换队员后无法复现 | 命令、环境、依赖、随机种子、输入输出 |
 | 结果冻结 | 论文、图表和代码里的数字不一致 | frozen-results.json 唯一权威结果集 |
 | 结论—证据账本 | 论文结论找不到数据支撑 | 每条结论对应代码、表格、图片和验证状态 |
+| 图表先立合同 | 先套模板、图多但论证弱 | 核心信息、面板任务、数据来源、统计与导出 QA |
+| 论证优先写作 | 按章节堆文字、术语漂移 | 一句话论点、段落任务、术语账本、证据边界 |
+| AI 图片边界 | 示意图和数据证据混淆 | 解释性生图可用，但不得伪装为经验数据 |
 | 自动审计 | 交稿前靠人工排雷不完整 | JSON + Markdown 门控审计报告 |
 
 ## 工作流
@@ -29,7 +32,7 @@ flowchart LR
     C --> G3{Computation}
     G3 --> D[对照、敏感性与鲁棒性]
     D --> G4{Evidence}
-    G4 --> E[冻结数字与论文写作]
+    G4 --> E[冻结数字、图表合同与论证写作]
     E --> G5{Manuscript}
     G5 --> F[可复现交付]
     G1 -.失败.-> X[修复或 blocked]
@@ -78,13 +81,17 @@ problem-a/
 ├─ planning/
 │  ├─ problem-contract.json       # 问题、目标、约束、子问题
 │  ├─ method-decision.json        # 基线、候选方法、验证方案
+│  ├─ figure-contract.json        # 图表信息、面板证据与导出 QA
 │  └─ data-audit.csv              # 数据来源与质量检查
 ├─ src/                           # 可执行代码
 ├─ results/
 │  ├─ tables/
 │  ├─ figures/
 │  └─ frozen-results.json         # 论文采用的权威数字
-├─ paper/main.md
+├─ paper/
+│  ├─ manuscript-contract.json    # 一句话论点、受众、证据与边界
+│  ├─ terminology-ledger.csv      # 术语、符号、单位统一标准
+│  └─ main.md
 └─ audit/
    ├─ reproducibility-manifest.json
    ├─ claim-evidence-ledger.csv
@@ -116,6 +123,16 @@ TOPSIS-灰色关联组合模型，并给出权重扰动实验。
 ~~~
 
 ~~~text
+先给每张图写一句话结论和面板证据地图，再用真实结果生成 SVG/PDF；
+审查重复面板、颜色一致性、误差定义和最终尺寸可读性。
+~~~
+
+~~~text
+先锁定论文的一句话论点、读者顺序和术语账本，再按“问题—基线差距—
+模型—公平比较—鲁棒性—决策意义—边界”组织全文。
+~~~
+
+~~~text
 只剩 6 小时，请保留可解释基线，删掉来不及验证的复杂模型，
 给出建模、代码、验证和写作的最小闭环。
 ~~~
@@ -134,6 +151,8 @@ math-modeling-playbook/
 │  ├─ data-and-reproducibility.md
 │  ├─ validation-playbook.md
 │  ├─ task-family-router.md
+│  ├─ figure-contract-and-qa.md
+│  ├─ argument-first-paper-writing.md
 │  └─ ...                         # 模型选择、论文、时间线等
 ├─ assets/
 │  ├─ templates/
@@ -148,15 +167,17 @@ math-modeling-playbook/
 3. 代码、数字、图片和论文必须形成可追溯链。
 4. 缺少真实数据时明确阻塞或切换演示模式，不伪造正式结果。
 5. 每次模型升级都要回答：基线哪里失败、新组件解决什么、是否公平比较。
+6. 数据图必须由可追溯数据和代码生成；AI 生图只用于明确标注的解释性内容。
 
 ## 公开项目调研与致谢
 
-v2.0 在公开资料调研基础上独立设计和实现。我们比较了以下项目的工作流思想，并重新组织为本仓库的“问题契约—五道证据门—结果冻结—结论账本”体系；没有复制未授权项目的代码或文案。
+v2.1 在公开资料调研基础上独立设计和实现。我们比较了以下项目的工作流思想，并重新组织为本仓库的“问题契约—五道证据门—图表合同—论证合同—结果冻结—结论账本”体系；没有复制未授权项目的代码或文案。
 
 - [MathModelAgent](https://github.com/jihe520/MathModelAgent)：端到端建模、人工确认与容错流程参考。调研时未检测到标准仓库许可证，因此仅作功能基准。
 - [LLM-MM-Agent](https://github.com/usail-hkust/LLM-MM-Agent)：子任务分解、依赖执行与迭代评审的研究思路，GPL-3.0。
 - [MathModeling-skills](https://github.com/zhnnky329/MathModeling-skills)：模块化任务与质量门设计参考，MIT。
 - [EZ_math_model](https://github.com/woodfishhhh/EZ_math_model)：正式/演示模式与交付物组织参考，MIT。
 - [math-modeling-skill](https://github.com/XiaoMaColtAI/math-modeling-skill)：角色分工和复现清单参考。调研时未检测到标准仓库许可证，因此仅作功能基准。
+- [nature-skills](https://github.com/Yuan1z0825/nature-skills)：结论优先的科研图表、论证优先写作、术语一致性与投稿前 QA 思想参考，Apache-2.0。
 
 所有新增工作流、模板、审计器、测试与文案均在本仓库中重新设计和实现。引用这些项目是为了让设计来源透明，也便于社区复核差异。

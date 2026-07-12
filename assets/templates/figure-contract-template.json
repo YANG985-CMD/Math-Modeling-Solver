@@ -1,0 +1,29 @@
+{
+  "schema_version": "2.1",
+  "figures": [
+    {
+      "id": "F1",
+      "core_message": "",
+      "paper_role": "",
+      "archetype": "",
+      "backend": "",
+      "source_script": "",
+      "final_size_mm": {
+        "width": null,
+        "height": null
+      },
+      "panels": [],
+      "source_data": [],
+      "statistics": {
+        "metric": "",
+        "baseline": "",
+        "sample_or_runs": "",
+        "uncertainty": ""
+      },
+      "exports": [],
+      "conceptual_or_ai_generated": false,
+      "qa_status": "pending",
+      "review_risks": []
+    }
+  ]
+}

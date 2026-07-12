@@ -54,6 +54,21 @@ def relative_file_exists(root: Path, value: Any) -> bool:
     return candidate.is_file()
 
 
+def load_csv(
+    root: Path, relative_path: str, issues: list[str]
+) -> list[dict[str, str]]:
+    path = root / relative_path
+    if not path.is_file():
+        issues.append(f"Missing {relative_path}")
+        return []
+    try:
+        with path.open(encoding="utf-8-sig", newline="") as handle:
+            return list(csv.DictReader(handle))
+    except OSError as exc:
+        issues.append(f"Cannot read {relative_path}: {exc}")
+        return []
+
+
 def audit_intake(root: Path) -> list[str]:
     issues: list[str] = []
     state = load_json(root, "audit/project-state.json", issues)
@@ -181,14 +196,70 @@ def audit_evidence(root: Path) -> list[str]:
             if not relative_file_exists(root, item.get("artifact_path")):
                 issues.append("A validation evidence file is missing")
 
-    ledger_path = root / "audit/claim-evidence-ledger.csv"
-    if not ledger_path.is_file():
-        return issues + ["Missing audit/claim-evidence-ledger.csv"]
-    try:
-        with ledger_path.open(encoding="utf-8-sig", newline="") as handle:
-            rows = list(csv.DictReader(handle))
-    except OSError as exc:
-        return issues + [f"Cannot read claim ledger: {exc}"]
+    manifest = load_json(root, "audit/reproducibility-manifest.json", issues)
+    output_files = manifest.get("output_files") or []
+    figure_extensions = {".svg", ".pdf", ".png", ".tif", ".tiff", ".jpg", ".jpeg"}
+    figure_outputs = [
+        path
+        for path in output_files
+        if (
+            isinstance(path, str)
+            and path.replace("\\", "/").startswith("results/figures/")
+            and Path(path).suffix.lower() in figure_extensions
+        )
+    ]
+    figure_contract = load_json(root, "planning/figure-contract.json", issues)
+    figures = figure_contract.get("figures")
+    if figure_outputs and (not isinstance(figures, list) or not figures):
+        issues.append("Figure outputs exist but no figure contract is recorded")
+    if isinstance(figures, list):
+        contracted_exports: set[str] = set()
+        for index, figure in enumerate(figures, 1):
+            figure_id = figure.get("id") or f"figure-{index}"
+            for field in (
+                "core_message",
+                "paper_role",
+                "archetype",
+                "backend",
+                "source_script",
+            ):
+                if has_placeholder(figure.get(field)):
+                    issues.append(f"{figure_id} contract is incomplete: {field}")
+            if not relative_file_exists(root, figure.get("source_script")):
+                issues.append(f"{figure_id} source script is missing")
+            panels = figure.get("panels")
+            if not isinstance(panels, list) or not panels:
+                issues.append(f"{figure_id} has no panel evidence map")
+            source_data = figure.get("source_data")
+            if not isinstance(source_data, list) or not source_data:
+                issues.append(f"{figure_id} has no traceable source data")
+            else:
+                for path in source_data:
+                    if not relative_file_exists(root, path):
+                        issues.append(f"{figure_id} source data is missing: {path}")
+            exports = figure.get("exports")
+            if not isinstance(exports, list) or not exports:
+                issues.append(f"{figure_id} has no declared exports")
+            else:
+                for path in exports:
+                    if isinstance(path, str):
+                        contracted_exports.add(path)
+                    if not relative_file_exists(root, path):
+                        issues.append(f"{figure_id} export is missing: {path}")
+            if figure.get("qa_status") != "passed":
+                issues.append(f"{figure_id} has not passed final-size visual QA")
+            if figure.get("conceptual_or_ai_generated") and figure.get(
+                "paper_role"
+            ) in {"main result", "comparison", "validation", "robustness"}:
+                issues.append(
+                    f"{figure_id} uses conceptual or AI-generated imagery "
+                    "in an empirical evidence role"
+                )
+        for path in figure_outputs:
+            if path not in contracted_exports:
+                issues.append(f"Figure output is not covered by a contract: {path}")
+
+    rows = load_csv(root, "audit/claim-evidence-ledger.csv", issues)
     if not rows:
         issues.append("Claim-evidence ledger has no claims")
     for row in rows:
@@ -206,6 +277,49 @@ def audit_evidence(root: Path) -> list[str]:
 
 def audit_manuscript(root: Path) -> list[str]:
     issues: list[str] = []
+    contract = load_json(root, "paper/manuscript-contract.json", issues)
+    for field in (
+        "paper_type",
+        "target_audience",
+        "target_format",
+        "language",
+        "core_argument",
+        "baseline",
+        "evidence_boundary",
+    ):
+        if has_placeholder(contract.get(field)):
+            issues.append(f"Manuscript contract is incomplete: {field}")
+    primary_evidence = contract.get("primary_evidence")
+    if not isinstance(primary_evidence, list) or not primary_evidence:
+        issues.append("Manuscript contract has no primary evidence")
+    else:
+        for path in primary_evidence:
+            if not relative_file_exists(root, path):
+                issues.append(f"Manuscript primary evidence is missing: {path}")
+    if not contract.get("section_jobs"):
+        issues.append("Manuscript contract has no section or paragraph map")
+    if contract.get("approved") is not True:
+        issues.append("Manuscript argument has not been approved")
+
+    terminology = load_csv(root, "paper/terminology-ledger.csv", issues)
+    if not terminology:
+        issues.append("Terminology ledger has no canonical terms")
+    canonical_terms: set[str] = set()
+    for row in terminology:
+        term = row.get("canonical_term") or ""
+        if has_placeholder(term):
+            issues.append("Terminology ledger contains an undefined term")
+            continue
+        normalized = term.casefold()
+        if normalized in canonical_terms:
+            issues.append(f"Terminology ledger repeats canonical term: {term}")
+        canonical_terms.add(normalized)
+        for field in ("first_use_definition", "category", "decision"):
+            if has_placeholder(row.get(field)):
+                issues.append(f"Terminology entry {term} is incomplete: {field}")
+        if row.get("status") != "approved":
+            issues.append(f"Terminology entry {term} is not approved")
+
     manuscript = root / "paper/main.md"
     if not manuscript.is_file():
         return ["Missing paper/main.md"]
@@ -224,6 +338,11 @@ def audit_manuscript(root: Path) -> list[str]:
             "Manuscript does not declare its canonical result version "
             f"with 'frozen-results: {version}'"
         )
+    figure_contract = load_json(root, "planning/figure-contract.json", issues)
+    for figure in figure_contract.get("figures") or []:
+        figure_id = figure.get("id")
+        if figure_id and figure_id not in text:
+            issues.append(f"Manuscript does not reference declared figure: {figure_id}")
     return issues
 
 
@@ -258,7 +377,7 @@ def run_audit(root: Path, write_report: bool = True) -> dict[str, Any]:
         results.append(GateResult(gate, title, status, issues))
 
     report = {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "audited_at": datetime.now(timezone.utc).isoformat(),
         "project_root": str(root),
         "overall_status": "passed" if all(r.status == "passed" for r in results) else "failed",

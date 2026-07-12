@@ -80,6 +80,8 @@ Required evidence:
 - limitations and known failure regions;
 - every headline claim mapped in <code>audit/claim-evidence-ledger.csv</code>;
 - approved numbers stored in <code>results/frozen-results.json</code>.
+- every quantitative figure has a contract linking its message, panels, source data, script, statistics, exports, and final-size QA;
+- AI-generated or conceptual imagery is excluded from empirical evidence roles.
 
 Human checkpoint: approve the canonical result set before final paper writing.
 
@@ -90,6 +92,8 @@ Before freezing, run a second critic pass focused on infeasible outputs, cherry-
 Required evidence:
 
 - formulas match implemented logic;
+- a one-sentence paper argument, evidence boundary, and section jobs are approved;
+- a terminology ledger fixes model names, abbreviations, symbols, metrics, and units;
 - symbols and units are defined and consistent;
 - every figure and table is referenced and interpreted;
 - numbers match the frozen result set;

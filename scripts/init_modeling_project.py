@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "2.0"
+SCHEMA_VERSION = "2.1"
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -89,6 +89,30 @@ def build_files(mode: str, question_count: int) -> dict[str, Any]:
             "schema_version": SCHEMA_VERSION,
             "questions": decisions,
         },
+        "planning/figure-contract.json": {
+            "schema_version": SCHEMA_VERSION,
+            "figures": [],
+        },
+        "paper/manuscript-contract.json": {
+            "schema_version": SCHEMA_VERSION,
+            "paper_type": "algorithmic",
+            "target_audience": "TODO",
+            "target_format": "TODO",
+            "language": "TODO",
+            "core_argument": "TODO",
+            "primary_evidence": [],
+            "baseline": "TODO",
+            "evidence_boundary": "TODO",
+            "reader_sequence": [
+                "relevance",
+                "contribution",
+                "trust",
+                "reuse",
+                "boundary",
+            ],
+            "section_jobs": [],
+            "approved": False,
+        },
         "audit/reproducibility-manifest.json": {
             "schema_version": SCHEMA_VERSION,
             "run_mode": mode,
@@ -135,14 +159,21 @@ def initialize(root: Path, mode: str, question_count: int, force: bool) -> None:
             "claim_id,claim_text,scope,evidence_type,artifact_path,"
             "artifact_anchor,method_or_code,validation_status,limitations,status\n"
         ),
+        "paper/terminology-ledger.csv": (
+            "canonical_term,first_use_definition,category,unit_or_symbol,"
+            "variants_found,decision,status\n"
+            "TODO,TODO,TODO,TODO,,TODO,pending\n"
+        ),
         "paper/main.md": (
             "# Modeling Report\n\n"
             "> DRAFT: replace all TODO markers and use only frozen results.\n\n"
             "## Abstract\n\nTODO\n\n"
             "## Problem and Assumptions\n\nTODO\n\n"
-            "## Model\n\nTODO\n\n"
+            "## Baseline and Method Selection\n\nTODO\n\n"
+            "## Model and Solution\n\nTODO\n\n"
             "## Results and Validation\n\nTODO\n\n"
-            "## Limitations\n\nTODO\n"
+            "## Decision Insight and Limitations\n\nTODO\n\n"
+            "## Conclusion\n\nTODO\n"
         ),
         "src/README.md": (
             "# Source Code\n\n"
@@ -196,7 +227,10 @@ def initialize(root: Path, mode: str, question_count: int, force: bool) -> None:
 
     print(f"Initialized evidence-gated modeling project: {root}")
     print(f"Mode: {mode}; sub-questions: {question_count}")
-    print("Next: complete planning/problem-contract.json and the data audit.")
+    print(
+        "Next: complete the problem, manuscript, and data contracts "
+        "before selecting a method."
+    )
 
 
 def parse_args() -> argparse.Namespace:

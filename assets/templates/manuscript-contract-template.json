@@ -1,0 +1,20 @@
+{
+  "schema_version": "2.1",
+  "paper_type": "algorithmic",
+  "target_audience": "",
+  "target_format": "",
+  "language": "",
+  "core_argument": "",
+  "primary_evidence": [],
+  "baseline": "",
+  "evidence_boundary": "",
+  "reader_sequence": [
+    "relevance",
+    "contribution",
+    "trust",
+    "reuse",
+    "boundary"
+  ],
+  "section_jobs": [],
+  "approved": false
+}

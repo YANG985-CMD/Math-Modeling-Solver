@@ -1,5 +1,7 @@
 # Competition Paper Writing
 
+Read <code>argument-first-paper-writing.md</code> first for the paper contract, reader sequence, paragraph jobs, terminology ledger, and targeted revision loop. Use this file as the compact competition structure and consistency checklist.
+
 ## Standard Structure
 
 1. Abstract
@@ -15,6 +17,7 @@
 ## Evidence-First Writing
 
 - Write from frozen results, not memory or console screenshots.
+- Lock the one-sentence argument and terminology ledger before drafting full sections.
 - Give each headline quantitative claim an entry in the claim-evidence ledger.
 - Explain what the baseline can do before claiming improvement.
 - Separate observed results, interpretation, and speculation.
