@@ -1,0 +1,2 @@
+claim_id,claim_text,scope,evidence_type,artifact_path,artifact_anchor,method_or_code,validation_status,limitations,status
+C001,Replace with a precise quantitative claim,Define population/time/scenario,table,results/tables/example.csv,row or cell,src/model.py,pending,State the boundary,draft

@@ -1,3 +1,4 @@
-display_name: Math Modeling Playbook
-short_description: Reusable mathematical modeling contest workflow, model selection, and algorithm templates.
-default_prompt: Help me analyze and solve this mathematical modeling competition problem.
+interface:
+  display_name: "Math Modeling Playbook"
+  short_description: "Evidence-gated modeling, reproducibility, and paper delivery."
+  default_prompt: "Use $math-modeling-playbook to solve this problem with a baseline, executable evidence, robustness checks, reproducibility, and an audited paper."

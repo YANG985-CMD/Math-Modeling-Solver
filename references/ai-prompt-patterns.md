@@ -1,17 +1,25 @@
 # AI Prompt Patterns
 
-## Problem Analysis Prompt
+## Evidence-Gated Project
 
-Restate this mathematical modeling problem, split it into sub-problems, identify objectives and constraints, and recommend 2-3 candidate model families with reasons.
+Analyze this problem in formal mode. Create sub-question input-output contracts and a dependency map. Audit the data, establish a baseline, compare candidate methods, define validation before final evaluation, execute the code, freeze approved numbers, map claims to evidence, and audit all five gates. Never invent missing data or results.
 
-## Model Selection Prompt
+## Rapid Triage
 
-Given this problem statement and data description, compare suitable models, state assumptions, and recommend the simplest defensible route.
+Restate the task, classify each sub-question, identify objectives, constraints, units, data needs, and dependencies, then recommend 2-3 candidate families plus the simplest defensible baseline and the largest validation risk.
 
-## Code Adaptation Prompt
+## Model Selection
 
-Adapt this algorithm template to the following problem. Specify input format, parameters to change, expected outputs, and validation checks.
+Compare candidates on assumption fit, data demand, interpretability, runtime, and validation burden. Design a minimal feasibility probe. Recommend an upgrade only if a named baseline failure justifies it.
 
-## Paper Writing Prompt
+## Code Adaptation
 
-Draft a competition-style section for this modeling problem using clear assumptions, notation, model rationale, and result interpretation.
+Adapt the closest local template. Define the input schema, parameters, units, exact command, deterministic seed policy, output artifacts, error checks, baseline comparison, and reproducibility manifest updates.
+
+## Results Review
+
+Audit these results for leakage, feasibility, baseline fairness, uncertainty, seed or split stability, failure cases, and overclaiming. Produce a claim-evidence ledger and list every missing artifact.
+
+## Paper Writing
+
+Draft the section using only the supplied frozen results. Keep notation and units consistent, link each quantitative claim to an artifact, distinguish results from interpretation, and state limitations without inventing citations.

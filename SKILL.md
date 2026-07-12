@@ -1,40 +1,83 @@
 ---
 name: math-modeling-playbook
-description: Use when the user wants help solving mathematical modeling competition problems, especially for problem triage, model selection, reusable algorithm templates, competition-paper structuring, or end-to-end modeling workflows.
+description: Evidence-gated mathematical modeling workflow for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, baseline design, executable Python or MATLAB solutions, robustness analysis, reproducibility, claim-to-evidence tracing, and competition-paper drafting.
 ---
 
 # Math Modeling Playbook
 
-Use this skill when the user is working on a mathematical modeling contest problem and needs either:
+Turn a modeling prompt into a reproducible result and a defensible paper. Optimize for evidence, clarity, and contest time rather than method novelty alone.
 
-- rapid problem triage
-- full solving workflow guidance
-- Python or MATLAB template matching
-- competition-style paper structuring
+## Non-Negotiable Rules
 
-## Workflow
+- Never invent data, execution results, metrics, citations, or chart conclusions.
+- Label the run as <code>formal</code>, <code>demo</code>, or <code>blocked</code>. Formal runs may not silently replace missing data with synthetic data.
+- Establish a simple baseline before adding model complexity.
+- Keep training, validation, and test information separated; treat temporal and grouped data with structure-aware splits.
+- Tie every important conclusion to a result file, table, figure, formula, or verified source.
+- Record units, assumptions, random seeds, software versions, commands, and input provenance.
+- Report uncertainty, failure cases, and claim boundaries.
 
-1. Determine which mode the user needs.
-2. Read only the matching reference files.
-3. Prefer reusable modeling logic over one-off answers.
-4. When suggesting a model, explain fit, assumptions, and alternatives.
-5. When suggesting code, point to the closest local asset template and explain what to change.
-6. When the user gives a time limit, add the matching compressed mode from `references/competition-timeline.md`.
+## Operating Workflow
 
-## Mode Routing
+1. Identify the requested scope, available data, time budget, language, and desired deliverables.
+2. Classify each sub-question and map dependencies between them.
+3. Create or update the modeling workspace. For a new project, run:
 
-- Triage requests: read `references/problem-triage.md` and `references/model-selection.md`
-- Model-fit requests: read `references/model-selection.md`
-- Full workflow requests: read `references/standard-workflow.md`, `references/paper-writing.md`, and `assets/templates/problem-analysis-template.md`
-- Code-template requests: read `references/algorithm-templates.md` and inspect `assets/code/python/` or `assets/code/matlab/`
-- Paper-writing requests: read `references/paper-writing.md` and `assets/templates/paper-outline-template.md`
-- Time-limited contest requests: read `references/competition-timeline.md`
-- Prompting requests: read `references/ai-prompt-patterns.md`
-- Advanced-method requests: read `references/advanced-model-combinations.md` and `references/when-to-upgrade-model-complexity.md`
+       python scripts/init_modeling_project.py PROJECT_DIR --mode formal --questions N
 
-## Output Expectations
+4. Advance through the five evidence gates in order:
+   - Intake: problem contract and data audit are complete.
+   - Method: candidates, baseline, feasibility probe, and selection rationale are recorded.
+   - Computation: code actually ran and can be reproduced.
+   - Evidence: baseline comparison, robustness evidence, and canonical numbers are frozen.
+   - Manuscript: claims, figures, tables, symbols, units, and citations are consistent.
+5. If an upstream assumption, dataset, method, or parameter changes, mark downstream artifacts stale and rerun the affected gates.
+6. Audit before delivery:
 
-- For problem-classification prompts, classify the task type, split the problem into sub-problems, identify objectives and constraints, and recommend 2-3 candidate model families plus a simplest defensible first-pass route.
-- For full-workflow prompts, include assumptions, preprocessing, model plan, validation or sensitivity checks, and a paper structure.
-- For code-template prompts, name the closest local Python or MATLAB asset, explain input format, parameters to edit, expected outputs, and validation checks.
-- For advanced-method prompts, explain whether a single model is enough, whether an upgrade is justified, and which combination model best matches the failure of the baseline.
+       python scripts/audit_modeling_project.py PROJECT_DIR
+
+7. Deliver the requested artifacts plus unresolved risks and the audit status. Do not present a failed gate as completed work.
+
+## Human Decision Points
+
+Pause for the user's decision when:
+
+- two viable methods encode materially different assumptions or trade-offs;
+- the selected method is about to replace a working baseline with a substantially more complex route;
+- results are ready to be frozen as the canonical numbers used in the paper;
+- missing real data would force a switch from formal to demo mode.
+
+If the user is unavailable and time is limited, keep the baseline, document the assumption, and continue only where the choice is reversible.
+
+## Reference Routing
+
+- Rapid triage: read <code>references/problem-triage.md</code> and <code>references/task-family-router.md</code>.
+- Model selection or upgrades: read <code>references/model-selection.md</code> and <code>references/when-to-upgrade-model-complexity.md</code>.
+- End-to-end work: read <code>references/evidence-gated-workflow.md</code> and <code>references/standard-workflow.md</code>.
+- Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>.
+- Validation, sensitivity, or uncertainty: read <code>references/validation-playbook.md</code>.
+- Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
+- Combination models: read <code>references/advanced-model-combinations.md</code>.
+- Paper writing: read <code>references/paper-writing.md</code> and the templates under <code>assets/templates/</code>.
+- Time-limited work: read <code>references/competition-timeline.md</code>.
+- Prompt design: read <code>references/ai-prompt-patterns.md</code>.
+
+## Required Outputs by Request Type
+
+- Triage: sub-question map, task family, objectives, constraints, data needs, 2-3 candidates, baseline, and major risk.
+- Model plan: assumptions, mathematical formulation, candidate comparison, baseline, feasibility probe, metrics, validation design, and fallback.
+- Code: input contract, executable source, deterministic command, outputs, error checks, and reproducibility record.
+- Results: baseline comparison, uncertainty or robustness evidence, limitations, and a claim-evidence map.
+- Paper: consistent notation and units, evidence-backed results, figure/table references, limitations, and no unsupported claims.
+
+## Complexity Escalation Test
+
+Add a component only when all are true:
+
+1. The baseline has been executed.
+2. Its failure is observable and named.
+3. The added component directly addresses that failure.
+4. The comparison protocol is fair.
+5. The remaining time supports validation.
+
+Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
