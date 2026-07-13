@@ -1,9 +1,9 @@
 ---
-name: math-modeling-playbook
-description: Evidence-gated mathematical modeling workflow for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade scientific figures, argument-first competition-paper writing, reproducibility, and claim-to-evidence tracing.
+name: math-modeling-solver
+description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade scientific figures, argument-first competition-paper writing, reproducibility, and claim-to-evidence tracing.
 ---
 
-# Math Modeling Playbook
+# Math Modeling Solver
 
 Turn a modeling prompt into a reproducible result and a defensible paper. Optimize for evidence, clarity, and contest time rather than method novelty alone.
 

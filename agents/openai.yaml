@@ -1,4 +1,4 @@
 interface:
-  display_name: "Math Modeling Playbook"
-  short_description: "Evidence-gated modeling, figures, and argument-first papers."
-  default_prompt: "Use $math-modeling-playbook to build a baseline-first model, traceable scientific figures, an argument-first paper, and a fully audited reproducible delivery."
+  display_name: "Math Modeling Solver"
+  short_description: "Solve modeling problems with reproducible evidence."
+  default_prompt: "Use $math-modeling-solver to decompose this problem, run and validate suitable models, create traceable figures, and draft an evidence-backed paper."
