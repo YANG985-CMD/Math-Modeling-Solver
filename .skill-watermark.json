@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "watermark_type": "render-invisible-ed25519-provenance",
+  "owner": "YANG985-CMD",
+  "watermark_id": "YANG985-CMD-MMS-2026-v1",
+  "repository": "https://github.com/YANG985-CMD/Math-Modeling-Solver",
+  "algorithm": "Ed25519",
+  "canonical_hash": "SHA-256",
+  "signed_at_utc": "2026-07-14T07:27:43+00:00",
+  "public_key_base64": "MZ8DANlU5cbnFaA4tGmWozbxVTaPI0z60znYRpFL9cY=",
+  "bundle_sha256": "87ada82f035c7048c3eb1fe687b8b625089ff1b968082318cae5cb8152e32441",
+  "bundle_signature_base64": "oEAs4S-RYkIpCJ2hVyCjULQoRM635SjTpkhTI7nWWU8bu6IJy3PocSoqkdvemF5LyslxRM_MYJFkYD8bomI9BA==",
+  "file_count": 64,
+  "signed_files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "08dd69c71c09a0f6d94105ed1167ec749f5fd4a3f74fc8ed38707044ca2ae5da"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "927a310ec1c952364bdeb4b60fda43d447d58e9bc6f2119ef8e7045f28321b69"
+    },
+    {
+      "path": "README.md",
+      "sha256": "789068a4fa1bd3faa6297253e1cc64002a4056a7929290c3ac5670784a45c705"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "ece6b6e71ee541c92e115de01640b7d27a698f1710932dc6f06429d7a31f8e0b"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "7e66053c45c5af1a1c639d69355e69080c1eda697ce98c6078edebce74608e6f"
+    },
+    {
+      "path": "assets/code/matlab/entropy_weight.m",
+      "sha256": "31b8d822b195962a680579e4e8c2201cc0d091a0288fc20dbd3461714dd2edff"
+    },
+    {
+      "path": "assets/code/matlab/genetic_algorithm.m",
+      "sha256": "ff82f1df948b3ee7f5ce6ef15c40645f13fa82ebdab0316e2574b6198ab8230a"
+    },
+    {
+      "path": "assets/code/matlab/grey_prediction.m",
+      "sha256": "958d6f4dc2b792f06c4e5c7aebd10cb6826e6d1faf8d1cd3cc96600cf77d2236"
+    },
+    {
+      "path": "assets/code/matlab/integer_programming.m",
+      "sha256": "4a2ef6b9868eb976fb0d2e3fd8fdfcf30c068bbaa5636ddd515d44c5589221a1"
+    },
+    {
+      "path": "assets/code/matlab/linear_programming.m",
+      "sha256": "b7b4f85536294534caed1213096f4dac23995867f4b15ad9aae1121b0eb82460"
+    },
+    {
+      "path": "assets/code/matlab/particle_swarm.m",
+      "sha256": "5f84cec5626ac9f5e98bfc6fef973a5bf39e1b6e3eda3625dc1b05db9369fe5a"
+    },
+    {
+      "path": "assets/code/matlab/topsis.m",
+      "sha256": "8395aa7d3fb498acf88b30d0b4c97dc445a4e4d351cd8e658f17195b1cddda4a"
+    },
+    {
+      "path": "assets/code/python/ahp_entropy_weight.py",
+      "sha256": "d24e2fd97f77bdec60ebe2fdb36b1810db8e40b55e213c3a9d5f8bcfdf16c2a2"
+    },
+    {
+      "path": "assets/code/python/arima_forecast.py",
+      "sha256": "eff1e527ab56d619b4e207192b0256399747a8105855ea1411737af3987e85d9"
+    },
+    {
+      "path": "assets/code/python/dea_topsis.py",
+      "sha256": "c7245b22b81acb4e4dfafcc5333b8050d64fb244dc8800bbbfd1987be555df80"
+    },
+    {
+      "path": "assets/code/python/demo_modeling_figure.py",
+      "sha256": "e666f8b0254d6b037ebc3268bcf7065244fe45962d315c00c4aac29e6dbe9480"
+    },
+    {
+      "path": "assets/code/python/entropy_weight.py",
+      "sha256": "b435268ca9a29f9ab44be63c1ce603903636b4ed988a70be99138f5e8feaa9ba"
+    },
+    {
+      "path": "assets/code/python/ga_sa.py",
+      "sha256": "f26fc59ceb3c5786385d2ba94e86474d28c9e79f2b3ef43f0dd88e400056d95d"
+    },
+    {
+      "path": "assets/code/python/genetic_algorithm.py",
+      "sha256": "aa2f339d62bef74e900fe985e8221d8bf03e94139f340c1438830dd6f2bea7f8"
+    },
+    {
+      "path": "assets/code/python/gm11_markov.py",
+      "sha256": "c04ea554ea16e4a851786e379e178376d6a96695d6709f465fcb9f4564881ef8"
+    },
+    {
+      "path": "assets/code/python/grey_prediction.py",
+      "sha256": "0e61718280fef3ca3d29f2a5bd96babc53349472b8a9b4bc93f2dd09ff66d2e4"
+    },
+    {
+      "path": "assets/code/python/integer_programming.py",
+      "sha256": "c3ab40291d820938c0e145ced64f6ec6e0160a04397346161b1aafb71edeaae3"
+    },
+    {
+      "path": "assets/code/python/linear_programming.py",
+      "sha256": "249074c7c71b20b34eee826a129bdabed69e41cde5f4da8ea49d7903f66428a3"
+    },
+    {
+      "path": "assets/code/python/modeling_plotkit.py",
+      "sha256": "7407631792daa4003ba6f8b664324ee1b749c88e6b2a9c5f80a11564811fb06c"
+    },
+    {
+      "path": "assets/code/python/particle_swarm.py",
+      "sha256": "30a77fcd60cf24746d7954de950fe58ec73214e3880a872c921e1e349a7f55da"
+    },
+    {
+      "path": "assets/code/python/pca_svm.py",
+      "sha256": "c834d7eabab74aa0846788ff2aac9448d483331c31792da50f9462f8afb7ff07"
+    },
+    {
+      "path": "assets/code/python/svm_pso.py",
+      "sha256": "d1b6aa6fdbedd3a074b978455a3aa001e3402baf5ff966da5ea2a0085722afd1"
+    },
+    {
+      "path": "assets/code/python/topsis.py",
+      "sha256": "9d9e849ccac680ee6bcd8a7303689f21742292d1e1638fd98394b3802cf5a3d6"
+    },
+    {
+      "path": "assets/code/python/topsis_grey_relation.py",
+      "sha256": "6809237db4da3692e39d4234d85b2dfa2cb247332fcf81851b8955d518ccdeb7"
+    },
+    {
+      "path": "assets/images/modeling-closed-loop.png",
+      "sha256": "eb7906e7ce11e69a137ac9afbe9f771f2a9525e93b348a54bd1c5f2ab3165518"
+    },
+    {
+      "path": "assets/images/modeling-evidence-figure.png",
+      "sha256": "4010193f23762b1fc8d1d526b361bfee103ceee66feba46b25629b2e8e859e9a"
+    },
+    {
+      "path": "assets/templates/claim-evidence-ledger-template.csv",
+      "sha256": "18f328879525d7223e093cdb16ba27d48d13bf9c323958c66c79f429d538ca33"
+    },
+    {
+      "path": "assets/templates/figure-contract-template.json",
+      "sha256": "afc1f468c6a28ea2039634d4105de3e2a283d39de8cd1fbdcfc703da5f8fcd86"
+    },
+    {
+      "path": "assets/templates/manuscript-contract-template.json",
+      "sha256": "21f42c1e1e9de38b9089d81c940a61a5f17814a37cc802d86d09baba8a9c91de"
+    },
+    {
+      "path": "assets/templates/model-contract-template.md",
+      "sha256": "5dd99cb24a8c8a77f097c41dbc2bb926c0337f797a9cd1727c4234e1def74a8d"
+    },
+    {
+      "path": "assets/templates/modeling-diagram-spec-template.json",
+      "sha256": "a03e00b56be83ca55bf590e816816833c0a3d18be20f3634f1e9fcb102cf0a6c"
+    },
+    {
+      "path": "assets/templates/paper-outline-template.md",
+      "sha256": "88ad28eb40f1690a4bb48b1fed93cd4049a518ad669618cfdb2495e2e7659817"
+    },
+    {
+      "path": "assets/templates/problem-analysis-template.md",
+      "sha256": "5e46a2569ae3a215eb626c7a09e2d6ef2531033d6fe15cf348839a211301c6d5"
+    },
+    {
+      "path": "assets/templates/reproducibility-manifest-template.json",
+      "sha256": "effb2b9be6f634a0452843407e504406865d7314ceeaea08b87a3bc1f7d3ca0d"
+    },
+    {
+      "path": "assets/templates/terminology-ledger-template.csv",
+      "sha256": "88960f0189c81f528c32cc4eb863bf79f060fa7405f4775a5288032bc2ad9f51"
+    },
+    {
+      "path": "references/advanced-model-combinations.md",
+      "sha256": "dac82d8d8a2976e351e0b3e21bcb11cc258fba34bd3c8fab02770aafb2b74f1b"
+    },
+    {
+      "path": "references/ai-prompt-patterns.md",
+      "sha256": "8e17c32cf8419b137f11289dc746e64881918c5a1daf56c352c5db605587987b"
+    },
+    {
+      "path": "references/algorithm-templates.md",
+      "sha256": "3171babd8992915037242142af14f5d1744d919a438f88d44a0f9a66cefefac4"
+    },
+    {
+      "path": "references/argument-first-paper-writing.md",
+      "sha256": "be23c9d9e5b4aa44dd154a5b8d0e3c96ed061258a54d24bfaf7de3555f6b06f4"
+    },
+    {
+      "path": "references/competition-timeline.md",
+      "sha256": "d74422b93edc37f5ecc32cfe3ccb37100751bcf70abecf1466ab3a783d6cd573"
+    },
+    {
+      "path": "references/data-and-reproducibility.md",
+      "sha256": "c3a5a6ca7cdae969dfe12838c9fa9c85e662712466955802e71c8fc09c9e5155"
+    },
+    {
+      "path": "references/evidence-gated-workflow.md",
+      "sha256": "d2090ef3f87c78520581afb183ddc54f8985086716da3cb273df5d16b76c8cc4"
+    },
+    {
+      "path": "references/figure-contract-and-qa.md",
+      "sha256": "63521d54caadce425942194f07df8ee04d193ac8d47acd99cbe3e55037f5483d"
+    },
+    {
+      "path": "references/figure-qa-checklist.md",
+      "sha256": "1f56d422c9695062e1cb800826e990325753552cb766a3d7033f264f4ca03302"
+    },
+    {
+      "path": "references/model-selection.md",
+      "sha256": "1e95caef5b6a020116ab2b814232c1ea1ff33c753000e95dcb323e9b4b6899c2"
+    },
+    {
+      "path": "references/modeling-figure-workflow.md",
+      "sha256": "e8b92e8177e36ec5d20dd3d3a75f34a34abbb31d91f235f750300ef33d1a5aa7"
+    },
+    {
+      "path": "references/paper-writing.md",
+      "sha256": "68a6b37f01a14e76ecbac8452972e26f0265315cd1a5298ddad78099824e9d80"
+    },
+    {
+      "path": "references/problem-triage.md",
+      "sha256": "be68bd5b13100ba1b3df8595b25d18ebea476b5ab9085fffa50651fb73fa4454"
+    },
+    {
+      "path": "references/standard-workflow.md",
+      "sha256": "0b3cbe6bd21d993947e5431dc37f47ba3fc7540f92cb9b84294281539773066b"
+    },
+    {
+      "path": "references/task-family-router.md",
+      "sha256": "1b98e054099f22163bbf72e2f7f0112f04dec4957ea85a4b8da25fd28ef93852"
+    },
+    {
+      "path": "references/validation-playbook.md",
+      "sha256": "c097f7a7b6c1c0ce89fd1b00403ce91c0d83bab7569e488ed70b4b6de648c343"
+    },
+    {
+      "path": "references/when-to-upgrade-model-complexity.md",
+      "sha256": "27e5602750c0613c8e1ab924f84a57d173e3dbff80b37284ec0f384c3ae1815b"
+    },
+    {
+      "path": "scripts/audit_figure_bundle.py",
+      "sha256": "cac28e225eda142c205a62114dafac807cba339e39de1b2b080b15664c74f883"
+    },
+    {
+      "path": "scripts/audit_modeling_project.py",
+      "sha256": "223aee020d7b452d51280001a22b336f34e2c3006ab26c1513043b6e838363b4"
+    },
+    {
+      "path": "scripts/build_modeling_diagram.py",
+      "sha256": "7e7a22451cce9c8c6127ad159747d88504740851629ba06ff5bc19aa20167b7d"
+    },
+    {
+      "path": "scripts/init_modeling_project.py",
+      "sha256": "39d6f6cee1ff4c9788c7e8322c8fea63addfcee91654e1ccc9a627ab29517b2f"
+    },
+    {
+      "path": "scripts/provenance_watermark.py",
+      "sha256": "1da1956918fef1492f815c8dd3e11decd6dcbf67d2eb91113da4eed97151b5a7"
+    },
+    {
+      "path": "tests/test_figure_tools.py",
+      "sha256": "056737352118ec6e2e4857aa5d8ea31463eb23ac2bd2663cb2119407bd276328"
+    },
+    {
+      "path": "tests/test_workflow_tools.py",
+      "sha256": "3dd3709f54f46b8376cadf0c2075a67fe3feb5d8e1f2fd0ba035c0e1d72ae6f9"
+    }
+  ],
+  "marker_files": [
+    {
+      "path": "SKILL.md",
+      "sha256": "ece6b6e71ee541c92e115de01640b7d27a698f1710932dc6f06429d7a31f8e0b",
+      "signature": "K6M-XmXwdhVepMfNeN7ZX2ZYN7obnc3toAnGmLe_AdltM17S1ZZAOEIlCkJ7amhk4S-hSMNW3ZdB9pOHQEBUAA=="
+    },
+    {
+      "path": "README.md",
+      "sha256": "789068a4fa1bd3faa6297253e1cc64002a4056a7929290c3ac5670784a45c705",
+      "signature": "5d7stYnx4ZqTQ2P3OA8vwm4PBHvbkFqnki8PkaB6mJi06KqYbFzoBmttkamtpiHQwddBxkp57OBUIBXOnrRFCQ=="
+    }
+  ],
+  "private_key_committed": false
+}

@@ -283,3 +283,5 @@ uv run --with pyyaml python `
 ---
 
 如果你需要的是一个能从题目一直工作到可复现论文交付的数学建模 Agent，直接从 `$math-modeling-solver` 开始。
+
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v1;path=README.md;sha256=789068a4fa1bd3faa6297253e1cc64002a4056a7929290c3ac5670784a45c705;pub=MZ8DANlU5cbnFaA4tGmWozbxVTaPI0z60znYRpFL9cY=;sig=5d7stYnx4ZqTQ2P3OA8vwm4PBHvbkFqnki8PkaB6mJi06KqYbFzoBmttkamtpiHQwddBxkp57OBUIBXOnrRFCQ== -->

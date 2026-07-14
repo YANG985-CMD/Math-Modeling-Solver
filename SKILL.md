@@ -122,3 +122,5 @@ Add a component only when all are true:
 5. The remaining time supports validation.
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
+
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v1;path=SKILL.md;sha256=ece6b6e71ee541c92e115de01640b7d27a698f1710932dc6f06429d7a31f8e0b;pub=MZ8DANlU5cbnFaA4tGmWozbxVTaPI0z60znYRpFL9cY=;sig=K6M-XmXwdhVepMfNeN7ZX2ZYN7obnc3toAnGmLe_AdltM17S1ZZAOEIlCkJ7amhk4S-hSMNW3ZdB9pOHQEBUAA== -->
