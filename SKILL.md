@@ -1,6 +1,6 @@
 ---
 name: math-modeling-solver
-description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade scientific figures, argument-first competition-paper writing, reproducibility, and claim-to-evidence tracing.
+description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, and claim-to-evidence tracing. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
 ---
 
 # Math Modeling Solver
@@ -15,6 +15,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Keep training, validation, and test information separated; treat temporal and grouped data with structure-aware splits.
 - Tie every important conclusion to a result file, table, figure, formula, or verified source.
 - Generate quantitative figures from traceable data and code. Never use AI-generated imagery as empirical evidence.
+- Give every figure one primary conclusion. Do not fill a canvas with redundant panels or decoration.
 - Record units, assumptions, random seeds, software versions, commands, and input provenance.
 - Report uncertainty, failure cases, and claim boundaries.
 
@@ -57,12 +58,49 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - End-to-end work: read <code>references/evidence-gated-workflow.md</code> and <code>references/standard-workflow.md</code>.
 - Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>.
 - Validation, sensitivity, or uncertainty: read <code>references/validation-playbook.md</code>.
-- Scientific figures, multi-panel layouts, or export QA: read <code>references/figure-contract-and-qa.md</code>.
+- Scientific figures, chart selection, multi-panel layouts, modeling diagrams, or export QA: read <code>references/modeling-figure-workflow.md</code>, then <code>references/figure-contract-and-qa.md</code>. Before delivery also read <code>references/figure-qa-checklist.md</code>.
 - Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
 - Combination models: read <code>references/advanced-model-combinations.md</code>.
 - Paper planning or writing: read <code>references/argument-first-paper-writing.md</code>, <code>references/paper-writing.md</code>, and the templates under <code>assets/templates/</code>.
 - Time-limited work: read <code>references/competition-timeline.md</code>.
 - Prompt design: read <code>references/ai-prompt-patterns.md</code>.
+
+## Figure Workflow
+
+Use one of two routes and keep their evidence roles distinct.
+
+### Quantitative route
+
+Use for comparisons, distributions, forecasts, residuals, convergence, Pareto fronts, sensitivity, robustness, spatial/network results, and simulation trajectories.
+
+1. State the one-sentence conclusion and the reader question.
+2. Inspect variable types, sample sizes, grouping, uncertainty, units, and the baseline before selecting a chart.
+3. Use Python/Matplotlib as the figure backend. If the canonical model ran in MATLAB, export its traceable results to CSV or MAT and keep that data handoff in the figure contract.
+4. Start from <code>assets/code/python/modeling_plotkit.py</code>. Adapt it; do not redraw the same boilerplate from memory.
+5. Render at final size, run programmatic QA, open the PNG preview, revise, then export vector and raster deliverables.
+
+### Code-native diagram route
+
+Use for problem structure, algorithm pipelines, layered architectures, feedback loops, and baseline-versus-proposed mechanisms.
+
+1. Classify the argument as pipeline, layered system, closed loop, contrast, taxonomy, or decision flow.
+2. Require module and relationship detail; an abstract alone is not enough for a defensible architecture.
+3. Use flat vector structure, functional color, short labels, explicit arrows, and one visually dominant innovation.
+4. Prefer editable SVG/PDF generated from code. Start from <code>assets/templates/modeling-diagram-spec-template.json</code> and use <code>scripts/build_modeling_diagram.py</code> for supported layouts.
+5. Mark any AI-generated conceptual illustration as illustrative. Never place it in a quantitative evidence role.
+
+### Required figure bundle
+
+Deliver or record:
+
+- a completed figure contract with conclusion, role, panel map, final size, backend, source data, statistics, and review risks;
+- the generating script and deterministic command;
+- source data or a traceable result artifact;
+- SVG or PDF with editable text, plus a 300 dpi PNG preview;
+- a grayscale preview when color carries categories;
+- a QA JSON report and an actual visual inspection of the final-size preview.
+
+Use <code>scripts/audit_figure_bundle.py</code> to validate a completed bundle. A successful save call is not visual QA.
 
 ## Required Outputs by Request Type
 
@@ -70,7 +108,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Model plan: assumptions, mathematical formulation, candidate comparison, baseline, feasibility probe, metrics, validation design, and fallback.
 - Code: input contract, executable source, deterministic command, outputs, error checks, and reproducibility record.
 - Results: baseline comparison, uncertainty or robustness evidence, limitations, and a claim-evidence map.
-- Figure: one-sentence visual message, non-redundant panel map, source-data links, uncertainty/statistics, editable export, and final-size QA.
+- Figure: one-sentence visual message, justified chart/diagram archetype, non-redundant panel map, source-data links, uncertainty/statistics, generating code, SVG/PDF + PNG preview, grayscale check when relevant, QA JSON, and final-size visual QA.
 - Paper: one-sentence argument, section and paragraph jobs, terminology ledger, evidence-backed results, consistent figures/tables, limitations, and no unsupported claims.
 
 ## Complexity Escalation Test

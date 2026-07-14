@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "layout": "pipeline",
+  "target": "competition",
+  "language": "zh",
+  "column": "double",
+  "size_mm": [180, 100],
+  "title": "模型方法流程",
+  "core_message": "从可追溯数据到经过验证的决策输出",
+  "nodes": [
+    {
+      "id": "data",
+      "label": "数据审计",
+      "kind": "data"
+    },
+    {
+      "id": "model",
+      "label": "模型求解",
+      "kind": "model",
+      "accent": true
+    },
+    {
+      "id": "validation",
+      "label": "验证与稳健性",
+      "kind": "validation"
+    },
+    {
+      "id": "decision",
+      "label": "方案决策",
+      "kind": "decision"
+    }
+  ],
+  "edges": [
+    {
+      "source": "data",
+      "target": "model",
+      "label": "可信输入"
+    },
+    {
+      "source": "model",
+      "target": "validation",
+      "label": "候选结果"
+    },
+    {
+      "source": "validation",
+      "target": "decision",
+      "label": "验证证据"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
 interface:
   display_name: "Math Modeling Solver"
-  short_description: "Solve modeling problems with reproducible evidence."
-  default_prompt: "Use $math-modeling-solver to decompose this problem, run and validate suitable models, create traceable figures, and draft an evidence-backed paper."
+  short_description: "Reproducible modeling, figures, and papers."
+  default_prompt: "Use $math-modeling-solver to solve and validate this modeling problem, generate publication-ready traceable figures, and draft an evidence-backed paper."
