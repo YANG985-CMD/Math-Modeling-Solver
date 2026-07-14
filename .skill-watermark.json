@@ -6,15 +6,15 @@
   "repository": "https://github.com/YANG985-CMD/Math-Modeling-Solver",
   "algorithm": "Ed25519",
   "canonical_hash": "SHA-256",
-  "signed_at_utc": "2026-07-14T07:27:43+00:00",
+  "signed_at_utc": "2026-07-14T08:18:47+00:00",
   "public_key_base64": "MZ8DANlU5cbnFaA4tGmWozbxVTaPI0z60znYRpFL9cY=",
-  "bundle_sha256": "87ada82f035c7048c3eb1fe687b8b625089ff1b968082318cae5cb8152e32441",
-  "bundle_signature_base64": "oEAs4S-RYkIpCJ2hVyCjULQoRM635SjTpkhTI7nWWU8bu6IJy3PocSoqkdvemF5LyslxRM_MYJFkYD8bomI9BA==",
-  "file_count": 64,
+  "bundle_sha256": "5ac6d7d4a25c0c60797cd907b81ad31b2b968016389f5bc04f531850d0911cc0",
+  "bundle_signature_base64": "O34tIDaN3PutbjPIdXx0-4lOZ2kIcpXdYzxGYOGz4Lsj2DcUTgErUIs0F9fMwlP12NJ8cFKszXsFeO9eoRYiAQ==",
+  "file_count": 71,
   "signed_files": [
     {
       "path": ".gitattributes",
-      "sha256": "08dd69c71c09a0f6d94105ed1167ec749f5fd4a3f74fc8ed38707044ca2ae5da"
+      "sha256": "c0d4ee9bac5c5756fa9be96e46cdd41f236c88378bdf3252e0d37297db225049"
     },
     {
       "path": ".gitignore",
@@ -22,7 +22,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "789068a4fa1bd3faa6297253e1cc64002a4056a7929290c3ac5670784a45c705"
+      "sha256": "470cc7127c0047b972c1352a30432ab931536f42a65783a282edddf8d3f7ba82"
     },
     {
       "path": "SKILL.md",
@@ -129,12 +129,40 @@
       "sha256": "6809237db4da3692e39d4234d85b2dfa2cb247332fcf81851b8955d518ccdeb7"
     },
     {
+      "path": "assets/images/evidence-gate-workflow-grayscale.png",
+      "sha256": "78b7940da70cd4412bc84eafa54961e4ad3c2069d029746a6566f6687034db3f"
+    },
+    {
+      "path": "assets/images/evidence-gate-workflow.pdf",
+      "sha256": "5342aa3444ad33bd4935a4655820eac6ac4d09b82fff606968112d740aa4352e"
+    },
+    {
+      "path": "assets/images/evidence-gate-workflow.png",
+      "sha256": "83d2ad66ba369f0cacd83f5d6015663c6204220a9478618c2a54de5c7ac5fd2d"
+    },
+    {
+      "path": "assets/images/evidence-gate-workflow.svg",
+      "sha256": "8cf08ccd100df82ba04e72f0dbb0cf5ca6f48ab44de58756d003a6b580a235f9"
+    },
+    {
       "path": "assets/images/modeling-closed-loop.png",
       "sha256": "eb7906e7ce11e69a137ac9afbe9f771f2a9525e93b348a54bd1c5f2ab3165518"
     },
     {
       "path": "assets/images/modeling-evidence-figure.png",
       "sha256": "4010193f23762b1fc8d1d526b361bfee103ceee66feba46b25629b2e8e859e9a"
+    },
+    {
+      "path": "assets/latex/evidence-gate-workflow-contract.json",
+      "sha256": "7f22c4fe0412233eae65157f09c4cf6018066ddd012a79ff6068fbdf62af47d5"
+    },
+    {
+      "path": "assets/latex/evidence-gate-workflow-qa.json",
+      "sha256": "a7cd016e02700fc6d63cb14e7b9caf8a1bccff5fb40fa09390d61083e9a7716b"
+    },
+    {
+      "path": "assets/latex/evidence-gate-workflow.tex",
+      "sha256": "50215d92949b7e856fd8c7c54c33425ae2c13b4cb7b9ab123790749923d2a59f"
     },
     {
       "path": "assets/templates/claim-evidence-ledger-template.csv",
@@ -277,8 +305,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "789068a4fa1bd3faa6297253e1cc64002a4056a7929290c3ac5670784a45c705",
-      "signature": "5d7stYnx4ZqTQ2P3OA8vwm4PBHvbkFqnki8PkaB6mJi06KqYbFzoBmttkamtpiHQwddBxkp57OBUIBXOnrRFCQ=="
+      "sha256": "470cc7127c0047b972c1352a30432ab931536f42a65783a282edddf8d3f7ba82",
+      "signature": "eWKaFeqV5W1CC8uK04HdCWlMCjA1_s5Bwij6fl4E3zGz-Q-PC6NApWfovxEjD8X6I4Ivqn3M5MnbNlsMUS1LBg=="
     }
   ],
   "private_key_committed": false

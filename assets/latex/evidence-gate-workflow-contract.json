@@ -1,0 +1,43 @@
+{
+  "figure_id": "README-EVIDENCE-GATE-WORKFLOW",
+  "core_message": "数学建模流程只有在当前证据门通过后才能推进；任一门失败都必须修复、补证或标记 blocked。",
+  "reader_question": "五道证据门分别位于建模流程的什么位置，未通过时如何处理？",
+  "paper_role": "method workflow",
+  "archetype": "decision flow",
+  "hero_evidence": "五个紫色菱形证据门与统一失败回路",
+  "panels": [
+    {
+      "id": "single",
+      "job": "从题目输入到可复现交付，展示五道证据门和失败回退路径"
+    }
+  ],
+  "source_basis": [
+    "README.md 中原 Mermaid 证据门工作流",
+    "SKILL.md 的 Operating Workflow 与五道证据门定义"
+  ],
+  "backend": "XeLaTeX + TikZ",
+  "source_script": "assets/latex/evidence-gate-workflow.tex",
+  "build_commands": [
+    "xelatex -interaction=nonstopmode -halt-on-error -output-directory build assets/latex/evidence-gate-workflow.tex",
+    "dvisvgm --pdf --page=1 --bbox=min --exact --output=assets/images/evidence-gate-workflow.svg build/evidence-gate-workflow.pdf",
+    "pdftoppm -png -r 220 -singlefile build/evidence-gate-workflow.pdf assets/images/evidence-gate-workflow"
+  ],
+  "exports": [
+    "assets/images/evidence-gate-workflow.svg",
+    "assets/images/evidence-gate-workflow.pdf",
+    "assets/images/evidence-gate-workflow.png",
+    "assets/images/evidence-gate-workflow-grayscale.png"
+  ],
+  "final_medium": "GitHub README",
+  "target_dimensions": "约 300 mm × 55 mm，横向全宽",
+  "accessibility": {
+    "color_rule": "通过文字、形状、线型和颜色共同编码，不依赖红绿颜色单独区分",
+    "font": "Microsoft YaHei / Arial",
+    "minimum_text": "8 pt"
+  },
+  "review_risks": [
+    "横向节点较多，必须检查 GitHub 页面缩放后的英文门名和中文标签",
+    "失败回路线条不得遮挡节点或文字",
+    "SVG 必须内嵌或路径化中文字符，避免缺字"
+  ]
+}

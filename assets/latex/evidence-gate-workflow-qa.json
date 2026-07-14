@@ -1,0 +1,42 @@
+{
+  "figure_id": "README-EVIDENCE-GATE-WORKFLOW",
+  "status": "passed",
+  "backend": "XeLaTeX + TikZ",
+  "exports_checked": [
+    "assets/images/evidence-gate-workflow.svg",
+    "assets/images/evidence-gate-workflow.pdf",
+    "assets/images/evidence-gate-workflow.png",
+    "assets/images/evidence-gate-workflow-grayscale.png"
+  ],
+  "programmatic_checks": {
+    "latex_compile": "passed",
+    "page_count": 1,
+    "missing_glyph_warning": false,
+    "svg_generated": true,
+    "png_preview_generated": true,
+    "pdf_type3_fonts": false,
+    "readme_asset_path": "passed"
+  },
+  "visual_checks": {
+    "message": "passed",
+    "hierarchy": "passed",
+    "legibility": "passed",
+    "collision": "passed",
+    "alignment": "passed",
+    "color_and_grayscale_redundancy": "passed: shape, label and line style remain redundant",
+    "integrity": "passed: diagram matches the five gates defined in SKILL.md",
+    "cross_node_consistency": "passed"
+  },
+  "iterations": [
+    {
+      "issue": "原 Mermaid 图在 README 中文字过小，并显示浏览器流程图控件",
+      "code_change": "改为横向 TikZ 决策流，放大五个证据门并输出静态 SVG",
+      "status": "fixed"
+    },
+    {
+      "issue": "第一轮右下图例靠近 Manuscript 失败线，回退文字与实际路径不完全一致",
+      "code_change": "删除重复图例，并将回退说明改为‘修复后重新进入流程’",
+      "status": "fixed"
+    }
+  ]
+}

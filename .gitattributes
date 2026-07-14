@@ -4,3 +4,6 @@
 *.jpeg binary
 *.gif binary
 *.mat binary
+*.pdf binary
+*.svg text eol=lf
+*.tex text eol=lf

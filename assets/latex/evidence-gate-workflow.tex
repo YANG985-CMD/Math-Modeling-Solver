@@ -1,0 +1,148 @@
+\documentclass[tikz,border=7pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{Microsoft YaHei}
+
+\usetikzlibrary{arrows.meta,backgrounds,calc,fit,positioning,shapes.geometric}
+
+\definecolor{Ink}{HTML}{17324D}
+\definecolor{Line}{HTML}{6E7F91}
+\definecolor{ProcessFill}{HTML}{EAF2FF}
+\definecolor{ProcessEdge}{HTML}{6E95D8}
+\definecolor{GateFill}{HTML}{F1ECFF}
+\definecolor{GateEdge}{HTML}{8066C7}
+\definecolor{OutputFill}{HTML}{E6F6EE}
+\definecolor{OutputEdge}{HTML}{3D9B73}
+\definecolor{FailFill}{HTML}{FFF0F0}
+\definecolor{FailEdge}{HTML}{C95C62}
+\definecolor{BandFill}{HTML}{F7F9FC}
+
+\tikzset{
+  every node/.style={font=\small, text=Ink},
+  process/.style={
+    rectangle,
+    rounded corners=2.2pt,
+    draw=ProcessEdge,
+    fill=ProcessFill,
+    line width=0.8pt,
+    minimum width=21mm,
+    minimum height=11mm,
+    text width=19mm,
+    align=center,
+    inner sep=2.2pt
+  },
+  gate/.style={
+    diamond,
+    aspect=1.65,
+    draw=GateEdge,
+    fill=GateFill,
+    line width=0.9pt,
+    minimum width=19mm,
+    minimum height=11mm,
+    align=center,
+    inner sep=1.0pt,
+    font=\scriptsize\bfseries
+  },
+  output/.style={
+    process,
+    draw=OutputEdge,
+    fill=OutputFill,
+    font=\small\bfseries
+  },
+  flow/.style={
+    -{Stealth[length=2.2mm,width=1.6mm]},
+    draw=Line,
+    line width=0.9pt,
+    rounded corners=2pt
+  },
+  failflow/.style={
+    -{Stealth[length=2.0mm,width=1.4mm]},
+    draw=FailEdge,
+    line width=0.75pt,
+    dashed
+  },
+  faildrop/.style={
+    draw=FailEdge,
+    line width=0.65pt,
+    dashed
+  },
+  failbox/.style={
+    rectangle,
+    rounded corners=3pt,
+    draw=FailEdge,
+    fill=FailFill,
+    line width=0.8pt,
+    minimum width=63mm,
+    minimum height=9.5mm,
+    align=center,
+    font=\small\bfseries
+  },
+  stage/.style={
+    rounded corners=5pt,
+    fill=BandFill,
+    draw=none,
+    inner xsep=4pt,
+    inner ysep=7pt
+  },
+  stageLabel/.style={
+    font=\scriptsize\bfseries,
+    text=GateEdge,
+    fill=white,
+    inner xsep=4pt,
+    inner ysep=1.5pt,
+    rounded corners=2pt
+  }
+}
+
+\begin{document}
+\begin{tikzpicture}[node distance=4.2mm]
+  \node[process] (input) {题目与\\原始数据};
+  \node[gate, right=of input] (intake) {Intake};
+  \node[process, right=of intake] (audit) {拆题与\\数据审计};
+  \node[process, right=of audit] (baseline) {基线与\\候选模型};
+  \node[gate, right=of baseline] (method) {Method};
+  \node[process, right=of method] (code) {代码执行};
+  \node[gate, right=of code] (compute) {Computation};
+  \node[process, right=of compute] (validate) {对照、误差\\与鲁棒性};
+  \node[gate, right=of validate] (evidence) {Evidence};
+  \node[process, right=of evidence] (freeze) {冻结结果、\\图表与论文};
+  \node[gate, right=of freeze] (manuscript) {Manuscript};
+  \node[output, right=of manuscript] (deliver) {可复现交付};
+
+  \begin{scope}[on background layer]
+    \node[stage, fit=(input)(intake)] (s1) {};
+    \node[stage, fit=(audit)(baseline)(method)] (s2) {};
+    \node[stage, fit=(code)(compute)] (s3) {};
+    \node[stage, fit=(validate)(evidence)] (s4) {};
+    \node[stage, fit=(freeze)(manuscript)(deliver)] (s5) {};
+  \end{scope}
+
+  \node[stageLabel] at ($(s1.north)+(0,2.2mm)$) {1 任务入口};
+  \node[stageLabel] at ($(s2.north)+(0,2.2mm)$) {2 模型设计};
+  \node[stageLabel] at ($(s3.north)+(0,2.2mm)$) {3 真实计算};
+  \node[stageLabel] at ($(s4.north)+(0,2.2mm)$) {4 证据验证};
+  \node[stageLabel] at ($(s5.north)+(0,2.2mm)$) {5 论文交付};
+
+  \draw[flow] (input) -- (intake);
+  \draw[flow] (intake) -- node[above, font=\scriptsize, text=OutputEdge] {通过} (audit);
+  \draw[flow] (audit) -- (baseline);
+  \draw[flow] (baseline) -- (method);
+  \draw[flow] (method) -- node[above, font=\scriptsize, text=OutputEdge] {通过} (code);
+  \draw[flow] (code) -- (compute);
+  \draw[flow] (compute) -- node[above, font=\scriptsize, text=OutputEdge] {通过} (validate);
+  \draw[flow] (validate) -- (evidence);
+  \draw[flow] (evidence) -- node[above, font=\scriptsize, text=OutputEdge] {通过} (freeze);
+  \draw[flow] (freeze) -- (manuscript);
+  \draw[flow] (manuscript) -- node[above, font=\scriptsize, text=OutputEdge] {通过} (deliver);
+
+  \coordinate (railLeft) at ($(intake.south)+(0,-13mm)$);
+  \coordinate (railRight) at ($(manuscript.south)+(0,-13mm)$);
+  \draw[faildrop] (railLeft) -- (railRight);
+  \foreach \g in {intake,method,compute,evidence,manuscript}{
+    \draw[faildrop] (\g.south) -- node[right, pos=0.48, font=\tiny, text=FailEdge] {未通过} (\g.south |- railLeft);
+  }
+
+  \node[failbox, below=20mm of compute] (repair) {修复问题 · 补齐数据与证据 · 必要时标记 \texttt{blocked}};
+  \draw[failflow] ($(compute.south |- railLeft)$) -- (repair.north);
+  \draw[flow, dashed, draw=ProcessEdge] (repair.west) -| node[pos=0.18, below, font=\scriptsize, text=ProcessEdge] {修复后重新进入流程} ($(input.west)+(-4mm,0)$) -- (input.west);
+\end{tikzpicture}
+\end{document}
