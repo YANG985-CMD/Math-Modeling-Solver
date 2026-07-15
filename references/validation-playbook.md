@@ -24,6 +24,11 @@ Validation must match the question. One generic accuracy score is not enough.
 | ODE/dynamics | dimensional and initial-condition checks | parameter identifiability, residuals, scenario sensitivity | fitting without mechanism checks |
 | Simulation | verification of rules and conservation | repeated replications, confidence intervals, scenario coverage | one random trajectory |
 | Causal/statistical | diagnostics and uncertainty intervals | robustness to specifications and confounders | causal language from correlation |
+| Signal/inverse problem | FFT or other transparent baseline; recovery error on known simulation | resolution-versus-SNR curves, Monte Carlo noise, calibration perturbation | reporting a sharp spectrum without localization error or axis checks |
+| Dynamic tracking | framewise baseline and trajectory continuity | stagewise holdout, perturbation, runtime and latency scaling | validating on frames used to tune the tracker |
+| Multi-stage ranking/review | existing rule, reviewer calibration, rank stability | consensus holdout, bootstrap, selection-bias and fairness analysis | treating missing-by-design second-stage scores as random missingness |
+
+For inverse and tracking problems, explicitly audit complex-data axes, unknown target count, and the feature-to-sample ratio. Fit thresholds, dictionaries, calibration corrections, and motion parameters without using held-out frames. For staged review systems, distinguish structural selection from ordinary missingness and do not use later-stage consensus to tune and evaluate the same scoring rule.
 
 ## Robustness Design
 

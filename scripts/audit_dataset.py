@@ -10,6 +10,7 @@ import html
 import json
 import math
 import re
+import warnings
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -291,7 +292,9 @@ def infer_semantic_type(series: pd.Series, column: Any) -> str:
     if float(numeric.notna().mean()) >= 0.95:
         return "numeric"
     if any(hint in name for hint in TIME_HINTS):
-        parsed = pd.to_datetime(nonnull, errors="coerce")
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
+            parsed = pd.to_datetime(nonnull, errors="coerce")
         if float(parsed.notna().mean()) >= 0.8:
             return "datetime"
     unique = int(nonnull.nunique(dropna=True))

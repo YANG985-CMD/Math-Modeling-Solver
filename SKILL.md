@@ -69,6 +69,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Paper planning or writing: read <code>references/argument-first-paper-writing.md</code>, <code>references/paper-writing.md</code>, and the templates under <code>assets/templates/</code>.
 - Time-limited work: read <code>references/competition-timeline.md</code>.
 - Prompt design: read <code>references/ai-prompt-patterns.md</code>.
+- Skill maintenance or generalization testing on historical problems: read <code>references/blind-benchmarking.md</code>, then use <code>scripts/blind_modeling_benchmark.py</code>. Keep judge rubrics outside the evaluated agent context until responses are frozen.
 
 ## Figure Workflow
 
@@ -128,4 +129,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v3;path=SKILL.md;sha256=8134eb409f08aec5074d1365476aa9a3d2b389e31fc71b041260f348d1704645;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=JFMOJU84bDmQjcgYve6gtSizmFbvTZ-0BUuR3fBYeVKic_FuYWImY0GpVXP8j5voG2ttk9hjLc-UMnxp27GlDg== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v4;path=SKILL.md;sha256=e3e247495b4f8bbf28c82aaadae6ad11d0fa1926bfcd0ead6b9ad5de1ab29ca1;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=jnC2jFf_8uuN29tGQYtHC0sppw1FUi5APbFx2OBr9_ROweLDgKj96wOxMk4h6ztcTCKqwTkKe7r-CmRZANPdCQ== -->

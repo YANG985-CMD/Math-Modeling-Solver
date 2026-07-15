@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "replace-with-suite-id",
+  "run_id": "independent-run-id",
+  "solution_materials_read": false,
+  "blind_attestation": "I used only the statement, declared references, attachments, and the Math Modeling Solver skill; I did not inspect a solution or case-specific rubric.",
+  "cases": [
+    {
+      "case_id": "replace-with-case-id",
+      "materials_read_sha256": [
+        "replace-with-declared-material-sha256"
+      ],
+      "subproblems": [
+        {
+          "id": "q1",
+          "objective": "State the decision or estimation objective without proposing results.",
+          "task_families": [
+            "canonical-task-family"
+          ],
+          "baseline_families": [
+            "canonical-baseline-family"
+          ],
+          "candidate_models": [
+            "Transparent baseline",
+            "One justified upgrade"
+          ],
+          "selected_model": "Provisional selection and why it matches the structure",
+          "validation_safeguards": [
+            "baseline-comparison"
+          ],
+          "data_risks": [],
+          "output_contract": "The exact table, figure, metric, decision, or file this subproblem must produce.",
+          "assumptions": []
+        }
+      ],
+      "dependency_edges": [],
+      "unresolved_risks": [
+        "State what cannot be decided before computation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "cgmcm-blind-pilot-v1",
+  "judge_only": true,
+  "weights": {
+    "routing": 0.35,
+    "baseline": 0.2,
+    "validation": 0.3,
+    "data_risks": 0.15
+  },
+  "cases": [
+    {
+      "case_id": "cgmcm-2021-f",
+      "subproblems": [
+        {
+          "id": "q1",
+          "required_task_families": ["routing-scheduling", "resource-allocation"],
+          "accepted_task_families": ["routing-scheduling", "resource-allocation", "multi-objective"],
+          "accepted_baseline_families": ["milp-time-space-network"],
+          "required_validation_safeguards": ["baseline-comparison", "constraint-feasibility", "lexicographic-objectives", "scalability"],
+          "required_data_risks": ["cross-midnight-time", "qualification-substitution", "timezone-consistency"]
+        },
+        {
+          "id": "q2",
+          "required_task_families": ["routing-scheduling", "resource-allocation", "multi-objective"],
+          "accepted_task_families": ["routing-scheduling", "resource-allocation", "multi-objective", "balanced-assignment"],
+          "accepted_baseline_families": ["milp-time-space-network"],
+          "required_validation_safeguards": ["baseline-comparison", "constraint-feasibility", "lexicographic-objectives", "fairness-distribution", "scalability"],
+          "required_data_risks": ["cross-midnight-time", "duty-boundary", "qualification-substitution", "timezone-consistency"]
+        },
+        {
+          "id": "q3",
+          "required_task_families": ["routing-scheduling", "resource-allocation", "multi-objective"],
+          "accepted_task_families": ["routing-scheduling", "resource-allocation", "multi-objective", "balanced-assignment"],
+          "accepted_baseline_families": ["milp-time-space-network"],
+          "required_validation_safeguards": ["baseline-comparison", "constraint-feasibility", "lexicographic-objectives", "fairness-distribution", "sensitivity-analysis", "scalability"],
+          "required_data_risks": ["cross-midnight-time", "duty-boundary", "qualification-substitution", "timezone-consistency"]
+        }
+      ]
+    },
+    {
+      "case_id": "cgmcm-2022-a",
+      "subproblems": [
+        {
+          "id": "q1",
+          "required_task_families": ["signal-inverse"],
+          "accepted_task_families": ["signal-inverse"],
+          "accepted_baseline_families": ["fft-periodogram", "music-subspace"],
+          "required_validation_safeguards": ["baseline-comparison", "simulation-recovery", "resolution-recovery", "sensitivity-analysis"],
+          "required_data_risks": ["complex-data-axis", "target-count-unknown"]
+        },
+        {
+          "id": "q2",
+          "required_task_families": ["signal-inverse", "robust-estimation"],
+          "accepted_task_families": ["signal-inverse", "robust-estimation", "statistical-inference"],
+          "accepted_baseline_families": ["fft-periodogram", "music-subspace"],
+          "required_validation_safeguards": ["baseline-comparison", "monte-carlo-noise", "resolution-recovery", "simulation-recovery"],
+          "required_data_risks": ["complex-data-axis", "target-count-unknown", "high-dimensional-small-sample"]
+        },
+        {
+          "id": "q3",
+          "required_task_families": ["signal-inverse", "dynamic-state-estimation"],
+          "accepted_task_families": ["signal-inverse", "dynamic-state-estimation", "robust-estimation"],
+          "accepted_baseline_families": ["fft-periodogram", "nearest-neighbor-tracking"],
+          "required_validation_safeguards": ["baseline-comparison", "stagewise-holdout", "trajectory-continuity", "monte-carlo-noise", "scalability"],
+          "required_data_risks": ["complex-data-axis", "target-count-unknown", "high-dimensional-small-sample"]
+        },
+        {
+          "id": "q4",
+          "required_task_families": ["signal-inverse", "robust-estimation"],
+          "accepted_task_families": ["signal-inverse", "robust-estimation", "statistical-inference"],
+          "accepted_baseline_families": ["fft-periodogram", "music-subspace", "linear-calibration"],
+          "required_validation_safeguards": ["baseline-comparison", "calibration-perturbation", "monte-carlo-noise", "sensitivity-analysis"],
+          "required_data_risks": ["antenna-calibration-error", "complex-data-axis", "target-count-unknown", "high-dimensional-small-sample"]
+        }
+      ]
+    },
+    {
+      "case_id": "cgmcm-2023-c",
+      "subproblems": [
+        {
+          "id": "q1",
+          "required_task_families": ["balanced-assignment", "resource-allocation"],
+          "accepted_task_families": ["balanced-assignment", "resource-allocation", "multi-objective"],
+          "accepted_baseline_families": ["balanced-random-assignment"],
+          "required_validation_safeguards": ["baseline-comparison", "constraint-feasibility", "fairness-distribution", "sensitivity-analysis", "scalability"],
+          "required_data_risks": ["sparse-reviewer-overlap"]
+        },
+        {
+          "id": "q2",
+          "required_task_families": ["evaluation-ranking", "statistical-inference"],
+          "accepted_task_families": ["evaluation-ranking", "statistical-inference", "robust-estimation"],
+          "accepted_baseline_families": ["standard-score-ranking", "trimmed-score-ranking"],
+          "required_validation_safeguards": ["baseline-comparison", "ranking-stability", "consensus-ranking-check", "stagewise-holdout", "sensitivity-analysis"],
+          "required_data_risks": ["reviewer-calibration", "sparse-reviewer-overlap", "selection-bias"]
+        },
+        {
+          "id": "q3",
+          "required_task_families": ["statistical-inference", "robust-estimation", "evaluation-ranking"],
+          "accepted_task_families": ["statistical-inference", "robust-estimation", "evaluation-ranking"],
+          "accepted_baseline_families": ["standard-score-ranking", "trimmed-score-ranking"],
+          "required_validation_safeguards": ["baseline-comparison", "stagewise-holdout", "ranking-stability", "sensitivity-analysis"],
+          "required_data_risks": ["selection-bias", "reviewer-calibration", "missingness", "sparse-reviewer-overlap"]
+        },
+        {
+          "id": "q4",
+          "required_task_families": ["multi-objective", "evaluation-ranking", "resource-allocation"],
+          "accepted_task_families": ["multi-objective", "evaluation-ranking", "resource-allocation", "balanced-assignment", "statistical-inference", "robust-estimation"],
+          "accepted_baseline_families": ["balanced-random-assignment", "standard-score-ranking", "trimmed-score-ranking"],
+          "required_validation_safeguards": ["baseline-comparison", "constraint-feasibility", "fairness-distribution", "ranking-stability", "stagewise-holdout", "scalability"],
+          "required_data_risks": ["sparse-reviewer-overlap", "reviewer-calibration", "selection-bias", "missingness"]
+        }
+      ]
+    }
+  ]
+}

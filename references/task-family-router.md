@@ -16,6 +16,9 @@ Classify each sub-question independently, then map dependencies between outputs.
 | Queue/inventory/reliability | analytical queue or renewal baseline | discrete-event or Monte Carlo simulation |
 | Statistical association | descriptive model and regression | hierarchical, Bayesian, survival, causal design |
 | Spatial process | spatial summary and simple interpolation | kriging, spatial regression, spatial-temporal model |
+| Spectral localization or inverse measurement | FFT/periodogram with declared coordinate convention | MUSIC, sparse recovery, atomic norm, calibrated inverse model |
+| Repeated frames with moving latent state | framewise estimate plus nearest-neighbor association | Kalman/particle filtering, joint sparse tracking, online state estimation |
+| Balanced reviewer/block assignment | balanced random assignment and overlap diagnostics | block design, bipartite optimization, multi-objective fairness model |
 
 ## Routing Questions
 
@@ -26,6 +29,8 @@ Classify each sub-question independently, then map dependencies between outputs.
 5. What would a transparent baseline look like?
 6. What evidence can falsify the proposed method?
 7. Which output becomes an input to another sub-question?
+8. For complex arrays or signals, which axes represent time, sensors, frequency, frames, and targets?
+9. Is missingness structural because only selected units enter a later stage?
 
 ## Dependency Map
 

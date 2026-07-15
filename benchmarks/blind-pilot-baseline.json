@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "cgmcm-blind-pilot-v1",
+  "evaluated_on": "2026-07-15",
+  "protocol": {
+    "independent_runs": 3,
+    "cases_per_run": 3,
+    "subproblems_per_run": 11,
+    "rubric_created_after_all_runs_frozen": true,
+    "solution_materials_read": false,
+    "upstream_materials_committed": false
+  },
+  "frozen_payload_sha256": [
+    "5e6c39daf7ffe9322bf81bcd3e31c2aaadfde6d5350a72d9de8efa487e5e7fe3",
+    "50c4dda2c64fa0426bfb44947f8b29e765da523ffcd5587c566f81e2d1add76b",
+    "d5d7cac6d1c0c7f5f02021c972d937d0efd0002de194a7f54e1d4284b16cc6f7"
+  ],
+  "score_report_sha256": "b0bbe989130c73263aff8ec2caa219932d79efe1daeafd18a6a4070b0284ce32",
+  "correctness": {
+    "mean": 0.9913888888888889,
+    "min": 0.9772916666666666,
+    "max": 1.0
+  },
+  "stability": {
+    "overall": 0.9055675805675806,
+    "task_families": 0.9292929292929294,
+    "baseline_families": 0.8989898989898989,
+    "validation_safeguards": 0.8859066859066859,
+    "data_risks": 0.908080808080808
+  },
+  "observed_gaps": [
+    "Some runs did not mark high-dimensional-small-sample risk for complex radar matrices.",
+    "Stagewise holdout was less stable than task-family routing for dynamic tracking.",
+    "Validation-safeguard agreement was lower than routing agreement."
+  ],
+  "scope_limit": "This public three-case pilot is a regression baseline, not evidence of general mathematical-modeling performance."
+}
