@@ -212,6 +212,20 @@ class BlindBenchmarkTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn(">不适用<", single_svg)
 
+    def test_readme_embeds_chinese_blind_benchmark_dashboard(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        image_path = ROOT / "assets" / "images" / "blind-benchmark-dashboard.png"
+        svg_path = ROOT / "assets" / "images" / "blind-benchmark-dashboard.svg"
+
+        self.assertIn("assets/images/blind-benchmark-dashboard.png", readme)
+        self.assertIn("assets/images/blind-benchmark-dashboard.svg", readme)
+        self.assertTrue(image_path.is_file())
+        self.assertTrue(svg_path.is_file())
+        self.assertEqual(image_path.read_bytes()[:8], b"\x89PNG\r\n\x1a\n")
+        svg_text = " ".join(ET.parse(svg_path).getroot().itertext())
+        self.assertIn("往年题型盲测结果", svg_text)
+        self.assertIn("跨运行稳定性", svg_text)
+
 
 if __name__ == "__main__":
     unittest.main()

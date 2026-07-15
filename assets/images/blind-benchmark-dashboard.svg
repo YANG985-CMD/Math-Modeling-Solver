@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="959" viewBox="0 0 1200 959" role="img" aria-labelledby="dashboard-title dashboard-desc">
+<title id="dashboard-title">往年题型盲测结果</title>
+<desc id="dashboard-desc">柱状图比较各次独立运行的正确率和跨运行稳定性；热力图展示各题目与各评分分项结果，每个单元格都标出精确百分比。</desc>
+<style>
+        svg { color-scheme: light dark; font-family: "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Segoe UI", Arial, sans-serif; background: #ffffff; }
+        .title { fill: #17202a; font-size: 24px; font-weight: 500; }
+        .subtitle, .tick { fill: #57606a; font-size: 12px; font-weight: 400; }
+        .panel-title { fill: #17202a; font-size: 16px; font-weight: 500; }
+        .label, .value, .heat-header { fill: #17202a; font-size: 12px; font-weight: 400; }
+        .value { font-weight: 500; }
+        .grid { stroke: #d8dee4; stroke-width: 1; }
+        .track { fill: #eaeef2; }
+        .bar { fill: #2563eb; }
+        .heat-1 { fill: #fee2e2; } .heat-label-1 { fill: #7f1d1d; font-size: 12px; font-weight: 500; }
+        .heat-2 { fill: #fef3c7; } .heat-label-2 { fill: #78350f; font-size: 12px; font-weight: 500; }
+        .heat-3 { fill: #bfdbfe; } .heat-label-3 { fill: #1e3a8a; font-size: 12px; font-weight: 500; }
+        .heat-4 { fill: #2563eb; } .heat-label-4 { fill: #ffffff; font-size: 12px; font-weight: 500; }
+        @media (prefers-color-scheme: dark) {
+          svg { background: #0d1117; }
+          .title, .panel-title, .label, .value, .heat-header { fill: #f0f6fc; }
+          .subtitle, .tick { fill: #8b949e; }
+          .grid { stroke: #30363d; } .track { fill: #21262d; } .bar { fill: #58a6ff; }
+          .heat-1 { fill: #7f1d1d; } .heat-label-1 { fill: #fee2e2; }
+          .heat-2 { fill: #78350f; } .heat-label-2 { fill: #fef3c7; }
+          .heat-3 { fill: #1e3a8a; } .heat-label-3 { fill: #dbeafe; }
+          .heat-4 { fill: #58a6ff; } .heat-label-4 { fill: #0d1117; }
+        }
+        </style>
+<text x="58.0" y="42.0" class="title" text-anchor="start">往年题型盲测结果</text>
+<text x="58.0" y="70.0" class="subtitle" text-anchor="start">平均正确率 99.1%  |  跨运行稳定性 90.6%  |  共 3 次独立运行</text>
+<text x="58.0" y="110.0" class="panel-title" text-anchor="start">各次独立运行正确率</text>
+<line x1="233.0" y1="137.0" x2="233.0" y2="285.0" class="grid"/>
+<text x="233.0" y="132.0" class="tick" text-anchor="middle">0%</text>
+<line x1="294.8" y1="137.0" x2="294.8" y2="285.0" class="grid"/>
+<text x="294.8" y="132.0" class="tick" text-anchor="middle">25%</text>
+<line x1="356.5" y1="137.0" x2="356.5" y2="285.0" class="grid"/>
+<text x="356.5" y="132.0" class="tick" text-anchor="middle">50%</text>
+<line x1="418.2" y1="137.0" x2="418.2" y2="285.0" class="grid"/>
+<text x="418.2" y="132.0" class="tick" text-anchor="middle">75%</text>
+<line x1="480.0" y1="137.0" x2="480.0" y2="285.0" class="grid"/>
+<text x="480.0" y="132.0" class="tick" text-anchor="middle">100%</text>
+<text x="58.0" y="179.0" class="label" text-anchor="start">独立运行 1</text>
+<rect x="233.0" y="165.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="233.0" y="165.0" width="241.4" height="18" rx="3" class="bar"/>
+<text x="555.0" y="179.0" class="value" text-anchor="end">97.7%</text>
+<text x="58.0" y="223.0" class="label" text-anchor="start">独立运行 2</text>
+<rect x="233.0" y="209.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="233.0" y="209.0" width="247.0" height="18" rx="3" class="bar"/>
+<text x="555.0" y="223.0" class="value" text-anchor="end">100.0%</text>
+<text x="58.0" y="267.0" class="label" text-anchor="start">独立运行 3</text>
+<rect x="233.0" y="253.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="233.0" y="253.0" width="246.2" height="18" rx="3" class="bar"/>
+<text x="555.0" y="267.0" class="value" text-anchor="end">99.7%</text>
+<text x="645.0" y="110.0" class="panel-title" text-anchor="start">跨运行稳定性（杰卡德系数）</text>
+<line x1="820.0" y1="137.0" x2="820.0" y2="329.0" class="grid"/>
+<text x="820.0" y="132.0" class="tick" text-anchor="middle">0%</text>
+<line x1="881.8" y1="137.0" x2="881.8" y2="329.0" class="grid"/>
+<text x="881.8" y="132.0" class="tick" text-anchor="middle">25%</text>
+<line x1="943.5" y1="137.0" x2="943.5" y2="329.0" class="grid"/>
+<text x="943.5" y="132.0" class="tick" text-anchor="middle">50%</text>
+<line x1="1005.2" y1="137.0" x2="1005.2" y2="329.0" class="grid"/>
+<text x="1005.2" y="132.0" class="tick" text-anchor="middle">75%</text>
+<line x1="1067.0" y1="137.0" x2="1067.0" y2="329.0" class="grid"/>
+<text x="1067.0" y="132.0" class="tick" text-anchor="middle">100%</text>
+<text x="645.0" y="179.0" class="label" text-anchor="start">题型路由</text>
+<rect x="820.0" y="165.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="820.0" y="165.0" width="229.5" height="18" rx="3" class="bar"/>
+<text x="1142.0" y="179.0" class="value" text-anchor="end">92.9%</text>
+<text x="645.0" y="223.0" class="label" text-anchor="start">基线模型选择</text>
+<rect x="820.0" y="209.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="820.0" y="209.0" width="222.1" height="18" rx="3" class="bar"/>
+<text x="1142.0" y="223.0" class="value" text-anchor="end">89.9%</text>
+<text x="645.0" y="267.0" class="label" text-anchor="start">验证方案设计</text>
+<rect x="820.0" y="253.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="820.0" y="253.0" width="218.8" height="18" rx="3" class="bar"/>
+<text x="1142.0" y="267.0" class="value" text-anchor="end">88.6%</text>
+<text x="645.0" y="311.0" class="label" text-anchor="start">数据风险识别</text>
+<rect x="820.0" y="297.0" width="247.0" height="18" rx="3" class="track"/>
+<rect x="820.0" y="297.0" width="224.3" height="18" rx="3" class="bar"/>
+<text x="1142.0" y="311.0" class="value" text-anchor="end">90.8%</text>
+<text x="58.0" y="421.0" class="panel-title" text-anchor="start">各题目正确率</text>
+<text x="397.0" y="459.0" class="heat-header" text-anchor="middle">2021 F题：机组排班</text>
+<text x="695.0" y="459.0" class="heat-header" text-anchor="middle">2022 A题：超分辨定位</text>
+<text x="993.0" y="459.0" class="heat-header" text-anchor="middle">2023 C题：竞赛评审</text>
+<text x="58.0" y="500.0" class="label" text-anchor="start">独立运行 1</text>
+<rect x="251.0" y="475.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="397.0" y="499.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="549.0" y="475.0" width="292.0" height="36" rx="4" class="heat-3"/>
+<text x="695.0" y="499.0" class="heat-label-3" text-anchor="middle">93.2%</text>
+<rect x="847.0" y="475.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="993.0" y="499.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<text x="58.0" y="548.0" class="label" text-anchor="start">独立运行 2</text>
+<rect x="251.0" y="523.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="397.0" y="547.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="549.0" y="523.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="695.0" y="547.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="847.0" y="523.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="993.0" y="547.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<text x="58.0" y="596.0" class="label" text-anchor="start">独立运行 3</text>
+<rect x="251.0" y="571.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="397.0" y="595.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="549.0" y="571.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="695.0" y="595.0" class="heat-label-4" text-anchor="middle">99.1%</text>
+<rect x="847.0" y="571.0" width="292.0" height="36" rx="4" class="heat-4"/>
+<text x="993.0" y="595.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<text x="58.0" y="695.0" class="panel-title" text-anchor="start">各评分分项正确率</text>
+<text x="359.8" y="733.0" class="heat-header" text-anchor="middle">题型路由</text>
+<text x="583.2" y="733.0" class="heat-header" text-anchor="middle">基线选择</text>
+<text x="806.8" y="733.0" class="heat-header" text-anchor="middle">验证方案</text>
+<text x="1030.2" y="733.0" class="heat-header" text-anchor="middle">数据风险</text>
+<text x="58.0" y="774.0" class="label" text-anchor="start">独立运行 1</text>
+<rect x="251.0" y="749.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="359.8" y="773.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="474.5" y="749.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="583.2" y="773.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="698.0" y="749.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="806.8" y="773.0" class="heat-label-4" text-anchor="middle">95.9%</text>
+<rect x="921.5" y="749.0" width="217.5" height="36" rx="4" class="heat-3"/>
+<text x="1030.2" y="773.0" class="heat-label-3" text-anchor="middle">91.7%</text>
+<text x="58.0" y="822.0" class="label" text-anchor="start">独立运行 2</text>
+<rect x="251.0" y="797.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="359.8" y="821.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="474.5" y="797.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="583.2" y="821.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="698.0" y="797.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="806.8" y="821.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="921.5" y="797.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="1030.2" y="821.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<text x="58.0" y="870.0" class="label" text-anchor="start">独立运行 3</text>
+<rect x="251.0" y="845.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="359.8" y="869.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="474.5" y="845.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="583.2" y="869.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="698.0" y="845.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="806.8" y="869.0" class="heat-label-4" text-anchor="middle">100.0%</text>
+<rect x="921.5" y="845.0" width="217.5" height="36" rx="4" class="heat-4"/>
+<text x="1030.2" y="869.0" class="heat-label-4" text-anchor="middle">97.7%</text>
+</svg>
