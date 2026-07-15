@@ -15,6 +15,7 @@
 </div>
 
 ![Math Modeling Solver scientific figure](assets/images/modeling-evidence-figure.png)
+<img width="1272" height="510" alt="微信图片_20260715092244_582_35" src="https://github.com/user-attachments/assets/d14101d5-a326-4f1b-8fd3-e73005a2c4f0" />
 
 ## 它是什么
 
