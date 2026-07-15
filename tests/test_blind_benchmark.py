@@ -6,6 +6,7 @@ import json
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
@@ -186,9 +187,30 @@ class BlindBenchmarkTests(unittest.TestCase):
             for name in (
                 "blind-benchmark-report.json",
                 "blind-benchmark-scores.csv",
+                "blind-benchmark-dashboard.svg",
                 "blind-benchmark-report.html",
             ):
                 self.assertTrue((root / "score" / name).is_file())
+            svg_path = root / "score" / "blind-benchmark-dashboard.svg"
+            svg_root = ET.parse(svg_path).getroot()
+            self.assertEqual(svg_root.attrib["viewBox"].split()[:2], ["0", "0"])
+            svg_text = " ".join(svg_root.itertext())
+            self.assertIn("各次独立运行正确率", svg_text)
+            self.assertIn("跨运行稳定性", svg_text)
+            self.assertIn("独立运行 1", svg_text)
+            html_report = (root / "score" / "blind-benchmark-report.html").read_text(
+                encoding="utf-8"
+            )
+            self.assertIn("blind-benchmark-dashboard.svg", html_report)
+
+            single_report = score_benchmark(
+                rubric_path, [frozen_paths[0]], root / "score-single"
+            )
+            self.assertIsNone(single_report["stability"]["overall"])
+            single_svg = (
+                root / "score-single" / "blind-benchmark-dashboard.svg"
+            ).read_text(encoding="utf-8")
+            self.assertIn(">不适用<", single_svg)
 
 
 if __name__ == "__main__":

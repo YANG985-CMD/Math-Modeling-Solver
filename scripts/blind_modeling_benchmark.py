@@ -418,6 +418,8 @@ def validate_rubric(rubric: dict[str, Any]) -> dict[str, Any]:
         if case_id in case_ids:
             raise BenchmarkError(f"Rubric repeats case: {case_id}")
         case_ids.add(case_id)
+        if "display_name" in case:
+            require_text(case.get("display_name"), f"{location}.display_name")
         subproblems = case.get("subproblems")
         if not isinstance(subproblems, list) or not subproblems:
             raise BenchmarkError(f"{location}.subproblems must be non-empty")
@@ -534,7 +536,12 @@ def score_run(frozen: dict[str, Any], rubric: dict[str, Any]) -> dict[str, Any]:
             subproblem_results
         )
         case_results.append(
-            {"case_id": case_id, "score": case_score, "subproblems": subproblem_results}
+            {
+                "case_id": case_id,
+                "display_name": case_rubric.get("display_name", case_id),
+                "score": case_score,
+                "subproblems": subproblem_results,
+            }
         )
     overall = sum(case["score"] for case in case_results) / len(case_results)
     return {"run_id": response["run_id"], "score": overall, "cases": case_results}
@@ -625,6 +632,239 @@ def render_score_csv(report: dict[str, Any], path: Path) -> None:
                     )
 
 
+def heat_level(value: float) -> int:
+    if value >= 0.95:
+        return 4
+    if value >= 0.85:
+        return 3
+    if value >= 0.70:
+        return 2
+    return 1
+
+
+def component_means(run: dict[str, Any]) -> dict[str, float]:
+    values: dict[str, list[float]] = {key: [] for key in DEFAULT_WEIGHTS}
+    for case in run["cases"]:
+        for subproblem in case["subproblems"]:
+            for key, value in subproblem["components"].items():
+                values[key].append(value)
+    return {
+        key: sum(items) / len(items) if items else 0.0
+        for key, items in values.items()
+    }
+
+
+def render_score_svg(report: dict[str, Any], path: Path) -> None:
+    """Render an editable, dependency-free benchmark dashboard."""
+    runs = report["runs"]
+    case_names = [case["display_name"] for case in runs[0]["cases"]] if runs else []
+    width = max(1200, 300 + 230 * max(len(case_names), 1))
+    top_y = 110
+    top_height = max(230, 70 + 44 * max(len(runs), 4))
+    case_y = top_y + top_height + 65
+    heat_height = 65 + 48 * max(len(runs), 1)
+    component_y = case_y + heat_height + 65
+    height = component_y + heat_height + 55
+    left_margin = 58
+    panel_gap = 90
+    panel_width = (width - 2 * left_margin - panel_gap) / 2
+    svg: list[str] = []
+
+    def add(value: str) -> None:
+        svg.append(value)
+
+    def label(
+        x: float,
+        y: float,
+        value: str,
+        css_class: str = "label",
+        anchor: str = "start",
+    ) -> None:
+        add(
+            f'<text x="{x:.1f}" y="{y:.1f}" class="{css_class}" '
+            f'text-anchor="{anchor}">{html.escape(value)}</text>'
+        )
+
+    def bar_panel(
+        title: str,
+        items: list[tuple[str, float | None]],
+        x: float,
+        y: float,
+        panel_width_value: float,
+    ) -> None:
+        label(x, y, title, "panel-title")
+        bar_x = x + 175
+        value_x = x + panel_width_value
+        bar_width = max(panel_width_value - 250, 140)
+        axis_y = y + 27
+        for tick in (0, 25, 50, 75, 100):
+            tick_x = bar_x + bar_width * tick / 100
+            add(
+                f'<line x1="{tick_x:.1f}" y1="{axis_y:.1f}" '
+                f'x2="{tick_x:.1f}" y2="{axis_y + 16 + 44 * len(items):.1f}" '
+                'class="grid"/>'
+            )
+            label(tick_x, axis_y - 5, f"{tick}%", "tick", "middle")
+        for index, (item_name, value) in enumerate(items):
+            row_y = axis_y + 28 + index * 44
+            label(x, row_y + 14, item_name, "label")
+            add(
+                f'<rect x="{bar_x:.1f}" y="{row_y:.1f}" width="{bar_width:.1f}" '
+                'height="18" rx="3" class="track"/>'
+            )
+            if value is not None:
+                add(
+                    f'<rect x="{bar_x:.1f}" y="{row_y:.1f}" '
+                    f'width="{bar_width * max(0.0, min(value, 1.0)):.1f}" '
+                    'height="18" rx="3" class="bar"/>'
+                )
+                value_label = f"{value:.1%}"
+            else:
+                value_label = "不适用"
+            label(value_x, row_y + 14, value_label, "value", "end")
+
+    def heatmap(
+        title: str,
+        columns: list[str],
+        rows: list[tuple[str, list[float]]],
+        x: float,
+        y: float,
+    ) -> None:
+        label(x, y, title, "panel-title")
+        row_label_width = 190
+        available_width = width - x - left_margin - row_label_width
+        cell_width = available_width / max(len(columns), 1)
+        header_y = y + 38
+        for column_index, column in enumerate(columns):
+            cell_x = x + row_label_width + column_index * cell_width
+            label(cell_x + cell_width / 2, header_y, column, "heat-header", "middle")
+        for row_index, (row_name, values) in enumerate(rows):
+            cell_y = header_y + 16 + row_index * 48
+            label(x, cell_y + 25, row_name, "label")
+            for column_index, value in enumerate(values):
+                cell_x = x + row_label_width + column_index * cell_width
+                level = heat_level(value)
+                add(
+                    f'<rect x="{cell_x + 3:.1f}" y="{cell_y:.1f}" '
+                    f'width="{cell_width - 6:.1f}" height="36" rx="4" '
+                    f'class="heat-{level}"/>'
+                )
+                label(
+                    cell_x + cell_width / 2,
+                    cell_y + 24,
+                    f"{value:.1%}",
+                    f"heat-label-{level}",
+                    "middle",
+                )
+
+    add(
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}" role="img" '
+        'aria-labelledby="dashboard-title dashboard-desc">'
+    )
+    add('<title id="dashboard-title">往年题型盲测结果</title>')
+    add(
+        '<desc id="dashboard-desc">柱状图比较各次独立运行的正确率和跨运行稳定性；'
+        '热力图展示各题目与各评分分项结果，每个单元格都标出精确百分比。</desc>'
+    )
+    add(
+        """<style>
+        svg { color-scheme: light dark; font-family: "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", "Segoe UI", Arial, sans-serif; background: #ffffff; }
+        .title { fill: #17202a; font-size: 24px; font-weight: 500; }
+        .subtitle, .tick { fill: #57606a; font-size: 12px; font-weight: 400; }
+        .panel-title { fill: #17202a; font-size: 16px; font-weight: 500; }
+        .label, .value, .heat-header { fill: #17202a; font-size: 12px; font-weight: 400; }
+        .value { font-weight: 500; }
+        .grid { stroke: #d8dee4; stroke-width: 1; }
+        .track { fill: #eaeef2; }
+        .bar { fill: #2563eb; }
+        .heat-1 { fill: #fee2e2; } .heat-label-1 { fill: #7f1d1d; font-size: 12px; font-weight: 500; }
+        .heat-2 { fill: #fef3c7; } .heat-label-2 { fill: #78350f; font-size: 12px; font-weight: 500; }
+        .heat-3 { fill: #bfdbfe; } .heat-label-3 { fill: #1e3a8a; font-size: 12px; font-weight: 500; }
+        .heat-4 { fill: #2563eb; } .heat-label-4 { fill: #ffffff; font-size: 12px; font-weight: 500; }
+        @media (prefers-color-scheme: dark) {
+          svg { background: #0d1117; }
+          .title, .panel-title, .label, .value, .heat-header { fill: #f0f6fc; }
+          .subtitle, .tick { fill: #8b949e; }
+          .grid { stroke: #30363d; } .track { fill: #21262d; } .bar { fill: #58a6ff; }
+          .heat-1 { fill: #7f1d1d; } .heat-label-1 { fill: #fee2e2; }
+          .heat-2 { fill: #78350f; } .heat-label-2 { fill: #fef3c7; }
+          .heat-3 { fill: #1e3a8a; } .heat-label-3 { fill: #dbeafe; }
+          .heat-4 { fill: #58a6ff; } .heat-label-4 { fill: #0d1117; }
+        }
+        </style>"""
+    )
+    label(left_margin, 42, "往年题型盲测结果", "title")
+    stability_overall = report["stability"]["overall"]
+    stability_summary = "不适用" if stability_overall is None else f"{stability_overall:.1%}"
+    label(
+        left_margin,
+        70,
+        f"平均正确率 {report['summary']['mean_score']:.1%}  |  "
+        f"跨运行稳定性 {stability_summary}  |  共 {len(runs)} 次独立运行",
+        "subtitle",
+    )
+
+    bar_panel(
+        "各次独立运行正确率",
+        [(f"独立运行 {index + 1}", run["score"]) for index, run in enumerate(runs)],
+        left_margin,
+        top_y,
+        panel_width,
+    )
+    stability_names = {
+        "task_families": "题型路由",
+        "baseline_families": "基线模型选择",
+        "validation_safeguards": "验证方案设计",
+        "data_risks": "数据风险识别",
+    }
+    bar_panel(
+        "跨运行稳定性（杰卡德系数）",
+        [
+            (stability_names[key], report["stability"]["fields"].get(key))
+            for key in STABILITY_FIELDS
+        ],
+        left_margin + panel_width + panel_gap,
+        top_y,
+        panel_width,
+    )
+
+    heatmap(
+        "各题目正确率",
+        case_names,
+        [
+            (
+                f"独立运行 {index + 1}",
+                [case["score"] for case in run["cases"]],
+            )
+            for index, run in enumerate(runs)
+        ],
+        left_margin,
+        case_y,
+    )
+    component_labels = {
+        "routing": "题型路由",
+        "baseline": "基线选择",
+        "validation": "验证方案",
+        "data_risks": "数据风险",
+    }
+    heatmap(
+        "各评分分项正确率",
+        [component_labels[key] for key in DEFAULT_WEIGHTS],
+        [
+            (
+                f"独立运行 {index + 1}",
+                [component_means(run)[key] for key in DEFAULT_WEIGHTS],
+            )
+            for index, run in enumerate(runs)
+        ],
+        left_margin,
+        component_y,
+    )
+    add("</svg>")
+    path.write_text("\n".join(svg) + "\n", encoding="utf-8")
+
+
 def render_score_html(report: dict[str, Any], path: Path) -> None:
     run_rows = "".join(
         f"<tr><td>{html.escape(run['run_id'])}</td><td>{run['score']:.1%}</td></tr>"
@@ -661,6 +901,7 @@ th{{background:#f6f8fa}}.card{{display:inline-block;border:1px solid #d8dee4;bor
 <h1>Blind modeling benchmark</h1><p>Suite: <code>{html.escape(report['suite_id'])}</code></p>
 <div class="card"><strong>{report['summary']['mean_score']:.1%}</strong><br>mean score</div>
 <div class="card"><strong>{html.escape(stability_text)}</strong><br>stability</div>
+<h2>Visual summary</h2><img src="blind-benchmark-dashboard.svg" alt="用柱状图和热力图汇总盲测正确率与稳定性" style="width:100%;height:auto">
 <h2>Runs</h2><table><thead><tr><th>Run</th><th>Score</th></tr></thead><tbody>{run_rows}</tbody></table>
 <h2>Subproblem detail</h2><table><thead><tr><th>Run</th><th>Case</th><th>Subproblem</th><th>Total</th><th>Routing</th><th>Baseline</th><th>Validation</th><th>Risks</th></tr></thead><tbody>{''.join(detail_rows)}</tbody></table>
 <p>Scores measure agreement with an isolated rubric. Stability measures pairwise Jaccard agreement across independent frozen runs; high stability alone does not imply correctness.</p>
@@ -699,11 +940,13 @@ def score_benchmark(
     paths = {
         "json": output_dir / "blind-benchmark-report.json",
         "csv": output_dir / "blind-benchmark-scores.csv",
+        "svg": output_dir / "blind-benchmark-dashboard.svg",
         "html": output_dir / "blind-benchmark-report.html",
     }
     report["outputs"] = {key: str(value) for key, value in paths.items()}
     write_json(paths["json"], report)
     render_score_csv(report, paths["csv"])
+    render_score_svg(report, paths["svg"])
     render_score_html(report, paths["html"])
     return report
 

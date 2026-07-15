@@ -40,7 +40,7 @@ python scripts/blind_modeling_benchmark.py score `
   --out-dir D:\blind-eval\score
 ```
 
-The scorer writes JSON, field-level CSV, and HTML.
+The scorer writes JSON, field-level CSV, an editable Chinese-labeled SVG dashboard, and HTML. The dashboard uses full 0-100% scales for run correctness and stability, then directly labeled heatmaps for case and scoring-component detail. The HTML report embeds the same SVG.
 
 ## What the Scores Mean
 

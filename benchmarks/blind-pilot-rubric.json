@@ -11,6 +11,7 @@
   "cases": [
     {
       "case_id": "cgmcm-2021-f",
+      "display_name": "2021 F题：机组排班",
       "subproblems": [
         {
           "id": "q1",
@@ -40,6 +41,7 @@
     },
     {
       "case_id": "cgmcm-2022-a",
+      "display_name": "2022 A题：超分辨定位",
       "subproblems": [
         {
           "id": "q1",
@@ -77,6 +79,7 @@
     },
     {
       "case_id": "cgmcm-2023-c",
+      "display_name": "2023 C题：竞赛评审",
       "subproblems": [
         {
           "id": "q1",
