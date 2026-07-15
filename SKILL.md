@@ -27,18 +27,23 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 
        python scripts/init_modeling_project.py PROJECT_DIR --mode formal --questions N
 
-4. Advance through the five evidence gates in order:
+4. Before modeling tabular data, run the executable audit and declare any known prediction roles:
+
+       python scripts/audit_dataset.py INPUT.csv --target LABEL --time TIME --group ENTITY --split SPLIT --out-dir PROJECT_DIR/audit/dataset
+
+   The script supports CSV, TSV, delimited TXT/DAT, Excel, and two-dimensional MAT variables. Review its JSON, CSV, and HTML outputs; automated flags are screening evidence, not automatic deletion rules. Do not claim that leakage is absent unless feature availability at prediction time is also documented.
+5. Advance through the five evidence gates in order:
    - Intake: problem contract and data audit are complete.
    - Method: candidates, baseline, feasibility probe, and selection rationale are recorded.
    - Computation: code actually ran and can be reproduced.
    - Evidence: baseline comparison, robustness evidence, and canonical numbers are frozen.
    - Manuscript: the argument, claims, figures, tables, terminology, units, and citations are consistent.
-5. If an upstream assumption, dataset, method, or parameter changes, mark downstream artifacts stale and rerun the affected gates.
-6. Audit before delivery:
+6. If an upstream assumption, dataset, method, or parameter changes, mark downstream artifacts stale and rerun the affected gates.
+7. Audit before delivery:
 
        python scripts/audit_modeling_project.py PROJECT_DIR
 
-7. Deliver the requested artifacts plus unresolved risks and the audit status. Do not present a failed gate as completed work.
+8. Deliver the requested artifacts plus unresolved risks and the audit status. Do not present a failed gate as completed work.
 
 ## Human Decision Points
 
@@ -56,7 +61,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Rapid triage: read <code>references/problem-triage.md</code> and <code>references/task-family-router.md</code>.
 - Model selection or upgrades: read <code>references/model-selection.md</code> and <code>references/when-to-upgrade-model-complexity.md</code>.
 - End-to-end work: read <code>references/evidence-gated-workflow.md</code> and <code>references/standard-workflow.md</code>.
-- Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>.
+- Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>, then use <code>scripts/audit_dataset.py</code> for supported files.
 - Validation, sensitivity, or uncertainty: read <code>references/validation-playbook.md</code>.
 - Scientific figures, chart selection, multi-panel layouts, modeling diagrams, or export QA: read <code>references/modeling-figure-workflow.md</code>, then <code>references/figure-contract-and-qa.md</code>. Before delivery also read <code>references/figure-qa-checklist.md</code>.
 - Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
@@ -123,4 +128,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v2;path=SKILL.md;sha256=ece6b6e71ee541c92e115de01640b7d27a698f1710932dc6f06429d7a31f8e0b;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=epun_mToSikn0UPXvAngbou1vs20vVCXsc9GppiwTl4x9eENtd7-bBW0YHV_6TzeANhg_-UeACMUvbapv2T9BA== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v3;path=SKILL.md;sha256=8134eb409f08aec5074d1365476aa9a3d2b389e31fc71b041260f348d1704645;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=JFMOJU84bDmQjcgYve6gtSizmFbvTZ-0BUuR3fBYeVKic_FuYWImY0GpVXP8j5voG2ttk9hjLc-UMnxp27GlDg== -->

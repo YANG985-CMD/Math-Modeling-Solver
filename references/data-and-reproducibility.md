@@ -2,6 +2,24 @@
 
 ## Data Audit
 
+For CSV, TSV, delimited TXT/DAT, Excel, or two-dimensional MAT data, start with the executable audit rather than filling the audit table from visual inspection alone:
+
+```bash
+python scripts/audit_dataset.py input.xlsx \
+  --target label --time timestamp --group subject_id --split split \
+  --out-dir audit/dataset
+```
+
+Install `pandas` and `numpy`; Excel may require `openpyxl` or `xlrd`, and MAT files require `scipy`. The command writes:
+
+- `dataset-audit.json`: machine-readable findings, source hashes, role contract, and limitations;
+- `dataset-audit-fields.csv`: one row per field for the project audit table;
+- `dataset-audit.html`: a reviewable report for the team.
+
+The auditor checks inferred field types, missingness, duplicate rows, constants, IQR outliers, extreme skew, mixed value units, class imbalance, exact or near-perfect target leakage, time ordering, temporal split overlap, group split leakage, and high-dimensional tables. Complex MAT fields are retained and summarized by magnitude; the model must still declare whether it uses real/imaginary parts or magnitude/phase. MATLAB structs and arrays above two dimensions require an explicit reshape contract.
+
+Automated flags do not justify automatic deletion. An outlier may be the phenomenon of interest, and a strong target correlation may be a valid physical identity. Resolve each warning with provenance and domain reasoning.
+
 For each input, record:
 
 - source and retrieval date;
@@ -12,6 +30,16 @@ For each input, record:
 - license, privacy, or redistribution limits when relevant.
 
 Prefer a compact audit table with columns: field, type, unit, valid range, missing rate, action, and justification.
+
+## External Problem Corpora
+
+Historical contest repositories are useful as blind robustness benchmarks because their attachments contain heterogeneous encodings, legacy Excel files, matrices, complex values, irregular layouts, and incomplete metadata. Use them safely:
+
+- check the repository and each artifact's license before copying or redistributing anything;
+- when no license is declared, keep downloaded files temporary and commit only original code, synthetic test fixtures, source URLs, hashes, and derived interface lessons;
+- audit the attachment before reading a published solution so the benchmark tests the workflow rather than answer recall;
+- record which files and failure modes changed the implementation;
+- never train claims or copy prose from winning papers without permission and source attribution.
 
 ## Leakage Checklist
 
