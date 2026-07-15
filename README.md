@@ -264,8 +264,18 @@ uv run --with pyyaml python `
 - 论文中的每个重要主张都必须链接到可核验的证据。
 - 明确报告不确定性、失败情形、适用范围和未解决风险。
 
+## 许可证
+
+本项目采用 [PolyForm Noncommercial License 1.0.0](LICENSE)：
+
+- 个人学习、研究、实验及其他非商业用途可免费使用、修改和分发；
+- 禁止将本项目或其衍生作品用于任何商业用途；
+- 商业使用、商业集成或商业分发需要事先联系仓库所有者并取得单独授权。
+
+本许可证包含商业用途限制，因此属于源码可用许可证，并非 OSI 认可的开源许可证。
+
 ---
 
 如果你需要的是一个能从题目一直工作到可复现论文交付的数学建模 Agent，直接从 `$math-modeling-solver` 开始。
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v1;path=README.md;sha256=470cc7127c0047b972c1352a30432ab931536f42a65783a282edddf8d3f7ba82;pub=MZ8DANlU5cbnFaA4tGmWozbxVTaPI0z60znYRpFL9cY=;sig=eWKaFeqV5W1CC8uK04HdCWlMCjA1_s5Bwij6fl4E3zGz-Q-PC6NApWfovxEjD8X6I4Ivqn3M5MnbNlsMUS1LBg== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v2;path=README.md;sha256=821a6a6ddf6ee05516be7d81c4f0bf5c2da976e4a649617a4ced4dbd0f090bbc;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=j7MPG68Z27eX7GmueyQg5B697D7FU6n6Ofvyexsmkf00dlIAoSo5u-Vtycm3x_tbElgsJi2ui5TZj1sh0VKMAw== -->

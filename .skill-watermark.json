@@ -2,15 +2,15 @@
   "schema_version": 1,
   "watermark_type": "render-invisible-ed25519-provenance",
   "owner": "YANG985-CMD",
-  "watermark_id": "YANG985-CMD-MMS-2026-v1",
+  "watermark_id": "YANG985-CMD-MMS-2026-v2",
   "repository": "https://github.com/YANG985-CMD/Math-Modeling-Solver",
   "algorithm": "Ed25519",
   "canonical_hash": "SHA-256",
-  "signed_at_utc": "2026-07-14T08:18:47+00:00",
-  "public_key_base64": "MZ8DANlU5cbnFaA4tGmWozbxVTaPI0z60znYRpFL9cY=",
-  "bundle_sha256": "5ac6d7d4a25c0c60797cd907b81ad31b2b968016389f5bc04f531850d0911cc0",
-  "bundle_signature_base64": "O34tIDaN3PutbjPIdXx0-4lOZ2kIcpXdYzxGYOGz4Lsj2DcUTgErUIs0F9fMwlP12NJ8cFKszXsFeO9eoRYiAQ==",
-  "file_count": 71,
+  "signed_at_utc": "2026-07-15T09:14:36+00:00",
+  "public_key_base64": "0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=",
+  "bundle_sha256": "29e75fae8b3caaa751664bd2717ebe89be6d33d9bd092d3924018e4578bbee4b",
+  "bundle_signature_base64": "WiaSnCYvzQTzZ0D3wwDggwQ_dCwZ6MXf6N0scP9qNQKvOiGEUydrGfgoDjnWmkmpFgDwyNU37_C2rrRURebZAw==",
+  "file_count": 72,
   "signed_files": [
     {
       "path": ".gitattributes",
@@ -21,8 +21,12 @@
       "sha256": "927a310ec1c952364bdeb4b60fda43d447d58e9bc6f2119ef8e7045f28321b69"
     },
     {
+      "path": "LICENSE",
+      "sha256": "b10e285a6f4e8aa44cdc570f2faa796688e33c02b3a234d98a470b053e694773"
+    },
+    {
       "path": "README.md",
-      "sha256": "470cc7127c0047b972c1352a30432ab931536f42a65783a282edddf8d3f7ba82"
+      "sha256": "821a6a6ddf6ee05516be7d81c4f0bf5c2da976e4a649617a4ced4dbd0f090bbc"
     },
     {
       "path": "SKILL.md",
@@ -142,7 +146,7 @@
     },
     {
       "path": "assets/images/evidence-gate-workflow.svg",
-      "sha256": "8cf08ccd100df82ba04e72f0dbb0cf5ca6f48ab44de58756d003a6b580a235f9"
+      "sha256": "4a1f3d55342acab4397ff3fa317ae9ba7172075f0538b165d8896051b855471b"
     },
     {
       "path": "assets/images/modeling-closed-loop.png",
@@ -301,12 +305,12 @@
     {
       "path": "SKILL.md",
       "sha256": "ece6b6e71ee541c92e115de01640b7d27a698f1710932dc6f06429d7a31f8e0b",
-      "signature": "K6M-XmXwdhVepMfNeN7ZX2ZYN7obnc3toAnGmLe_AdltM17S1ZZAOEIlCkJ7amhk4S-hSMNW3ZdB9pOHQEBUAA=="
+      "signature": "epun_mToSikn0UPXvAngbou1vs20vVCXsc9GppiwTl4x9eENtd7-bBW0YHV_6TzeANhg_-UeACMUvbapv2T9BA=="
     },
     {
       "path": "README.md",
-      "sha256": "470cc7127c0047b972c1352a30432ab931536f42a65783a282edddf8d3f7ba82",
-      "signature": "eWKaFeqV5W1CC8uK04HdCWlMCjA1_s5Bwij6fl4E3zGz-Q-PC6NApWfovxEjD8X6I4Ivqn3M5MnbNlsMUS1LBg=="
+      "sha256": "821a6a6ddf6ee05516be7d81c4f0bf5c2da976e4a649617a4ced4dbd0f090bbc",
+      "signature": "j7MPG68Z27eX7GmueyQg5B697D7FU6n6Ofvyexsmkf00dlIAoSo5u-Vtycm3x_tbElgsJi2ui5TZj1sh0VKMAw=="
     }
   ],
   "private_key_committed": false
