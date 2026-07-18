@@ -80,9 +80,9 @@ Use `assets/code/python/modeling_plotkit.py` for:
 
 Run `assets/code/python/demo_modeling_figure.py` to verify the environment and inspect a complete four-panel evidence figure.
 
-### MATLAB result handoff
+### MATLAB-native and mixed routes
 
-When the model is solved in MATLAB, save the canonical arrays, tables, units, and labels to CSV or MAT, record that export command in the contract, and render the paper figure with the Python toolkit. Do not manually copy values into plotting code.
+When the model is solved in MATLAB, it may render the final paper figure directly. Save canonical arrays, tables, units, and labels, record the plotting/export command, use deterministic `exportgraphics`, and apply the same final-size, vector/raster, grayscale, statistics, and visual-QA requirements. A CSV or MAT handoff to Python is optional and must be recorded when used. Do not manually copy values into plotting code.
 
 ### Code-native diagrams
 

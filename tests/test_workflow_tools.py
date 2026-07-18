@@ -26,6 +26,29 @@ def write_json(path: Path, value: dict) -> None:
 
 
 class WorkflowToolTests(unittest.TestCase):
+    def test_word_only_delivery_profile_is_recorded(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(INIT_SCRIPT),
+                    str(root),
+                    "--delivery-profile",
+                    "word-only",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            state = load_json(root / "audit" / "project-state.json")
+            contract = load_json(root / "planning" / "problem-contract.json")
+            experiments = load_json(root / "planning" / "experiments.json")
+            self.assertEqual(state["delivery_profile"], "word-only")
+            self.assertEqual(contract["delivery_profile"], "word-only")
+            self.assertEqual(experiments["experiments"], [])
+
     def test_initialized_project_fails_until_evidence_is_complete(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

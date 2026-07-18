@@ -1,4 +1,4 @@
 interface:
   display_name: "Math Modeling Solver"
-  short_description: "Reproducible modeling, figures, and papers."
-  default_prompt: "Use $math-modeling-solver to solve and validate this modeling problem, generate publication-ready traceable figures, and draft an evidence-backed paper."
+  short_description: "Diagnostic-first modeling, validation, and delivery."
+  default_prompt: "Use $math-modeling-solver to diagnose score gaps, solve with Python or MATLAB, validate feasibility and simulator fidelity, and deliver only the requested evidence-backed artifacts."

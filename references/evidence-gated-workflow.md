@@ -8,12 +8,22 @@ Use this protocol for end-to-end projects. A stage is not complete because prose
 - Demo: synthetic or example data are allowed, but every output must be visibly labeled as illustrative.
 - Blocked: preserve the plan and list the exact missing inputs without fabricating results.
 
+Run mode controls evidence truthfulness. Delivery profile controls packaging:
+
+- Word-only: submit one DOCX; retain code, source data, and QA records in the workspace and embed only necessary verified tables and figures.
+- Paper-bundle: deliver manuscript, code, canonical results, figure bundle, and audit records.
+- Code-only: deliver executable code, tests, reproducibility records, and validation-essential diagnostics.
+- Custom: record an explicit artifact contract before modeling.
+
+A smaller delivery profile never weakens computation, feasibility, fidelity, or claim-evidence checks.
+
 ## Workspace Contract
 
 The initialization script creates:
 
 - <code>input/</code>: immutable copies or links to source data
 - <code>planning/</code>: problem contract, method decision, and data audit
+- <code>planning/experiments.json</code>: hypotheses, budgets, stop rules, and result lifecycle
 - <code>src/</code>: executable analysis and model code
 - <code>results/tables/</code> and <code>results/figures/</code>: generated evidence
 - <code>results/frozen-results.json</code>: canonical numbers approved for writing
@@ -43,6 +53,9 @@ Required evidence for each sub-question:
 - a minimal feasibility probe or hand-check;
 - chosen method and rejection reasons;
 - metrics and split strategy decided before looking at final test performance.
+- score-gap diagnosis for scored optimization;
+- hard-constraint action masks and an exact-transition comparison for simulator-backed search;
+- registered experiment budgets and stop rules before repeated tuning.
 
 Human checkpoint: confirm the selected route when viable candidates imply different interpretations or trade-offs.
 
@@ -80,6 +93,7 @@ Required evidence:
 - limitations and known failure regions;
 - every headline claim mapped in <code>audit/claim-evidence-ledger.csv</code>;
 - approved numbers stored in <code>results/frozen-results.json</code>.
+- successful result status is <code>independently_validated</code> before it is frozen;
 - every quantitative figure has a contract linking its message, panels, source data, script, statistics, exports, and final-size QA;
 - AI-generated or conceptual imagery is excluded from empirical evidence roles.
 
@@ -109,6 +123,7 @@ Track upstream changes instead of polishing stale outputs:
 - Method or parameter-policy change invalidates Computation through Manuscript.
 - Code or environment change invalidates Evidence and Manuscript.
 - Frozen-number change invalidates Manuscript.
+- Score-formula, hard-constraint mask, event order, or exact-transition change invalidates Computation through Manuscript.
 
 When invalidated, preserve prior artifacts for traceability, mark them stale, and rerun the smallest affected suffix of the workflow.
 

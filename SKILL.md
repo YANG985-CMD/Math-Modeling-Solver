@@ -12,6 +12,9 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Never invent data, execution results, metrics, citations, or chart conclusions.
 - Label the run as <code>formal</code>, <code>demo</code>, or <code>blocked</code>. Formal runs may not silently replace missing data with synthetic data.
 - Establish a simple baseline before adding model complexity.
+- Diagnose score headroom and component-level gaps before tuning an optimizer.
+- Remove hard-constraint violations from the action space; do not rely on penalty-only or post-hoc repair for illegal actions.
+- Validate every search surrogate against the exact simulator before increasing its search budget.
 - Keep training, validation, and test information separated; treat temporal and grouped data with structure-aware splits.
 - Tie every important conclusion to a result file, table, figure, formula, or verified source.
 - Generate quantitative figures from traceable data and code. Never use AI-generated imagery as empirical evidence.
@@ -21,7 +24,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 
 ## Operating Workflow
 
-1. Identify the requested scope, available data, time budget, language, and desired deliverables.
+1. Identify the requested scope, available data, time budget, implementation language, and delivery profile: <code>word-only</code>, <code>paper-bundle</code>, <code>code-only</code>, or an explicit custom contract.
 2. Classify each sub-question and map dependencies between them.
 3. Create or update the modeling workspace. For a new project, run:
 
@@ -32,18 +35,21 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
        python scripts/audit_dataset.py INPUT.csv --target LABEL --time TIME --group ENTITY --split SPLIT --out-dir PROJECT_DIR/audit/dataset
 
    The script supports CSV, TSV, delimited TXT/DAT, Excel, and two-dimensional MAT variables. Review its JSON, CSV, and HTML outputs; automated flags are screening evidence, not automatic deletion rules. Do not claim that leakage is absent unless feature availability at prediction time is also documented.
-5. Advance through the five evidence gates in order:
+5. For scored optimization, compute the theoretical bound, executed baseline, reference gap, component gaps, and weighted sensitivity before tuning. Use <code>scripts/analyze_score_gap.py</code> only when its additive normalized-score assumption matches the real score contract.
+6. For discrete-event search, scheduling, Beam Search, MPC, or learned policies, construct a hard-constraint action mask and compare the surrogate with the exact simulator for at least 50 consecutive steps using <code>scripts/check_transition_fidelity.py</code>. Do this before expanding search width, horizon, population, or training budget.
+7. Register each optimization experiment with a hypothesis, primary metric, improvement threshold, run/runtime budget, feasibility/fidelity requirements, and stop rule. Use <code>scripts/register_experiment.py</code> where practical.
+8. Advance through the five evidence gates in order:
    - Intake: problem contract and data audit are complete.
    - Method: candidates, baseline, feasibility probe, and selection rationale are recorded.
    - Computation: code actually ran and can be reproduced.
    - Evidence: baseline comparison, robustness evidence, and canonical numbers are frozen.
    - Manuscript: the argument, claims, figures, tables, terminology, units, and citations are consistent.
-6. If an upstream assumption, dataset, method, or parameter changes, mark downstream artifacts stale and rerun the affected gates.
-7. Audit before delivery:
+9. If an upstream assumption, dataset, method, parameter, score contract, constraint mask, or transition rule changes, mark downstream artifacts stale and rerun the affected gates.
+10. Audit before delivery:
 
        python scripts/audit_modeling_project.py PROJECT_DIR
 
-8. Deliver the requested artifacts plus unresolved risks and the audit status. Do not present a failed gate as completed work.
+11. Deliver only the artifacts required by the delivery profile plus unresolved risks and the audit status. Do not present a failed gate as completed work.
 
 ## Human Decision Points
 
@@ -60,6 +66,10 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 
 - Rapid triage: read <code>references/problem-triage.md</code> and <code>references/task-family-router.md</code>.
 - Model selection or upgrades: read <code>references/model-selection.md</code> and <code>references/when-to-upgrade-model-complexity.md</code>.
+- Scored optimization or comparison with another result: read <code>references/score-gap-analysis.md</code>, then use <code>scripts/analyze_score_gap.py</code> when its score assumption applies.
+- Discrete-event scheduling, Beam Search, MPC, or simulator-backed search: read <code>references/discrete-event-scheduling.md</code>, <code>references/hard-constraint-action-mask.md</code>, and <code>references/exact-simulation-contract.md</code>. Use <code>scripts/check_transition_fidelity.py</code> before increasing search budget.
+- Optimization experiments or result promotion: read <code>references/experiment-budget-and-promotion.md</code>, then use <code>scripts/register_experiment.py</code> and <code>scripts/promote_validated_candidate.py</code> where practical.
+- MATLAB, Simulink, or MATLAB MCP work: read <code>references/matlab-native-workflow.md</code>. Keep the authoritative model and figures in MATLAB when that reduces fidelity risk or the user requests it.
 - End-to-end work: read <code>references/evidence-gated-workflow.md</code> and <code>references/standard-workflow.md</code>.
 - Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>, then use <code>scripts/audit_dataset.py</code> for supported files.
 - Validation, sensitivity, or uncertainty: read <code>references/validation-playbook.md</code>.
@@ -81,8 +91,8 @@ Use for comparisons, distributions, forecasts, residuals, convergence, Pareto fr
 
 1. State the one-sentence conclusion and the reader question.
 2. Inspect variable types, sample sizes, grouping, uncertainty, units, and the baseline before selecting a chart.
-3. Use Python/Matplotlib as the figure backend. If the canonical model ran in MATLAB, export its traceable results to CSV or MAT and keep that data handoff in the figure contract.
-4. Start from <code>assets/code/python/modeling_plotkit.py</code>. Adapt it; do not redraw the same boilerplate from memory.
+3. Use the native backend selected for the modeling run. Python/Matplotlib and MATLAB are both valid when their figures satisfy the same traceability, statistics, export, and visual-QA contract. Do not force a cross-language handoff that risks changing authoritative results.
+4. For Python, start from <code>assets/code/python/modeling_plotkit.py</code>. For MATLAB, follow <code>references/matlab-native-workflow.md</code> and use deterministic <code>exportgraphics</code> commands.
 5. Render at final size, run programmatic QA, open the PNG preview, revise, then export vector and raster deliverables.
 
 ### Code-native diagram route
@@ -95,9 +105,9 @@ Use for problem structure, algorithm pipelines, layered architectures, feedback 
 4. Prefer editable SVG/PDF generated from code. Start from <code>assets/templates/modeling-diagram-spec-template.json</code> and use <code>scripts/build_modeling_diagram.py</code> for supported layouts.
 5. Mark any AI-generated conceptual illustration as illustrative. Never place it in a quantitative evidence role.
 
-### Required figure bundle
+### Figure bundle by delivery profile
 
-Deliver or record:
+For <code>paper-bundle</code>, deliver or record:
 
 - a completed figure contract with conclusion, role, panel map, final size, backend, source data, statistics, and review risks;
 - the generating script and deterministic command;
@@ -108,6 +118,16 @@ Deliver or record:
 
 Use <code>scripts/audit_figure_bundle.py</code> to validate a completed bundle. A successful save call is not visual QA.
 
+For <code>word-only</code>, keep source data, generating code, and QA records in the workspace, but embed only the figures and tables necessary for the report in the final Word file. Do not create redundant public CSV/Excel attachments. For <code>code-only</code>, keep visual outputs limited to diagnostics needed to validate the implementation. A custom contract overrides these defaults when explicit.
+
+## Result Lifecycle
+
+Move successful results only through:
+
+<code>exploratory → candidate → independently_validated → frozen → manuscript</code>
+
+Use <code>rejected_infeasible</code>, <code>rejected_no_improvement</code>, or <code>rejected_fidelity_failure</code> as terminal states. A high score does not permit skipping feasibility, fidelity, or independent validation. Freeze only canonical results approved for writing, and promote to manuscript only after the document actually contains the verified result and its evidence boundary.
+
 ## Required Outputs by Request Type
 
 - Triage: sub-question map, task family, objectives, constraints, data needs, 2-3 candidates, baseline, and major risk.
@@ -116,6 +136,9 @@ Use <code>scripts/audit_figure_bundle.py</code> to validate a completed bundle. 
 - Results: baseline comparison, uncertainty or robustness evidence, limitations, and a claim-evidence map.
 - Figure: one-sentence visual message, justified chart/diagram archetype, non-redundant panel map, source-data links, uncertainty/statistics, generating code, SVG/PDF + PNG preview, grayscale check when relevant, QA JSON, and final-size visual QA.
 - Paper: one-sentence argument, section and paragraph jobs, terminology ledger, evidence-backed results, consistent figures/tables, limitations, and no unsupported claims.
+- Word-only: one final DOCX containing the necessary verified tables and figures; retain code, source data, and QA records in the working directory without requiring them as separate submission files.
+- Paper-bundle: manuscript, executable code, canonical data/results, complete figure bundle, and audit records.
+- Code-only: executable source, input contract, deterministic command, tests, result summary, and only validation-essential diagnostics.
 
 ## Complexity Escalation Test
 
@@ -125,8 +148,10 @@ Add a component only when all are true:
 2. Its failure is observable and named.
 3. The added component directly addresses that failure.
 4. The comparison protocol is fair.
-5. The remaining time supports validation.
+5. Any surrogate has passed the exact-transition fidelity gate and all hard constraints are masked before search.
+6. The experiment has a registered improvement threshold, budget, and stop rule.
+7. The remaining time supports independent validation.
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v6;path=SKILL.md;sha256=e3e247495b4f8bbf28c82aaadae6ad11d0fa1926bfcd0ead6b9ad5de1ab29ca1;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=rDi7gwm0UVl5wvJCZFGCpkSQnRVB5KoaYsE4lpUCnwNx2eOdTuFqqC0URZY_D2fEfG0GrjvfH8QYpmVtvChPBw== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v7;path=SKILL.md;sha256=23c816dcace70e56e3142bbfd75dd6e6a26c507ae5415511e4c1f743e410e2a5;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=31Kaextmk9gvGGIA19t10C-eioR7Ljy8PBOzyu6UuCviiIFbzBSdMHOeohJZ4uBEDKtVJS-FXcNF-qS94DjBBQ== -->

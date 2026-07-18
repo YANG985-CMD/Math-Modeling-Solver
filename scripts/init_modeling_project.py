@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = "2.1"
+SCHEMA_VERSION = "2.2"
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -21,7 +21,9 @@ def write_json(path: Path, value: Any) -> None:
     )
 
 
-def build_files(mode: str, question_count: int) -> dict[str, Any]:
+def build_files(
+    mode: str, question_count: int, delivery_profile: str = "paper-bundle"
+) -> dict[str, Any]:
     question_ids = [f"Q{i}" for i in range(1, question_count + 1)]
     created_at = datetime.now(timezone.utc).isoformat()
     questions = [
@@ -69,6 +71,7 @@ def build_files(mode: str, question_count: int) -> dict[str, Any]:
             "schema_version": SCHEMA_VERSION,
             "created_at": created_at,
             "mode": mode,
+            "delivery_profile": delivery_profile,
             "status": "initialized",
             "active_gate": "intake",
             "subquestions": question_ids,
@@ -80,6 +83,7 @@ def build_files(mode: str, question_count: int) -> dict[str, Any]:
             "title": "TODO",
             "decision_to_support": "TODO",
             "time_budget": "TODO",
+            "delivery_profile": delivery_profile,
             "deliverables": [],
             "global_assumptions": [],
             "data_sources": [],
@@ -88,6 +92,10 @@ def build_files(mode: str, question_count: int) -> dict[str, Any]:
         "planning/method-decision.json": {
             "schema_version": SCHEMA_VERSION,
             "questions": decisions,
+        },
+        "planning/experiments.json": {
+            "schema_version": "1.0",
+            "experiments": [],
         },
         "planning/figure-contract.json": {
             "schema_version": SCHEMA_VERSION,
@@ -145,11 +153,17 @@ def build_files(mode: str, question_count: int) -> dict[str, Any]:
     }
 
 
-def initialize(root: Path, mode: str, question_count: int, force: bool) -> None:
+def initialize(
+    root: Path,
+    mode: str,
+    question_count: int,
+    force: bool,
+    delivery_profile: str = "paper-bundle",
+) -> None:
     root = root.expanduser().resolve()
     if root == Path(root.anchor):
         raise SystemExit("Refusing to initialize directly in a filesystem root")
-    structured_files = build_files(mode, question_count)
+    structured_files = build_files(mode, question_count, delivery_profile)
     text_files = {
         "planning/data-audit.csv": (
             "input_id,path,source,retrieval_date,unit,provenance_verified,"
@@ -226,7 +240,10 @@ def initialize(root: Path, mode: str, question_count: int, force: bool) -> None:
         )
 
     print(f"Initialized evidence-gated modeling project: {root}")
-    print(f"Mode: {mode}; sub-questions: {question_count}")
+    print(
+        f"Mode: {mode}; delivery: {delivery_profile}; "
+        f"sub-questions: {question_count}"
+    )
     print(
         "Next: complete the problem, manuscript, and data contracts "
         "before selecting a method."
@@ -245,6 +262,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--questions", type=int, default=1)
     parser.add_argument(
+        "--delivery-profile",
+        choices=("word-only", "paper-bundle", "code-only", "custom"),
+        default="paper-bundle",
+        help="Control the expected final artifact set without weakening evidence checks.",
+    )
+    parser.add_argument(
         "--force",
         action="store_true",
         help="Overwrite generated files after you have reviewed existing content.",
@@ -257,7 +280,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    initialize(args.project_dir, args.mode, args.questions, args.force)
+    initialize(
+        args.project_dir,
+        args.mode,
+        args.questions,
+        args.force,
+        args.delivery_profile,
+    )
 
 
 if __name__ == "__main__":
