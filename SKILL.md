@@ -163,4 +163,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v9;path=SKILL.md;sha256=fd5b08faed57770465e2a74ff74fc1aa34d0a5d0d57e1949ae3a19eec484747e;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=serL4-LKtfA9iRzhQ2rocqxwBtCycZ-e5KZ7-KroivRBsYwHNq5XIOyerDlLbsiGbwxQfzv2Bh7D-jdbRSZZDQ== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v10;path=SKILL.md;sha256=fd5b08faed57770465e2a74ff74fc1aa34d0a5d0d57e1949ae3a19eec484747e;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=za6dScnqu9BAhLSqNmrKHE122r9kQuydxpEGjLFvy9rMXMsMRjumtnwZHQZmEwoduoBlzzQ9BW0fB9YUh6FTAg== -->
