@@ -382,6 +382,67 @@ class DiagnosticToolTests(unittest.TestCase):
             )
             self.assertEqual(promoted.returncode, 0, promoted.stdout + promoted.stderr)
 
+    def test_later_lower_runs_do_not_demote_a_qualifying_candidate(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            registry = Path(directory) / "experiments.json"
+            created = subprocess.run(
+                [
+                    sys.executable,
+                    str(REGISTER),
+                    str(registry),
+                    "create",
+                    "--id",
+                    "E1",
+                    "--hypothesis",
+                    "A bounded mechanism improves the score",
+                    "--metric",
+                    "score",
+                    "--direction",
+                    "max",
+                    "--baseline",
+                    "50",
+                    "--min-improvement",
+                    "2",
+                    "--max-runs",
+                    "3",
+                    "--max-runtime-minutes",
+                    "10",
+                    "--stop-condition",
+                    "stop after three runs",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(created.returncode, 0, created.stdout + created.stderr)
+            for run_id, value in (("R1", "53"), ("R2", "49"), ("R3", "48")):
+                recorded = subprocess.run(
+                    [
+                        sys.executable,
+                        str(REGISTER),
+                        str(registry),
+                        "record",
+                        "--id",
+                        "E1",
+                        "--run-id",
+                        run_id,
+                        "--value",
+                        value,
+                        "--feasible",
+                        "--fidelity",
+                        "passed",
+                        "--artifact",
+                        f"results/{run_id}.json",
+                    ],
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertEqual(recorded.returncode, 0, recorded.stdout + recorded.stderr)
+            experiment = json.loads(registry.read_text(encoding="utf-8"))["experiments"][0]
+            self.assertEqual(experiment["status"], "candidate")
+            self.assertEqual(experiment["best_run"], "R1")
+
 
 if __name__ == "__main__":
     unittest.main()

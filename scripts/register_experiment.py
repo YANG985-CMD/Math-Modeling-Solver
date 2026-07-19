@@ -100,13 +100,16 @@ def record(args: argparse.Namespace, registry: dict[str, Any]) -> None:
     ]
     if eligible:
         experiment["best_run"] = max(eligible, key=lambda item: item["improvement"])["run_id"]
+    threshold_met = any(
+        item["improvement"] >= experiment["minimum_improvement"] for item in eligible
+    )
 
     previous = experiment["status"]
     if not run["feasible"]:
         experiment["status"] = "rejected_infeasible"
     elif run["fidelity"] == "failed":
         experiment["status"] = "rejected_fidelity_failure"
-    elif run["improvement"] >= experiment["minimum_improvement"]:
+    elif threshold_met:
         experiment["status"] = "candidate"
     elif len(experiment["runs"]) >= experiment["budget"]["maximum_runs"]:
         experiment["status"] = "rejected_no_improvement"
