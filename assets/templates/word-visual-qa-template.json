@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "docx_sha256": "",
+  "rendered_with": "Microsoft Word",
+  "rendered_pdf": "",
+  "page_count": 0,
+  "reviewed_pages": [],
+  "reviewed_by": "",
+  "reviewed_at": "",
+  "checks": {
+    "formulas": "pending",
+    "charts": "pending",
+    "pagination": "pending",
+    "encoding": "pending"
+  },
+  "notes": []
+}

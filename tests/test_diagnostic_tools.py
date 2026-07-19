@@ -189,6 +189,14 @@ class DiagnosticToolTests(unittest.TestCase):
                     "create",
                     "--id",
                     "E1",
+                    "--experiment-family",
+                    "fixture-family",
+                    "--candidate-budget",
+                    "3",
+                    "--cumulative-candidate-budget",
+                    "6",
+                    "--adaptive-search-bias-notes",
+                    "No adaptive choices in this fixture",
                     "--hypothesis",
                     "A hard action mask improves feasible score",
                     "--metric",
@@ -211,6 +219,10 @@ class DiagnosticToolTests(unittest.TestCase):
                 check=False,
             )
             self.assertEqual(created.returncode, 0, created.stdout + created.stderr)
+            (root / "results").mkdir()
+            (root / "results" / "E1.json").write_text(
+                "inspectable run\n", encoding="utf-8"
+            )
             recorded = subprocess.run(
                 [
                     sys.executable,
@@ -224,6 +236,10 @@ class DiagnosticToolTests(unittest.TestCase):
                     "--feasible",
                     "--fidelity",
                     "passed",
+                    "--candidates-evaluated",
+                    "1",
+                    "--runtime-minutes",
+                    "1",
                     "--artifact",
                     "results/E1.json",
                 ],
@@ -274,7 +290,7 @@ class DiagnosticToolTests(unittest.TestCase):
             artifact = root / "validation-artifact.txt"
             artifact.write_text("independent evidence\n", encoding="utf-8")
             report = {
-                "schema_version": "1.0",
+                "schema_version": "1.1",
                 "status": "passed",
                 "primary_metric": {
                     "name": "score",
@@ -311,11 +327,40 @@ class DiagnosticToolTests(unittest.TestCase):
                         }
                     ],
                 },
+                "reproducibility": {
+                    "status": "passed",
+                    "independent_reruns": 1,
+                    "canonical_input_hashes": ["a" * 64],
+                    "artifact_path": artifact.name,
+                },
+                "sensitivity": {
+                    "status": "not_applicable",
+                    "parameters_tested": [],
+                    "summary": "",
+                    "not_applicable_reason": "software lifecycle fixture has no parameter",
+                    "artifact_path": "",
+                },
                 "robustness": {
                     "status": "passed",
                     "tested_cases": 3,
+                    "perturbation_families": ["independent fixtures"],
                     "artifact_path": artifact.name,
                 },
+                "generalization": {
+                    "claim_type": "instance_only",
+                    "status": "not_claimed",
+                    "independent_cases": 0,
+                    "selection_free_cases": 0,
+                    "limitations": ["fixture only"],
+                    "artifact_path": "",
+                },
+                "instance_specific_schedule": {
+                    "applicable": False,
+                    "declared": False,
+                    "transferable_policy_claimed": False,
+                    "artifact_path": "",
+                },
+                "validation_independence_level": "independent_rerun",
                 "multiobjective": {
                     "applicable": True,
                     "claim_type": "pareto_front",
@@ -393,6 +438,14 @@ class DiagnosticToolTests(unittest.TestCase):
                     "create",
                     "--id",
                     "E1",
+                    "--experiment-family",
+                    "fixture-family",
+                    "--candidate-budget",
+                    "3",
+                    "--cumulative-candidate-budget",
+                    "6",
+                    "--adaptive-search-bias-notes",
+                    "No adaptive choices in this fixture",
                     "--hypothesis",
                     "A bounded mechanism improves the score",
                     "--metric",
@@ -415,7 +468,11 @@ class DiagnosticToolTests(unittest.TestCase):
                 check=False,
             )
             self.assertEqual(created.returncode, 0, created.stdout + created.stderr)
+            (Path(directory) / "results").mkdir()
             for run_id, value in (("R1", "53"), ("R2", "49"), ("R3", "48")):
+                (Path(directory) / "results" / f"{run_id}.json").write_text(
+                    "inspectable run\n", encoding="utf-8"
+                )
                 recorded = subprocess.run(
                     [
                         sys.executable,
@@ -431,6 +488,10 @@ class DiagnosticToolTests(unittest.TestCase):
                         "--feasible",
                         "--fidelity",
                         "passed",
+                        "--candidates-evaluated",
+                        "1",
+                        "--runtime-minutes",
+                        "1",
                         "--artifact",
                         f"results/{run_id}.json",
                     ],

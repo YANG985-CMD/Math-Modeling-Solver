@@ -10,20 +10,24 @@ Record:
 - one primary metric and executed baseline;
 - direction and minimum meaningful improvement;
 - maximum runs and runtime budget;
+- a per-experiment candidate-evaluation budget and one cumulative budget for the whole experiment family;
+- the parent experiment, family name, and what adaptive search choices may bias later comparisons;
 - feasibility and fidelity requirements;
 - stopping condition and required artifact.
 
 Example:
 
 ```text
-python scripts/register_experiment.py planning/experiments.json create --id E01 --hypothesis "A mandatory-service mask removes voluntary idling" --metric score --direction max --baseline 55.2 --min-improvement 0.5 --max-runs 6 --max-runtime-minutes 30 --stop-condition "stop after six runs or a fidelity failure"
+python scripts/register_experiment.py planning/experiments.json create --id E01 --experiment-family PBS-Q2 --candidate-budget 1200 --cumulative-candidate-budget 5000 --adaptive-search-bias-notes "Guard positions are selected only from training traces" --hypothesis "A mandatory-service mask removes voluntary idling" --metric score --direction max --baseline 55.2 --min-improvement 0.5 --max-runs 6 --max-runtime-minutes 30 --stop-condition "stop after six runs or a fidelity failure"
 ```
 
 Record a run only after it produces an inspectable artifact:
 
 ```text
-python scripts/register_experiment.py planning/experiments.json record --id E01 --value 57.1 --feasible --fidelity passed --artifact results/E01/run-1.json
+python scripts/register_experiment.py planning/experiments.json record --id E01 --value 57.1 --feasible --fidelity passed --candidates-evaluated 200 --runtime-minutes 4.8 --artifact results/E01/run-1.json
 ```
+
+The artifact must already exist and remain inside the project. A child experiment must name `--parent-experiment` and stay in the same family. Do not reset the apparent search budget by creating new experiment IDs: report both the local experiment budget and the cumulative family budget.
 
 ## Status lifecycle
 
@@ -63,3 +67,4 @@ robustness, and conditional multi-objective or pipeline evidence. See
 - Do not restart an exhausted experiment by renaming it; register a new mechanism and explain what changed.
 - Compare only runs with the same score contract, scenario set, seed policy, and compute budget.
 - Report all registered runs or a predeclared aggregation; do not select only the best favorable seed.
+- Count every adaptively inspected candidate in the family budget, including discarded pilots that influenced later guard positions, features, or hyperparameters.

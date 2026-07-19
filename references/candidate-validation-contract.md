@@ -38,7 +38,22 @@ Choose invariants in the output domain. Examples include:
 
 Low residual, cycle consistency, silhouette score, or accuracy cannot substitute for these checks.
 
-## 4. Separate stages and propagate uncertainty
+## 4. Keep four validation dimensions separate
+
+- **Reproducibility** asks whether the same frozen inputs and code reproduce the same result in an independent rerun.
+- **Sensitivity** varies modeling or policy parameters while holding the evaluation contract fixed.
+- **Robustness** varies seeds, noise, disruptions, initial states, or scenarios that the claim is expected to tolerate.
+- **Generalization** evaluates cases that did not guide model, schedule, guard-position, or hyperparameter selection.
+
+Do not use a deterministic replay as sensitivity evidence, a parameter sweep as generalization evidence, or a same-instance score distribution as proof of a transferable policy. Record canonical input hashes for reproducibility. If sensitivity is genuinely inapplicable, state why. Every robustness report must name its perturbation families.
+
+Declare the independence level as `same_run_replay`, `independent_rerun`, `held_out_cases`, or `external_blind_cases`. Promotion to independent validation requires at least `independent_rerun`; generalization claims require selection-free cases.
+
+## 5. Declare instance-specific schedules
+
+When the result contains hand-selected positions, a fixed action sequence, case-tuned guard intervals, or a schedule found on one supplied instance, mark `instance_specific_schedule.applicable` and provide the schedule artifact. Call it an instance solution unless held-out evidence validates a reusable policy. A high score on that same instance cannot justify policy generalization.
+
+## 6. Separate stages and propagate uncertainty
 
 For a multi-stage pipeline, validate each stage separately:
 
@@ -49,7 +64,7 @@ For a multi-stage pipeline, validate each stage separately:
 
 Do not use classification accuracy as a proxy for portfolio value, anomaly score as proof of a physical event, or interpolation accuracy as proof of mechanism. Propagate probabilities, intervals, replicate variance, or scenario uncertainty into downstream decisions and report whether the decision changes.
 
-## 5. Audit multi-objective coverage
+## 7. Audit multi-objective coverage
 
 Declare one of two claim types:
 
@@ -58,7 +73,7 @@ Declare one of two claim types:
 
 If a solver returns one survivor or exhausts its budget, label coverage as limited. Do not draw or describe a front from one point.
 
-## 6. Promotion evidence
+## 8. Promotion evidence
 
 Start from `assets/templates/candidate-validation-template.json`, fill only observed evidence, and run:
 
@@ -66,6 +81,6 @@ Start from `assets/templates/candidate-validation-template.json`, fill only obse
 python scripts/audit_candidate_evidence.py audit/candidate-validation.json --root PROJECT_DIR
 ```
 
-The report must pass the primary metric, feasibility, semantic, support, structural, and robustness checks. Fidelity, multi-objective, and pipeline checks are conditional. Use the same report with `scripts/promote_validated_candidate.py`; a JSON file containing only `{"status":"passed"}` is not independent validation.
+The report must pass the primary metric, feasibility, semantic, support, structural, reproducibility, sensitivity, robustness, independence, and claim-boundary checks. Generalization, instance-specific schedules, fidelity, multi-objective coverage, and pipeline checks are enforced according to the declared claim. Use the same report with `scripts/promote_validated_candidate.py`; a JSON file containing only `{"status":"passed"}` is not independent validation.
 
 Promotion means the stated claim passed this contract within its declared boundary. It does not prove global optimality, causality, or generalization outside tested support.

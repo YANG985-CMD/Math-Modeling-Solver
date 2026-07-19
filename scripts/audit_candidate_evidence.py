@@ -11,6 +11,12 @@ from typing import Any
 
 
 PASS_STATUSES = {"passed", "validated", "independently_validated"}
+INDEPENDENCE_LEVELS = {
+    "same_run_replay": 0,
+    "independent_rerun": 1,
+    "held_out_cases": 2,
+    "external_blind_cases": 3,
+}
 
 
 def nonempty_text(value: Any) -> bool:
@@ -22,6 +28,14 @@ def finite_number(value: Any) -> bool:
         isinstance(value, (int, float))
         and not isinstance(value, bool)
         and math.isfinite(float(value))
+    )
+
+
+def sha256_text(value: Any) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in "0123456789abcdefABCDEF" for character in value)
     )
 
 
@@ -97,6 +111,8 @@ def audit_report(
     experiment: dict[str, Any] | None = None,
 ) -> list[str]:
     issues: list[str] = []
+    if report.get("schema_version") != "1.1":
+        issues.append("schema_version must be 1.1")
     if report.get("status") not in PASS_STATUSES:
         issues.append("status must declare passed, validated, or independently_validated")
 
@@ -162,11 +178,121 @@ def audit_report(
             issues,
         )
 
+    reproducibility = passed_block(report, "reproducibility", root, issues)
+    if not isinstance(reproducibility.get("independent_reruns"), int) or reproducibility.get(
+        "independent_reruns", 0
+    ) < 1:
+        issues.append("reproducibility.independent_reruns must be at least 1")
+    hashes = reproducibility.get("canonical_input_hashes")
+    if not isinstance(hashes, list) or not hashes or not all(
+        sha256_text(item) for item in hashes
+    ):
+        issues.append(
+            "reproducibility.canonical_input_hashes must contain SHA-256 values"
+        )
+
+    sensitivity = report.get("sensitivity")
+    if not isinstance(sensitivity, dict):
+        issues.append("sensitivity must be an object")
+    elif sensitivity.get("status") in PASS_STATUSES:
+        parameters = sensitivity.get("parameters_tested")
+        if not isinstance(parameters, list) or not any(
+            nonempty_text(item) for item in parameters
+        ):
+            issues.append("sensitivity.parameters_tested must not be empty")
+        if not nonempty_text(sensitivity.get("summary")):
+            issues.append("sensitivity.summary is missing")
+        require_artifact(root, sensitivity, "sensitivity", issues)
+    elif sensitivity.get("status") == "not_applicable":
+        if not nonempty_text(sensitivity.get("not_applicable_reason")):
+            issues.append("sensitivity.not_applicable_reason is missing")
+    else:
+        issues.append("sensitivity.status must be passed or not_applicable")
+
     robustness = passed_block(report, "robustness", root, issues)
     if not isinstance(robustness.get("tested_cases"), int) or robustness.get(
         "tested_cases", 0
     ) < 1:
         issues.append("robustness.tested_cases must be at least 1")
+    perturbations = robustness.get("perturbation_families")
+    if not isinstance(perturbations, list) or not any(
+        nonempty_text(item) for item in perturbations
+    ):
+        issues.append("robustness.perturbation_families must not be empty")
+
+    generalization = report.get("generalization")
+    generalization_claim = None
+    if not isinstance(generalization, dict):
+        issues.append("generalization must be an object")
+    else:
+        generalization_claim = generalization.get("claim_type")
+        if generalization_claim not in {
+            "instance_only",
+            "tested_family",
+            "external_generalization",
+        }:
+            issues.append("generalization.claim_type is invalid")
+        limitations = generalization.get("limitations")
+        if not isinstance(limitations, list):
+            issues.append("generalization.limitations must be a list")
+        if generalization_claim == "instance_only":
+            if generalization.get("status") != "not_claimed":
+                issues.append(
+                    "instance_only generalization.status must be not_claimed"
+                )
+            if not isinstance(limitations, list) or not any(
+                nonempty_text(item) for item in limitations
+            ):
+                issues.append(
+                    "instance_only generalization must state at least one limitation"
+                )
+        elif generalization_claim in {"tested_family", "external_generalization"}:
+            if generalization.get("status") not in PASS_STATUSES:
+                issues.append("a generalization claim requires passed status")
+            minimum_cases = 2 if generalization_claim == "tested_family" else 1
+            if not isinstance(generalization.get("independent_cases"), int) or generalization.get(
+                "independent_cases", 0
+            ) < minimum_cases:
+                issues.append(
+                    f"{generalization_claim} requires at least {minimum_cases} independent case(s)"
+                )
+            if not isinstance(generalization.get("selection_free_cases"), int) or generalization.get(
+                "selection_free_cases", 0
+            ) < 1:
+                issues.append("a generalization claim requires a selection-free case")
+            require_artifact(root, generalization, "generalization", issues)
+
+    schedule = report.get("instance_specific_schedule")
+    if not isinstance(schedule, dict) or not isinstance(schedule.get("applicable"), bool):
+        issues.append("instance_specific_schedule.applicable must be boolean")
+    else:
+        if not isinstance(schedule.get("declared"), bool):
+            issues.append("instance_specific_schedule.declared must be boolean")
+        if not isinstance(schedule.get("transferable_policy_claimed"), bool):
+            issues.append(
+                "instance_specific_schedule.transferable_policy_claimed must be boolean"
+            )
+        if schedule["applicable"]:
+            if schedule.get("declared") is not True:
+                issues.append("an instance-specific schedule must be explicitly declared")
+            require_artifact(root, schedule, "instance_specific_schedule", issues)
+        if schedule.get("transferable_policy_claimed"):
+            if not schedule["applicable"]:
+                issues.append(
+                    "a transferable schedule-policy claim requires schedule applicability"
+                )
+            if generalization_claim == "instance_only":
+                issues.append(
+                    "a transferable schedule-policy claim requires generalization evidence"
+                )
+
+    independence = report.get("validation_independence_level")
+    if independence not in INDEPENDENCE_LEVELS:
+        issues.append("validation_independence_level is invalid")
+    elif INDEPENDENCE_LEVELS[independence] < INDEPENDENCE_LEVELS["independent_rerun"]:
+        issues.append(
+            "independent validation requires at least an independent_rerun"
+        )
 
     multiobjective = report.get("multiobjective")
     if not isinstance(multiobjective, dict) or not isinstance(
@@ -269,7 +395,7 @@ def main() -> int:
             experiment = load_experiment(args.experiment_registry, args.id)
         issues = audit_report(report, root, experiment)
         output = {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "status": "passed" if not issues else "failed",
             "report": str(report_path),
             "root": str(root),

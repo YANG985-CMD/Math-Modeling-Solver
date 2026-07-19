@@ -94,7 +94,7 @@ def build_files(
             "questions": decisions,
         },
         "planning/experiments.json": {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "experiments": [],
         },
         "planning/figure-contract.json": {
@@ -141,7 +141,7 @@ def build_files(
             "notes": [],
         },
         "audit/candidate-validation.json": {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "status": "pending",
             "primary_metric": {
                 "name": "",
@@ -169,11 +169,40 @@ def build_files(
                 "artifact_path": "",
             },
             "structural_validity": {"status": "pending", "checks": []},
+            "reproducibility": {
+                "status": "pending",
+                "independent_reruns": 0,
+                "canonical_input_hashes": [],
+                "artifact_path": "",
+            },
+            "sensitivity": {
+                "status": "pending",
+                "parameters_tested": [],
+                "summary": "",
+                "not_applicable_reason": "",
+                "artifact_path": "",
+            },
             "robustness": {
                 "status": "pending",
                 "tested_cases": 0,
+                "perturbation_families": [],
                 "artifact_path": "",
             },
+            "generalization": {
+                "claim_type": "instance_only",
+                "status": "not_claimed",
+                "independent_cases": 0,
+                "selection_free_cases": 0,
+                "limitations": [],
+                "artifact_path": "",
+            },
+            "instance_specific_schedule": {
+                "applicable": False,
+                "declared": False,
+                "transferable_policy_claimed": False,
+                "artifact_path": "",
+            },
+            "validation_independence_level": "pending",
             "multiobjective": {
                 "applicable": False,
                 "claim_type": "not_applicable",

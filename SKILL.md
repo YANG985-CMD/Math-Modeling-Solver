@@ -1,6 +1,6 @@
 ---
 name: math-modeling-solver
-description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, claim-to-evidence tracing, and CUMCM LaTeX paper production or format preflight. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
+description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, claim-to-evidence tracing, Word reports with native OMML formulas, and CUMCM LaTeX paper production or format preflight. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
 ---
 
 # Math Modeling Solver
@@ -17,6 +17,9 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Remove hard-constraint violations from the action space; do not rely on penalty-only or post-hoc repair for illegal actions.
 - Validate every search surrogate against the exact simulator before increasing its search budget.
 - Do not promote a candidate from one favorable loss alone. Require task-specific structural or physical invariants and report effective support, coverage, and identifiability.
+- Keep reproducibility, sensitivity, robustness, and generalization as separate claims with separate evidence. A same-instance replay or sweep is not proof of transfer.
+- Declare hand-selected positions, action sequences, and case-tuned schedules as instance-specific unless selection-free cases validate a reusable policy.
+- Count inspected candidates across the whole experiment family. Record parent experiments and adaptive-search choices instead of resetting the apparent budget with a new experiment ID.
 - Separate prediction or estimation quality from downstream decision quality; propagate upstream uncertainty through allocation, optimization, or correction stages.
 - Do not call one trade-off point a Pareto front. State whether multi-objective coverage is adequate or limited.
 - Keep training, validation, and test information separated; treat temporal and grouped data with structure-aware splits.
@@ -25,6 +28,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Give every figure one primary conclusion. Do not fill a canvas with redundant panels or decoration.
 - Record units, assumptions, random seeds, software versions, commands, and input provenance.
 - Report uncertainty, failure cases, and claim boundaries.
+- For Word reports, convert LaTeX math through Pandoc to native OMML, verify `m:oMath`, render with Microsoft Word, and inspect every page. Never downgrade formulas to text or screenshots.
 
 ## Operating Workflow
 
@@ -41,8 +45,8 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
    The script supports CSV, TSV, delimited TXT/DAT, Excel, and two-dimensional MAT variables. Review its JSON, CSV, and HTML outputs; automated flags are screening evidence, not automatic deletion rules. Do not claim that leakage is absent unless feature availability at prediction time is also documented.
 5. Before comparing candidates, record the semantic contract, effective support, and task-specific state invariants. For scored optimization, compute the theoretical bound, executed baseline, reference gap, component gaps, and weighted sensitivity before tuning. Use <code>scripts/analyze_score_gap.py</code> only when its additive normalized-score assumption matches the real score contract.
 6. For discrete-event search, scheduling, Beam Search, MPC, or learned policies, construct a hard-constraint action mask and compare the surrogate with the exact simulator for at least 50 consecutive steps using <code>scripts/check_transition_fidelity.py</code>. Do this before expanding search width, horizon, population, or training budget.
-7. Register each optimization experiment with a hypothesis, primary metric, improvement threshold, run/runtime budget, feasibility/fidelity requirements, and stop rule. Use <code>scripts/register_experiment.py</code> where practical.
-8. Before promoting a candidate, complete <code>assets/templates/candidate-validation-template.json</code> and run <code>scripts/audit_candidate_evidence.py</code>. A low residual, good cycle closure, high silhouette score, or improved cross-validation metric is insufficient when the reconstructed state, support, or downstream decision is invalid.
+7. Register each optimization experiment with a hypothesis, primary metric, improvement threshold, local run/runtime/candidate budget, cumulative experiment-family budget, parent experiment, adaptive-search-bias note, feasibility/fidelity requirements, and stop rule. Use <code>scripts/register_experiment.py</code> where practical.
+8. Before promoting a candidate, complete <code>assets/templates/candidate-validation-template.json</code> and run <code>scripts/audit_candidate_evidence.py</code>. Distinguish reproducibility, sensitivity, robustness, and generalization; declare instance-specific schedules and validation independence. A low residual, good cycle closure, high silhouette score, or improved cross-validation metric is insufficient when the reconstructed state, support, or downstream decision is invalid.
 9. Advance through the five evidence gates in order:
    - Intake: problem contract and data audit are complete.
    - Method: candidates, baseline, feasibility probe, and selection rationale are recorded.
@@ -54,7 +58,8 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 
        python scripts/audit_modeling_project.py PROJECT_DIR
 
-12. Deliver only the artifacts required by the delivery profile plus unresolved risks and the audit status. Do not present a failed gate as completed work.
+12. Generate manuscript numbers and tables from <code>results/frozen-results.json</code> rather than retyping them. For Word delivery, follow <code>references/word-omml-delivery.md</code> and pass the native-formula plus page-review audit.
+13. Deliver only the artifacts required by the delivery profile plus unresolved risks and the audit status. Do not present a failed gate as completed work.
 
 ## Human Decision Points
 
@@ -76,6 +81,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Optimization experiments or result promotion: read <code>references/experiment-budget-and-promotion.md</code> and <code>references/candidate-validation-contract.md</code>, then use <code>scripts/register_experiment.py</code>, <code>scripts/audit_candidate_evidence.py</code>, and <code>scripts/promote_validated_candidate.py</code> where practical.
 - Reconstruction, registration, clustering, anomaly detection, multi-stage prediction-to-decision pipelines, or multi-objective claims: read <code>references/candidate-validation-contract.md</code>. Validate the physical or structural state, support coverage, semantic definitions, and downstream decision separately from the primary fit metric.
 - MATLAB, Simulink, or MATLAB MCP work: read <code>references/matlab-native-workflow.md</code>. Keep the authoritative model and figures in MATLAB when that reduces fidelity risk or the user requests it.
+- Mixed MATLAB-Python computation: define the backend contract in <code>references/matlab-native-workflow.md</code> and run <code>scripts/preflight_matlab_python_bridge.py</code> before formal search. For path-dependent decisions, start from <code>assets/templates/decision-trace-template.json</code> and run <code>scripts/audit_decision_trace.py</code>.
 - End-to-end work: read <code>references/evidence-gated-workflow.md</code> and <code>references/standard-workflow.md</code>.
 - Data, leakage, or reproducibility: read <code>references/data-and-reproducibility.md</code>, then use <code>scripts/audit_dataset.py</code> for supported files.
 - Validation, sensitivity, or uncertainty: read <code>references/validation-playbook.md</code>.
@@ -83,6 +89,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
 - Combination models: read <code>references/advanced-model-combinations.md</code>.
 - Paper planning or writing: read <code>references/argument-first-paper-writing.md</code>, <code>references/paper-writing.md</code>, and the templates under <code>assets/templates/</code>.
+- Word reports: read <code>references/word-omml-delivery.md</code>. Generate frozen-number blocks with <code>scripts/render_frozen_results.py</code>, build equations through Pandoc, and audit the DOCX with <code>scripts/audit_word_delivery.py</code> after Word rendering and page-by-page inspection.
 - CUMCM LaTeX formatting or submission preflight: read <code>references/cumcm-2026-latex.md</code>, start from <code>assets/latex/cumcm-2026/paper.tex</code>, build with <code>scripts/build_cumcm_latex.py</code>, and audit with <code>scripts/audit_cumcm_latex.py</code>. Recheck the current official notice before every formal submission.
 - Time-limited work: read <code>references/competition-timeline.md</code>.
 - Prompt design: read <code>references/ai-prompt-patterns.md</code>.
@@ -133,7 +140,7 @@ Move successful results only through:
 
 <code>exploratory → candidate → independently_validated → frozen → manuscript</code>
 
-Use <code>rejected_infeasible</code>, <code>rejected_no_improvement</code>, or <code>rejected_fidelity_failure</code> as terminal states. A high score does not permit skipping feasibility, fidelity, structural validity, support adequacy, or independent validation. Freeze only canonical results approved for writing, and promote to manuscript only after the document actually contains the verified result and its evidence boundary.
+Use <code>rejected_infeasible</code>, <code>rejected_no_improvement</code>, or <code>rejected_fidelity_failure</code> as terminal states. A high score does not permit skipping feasibility, fidelity, structural validity, support adequacy, independent validation, or the instance-versus-policy boundary. Freeze only canonical results approved for writing, and promote to manuscript only after the document actually contains the verified result and its evidence boundary.
 
 ## Required Outputs by Request Type
 
@@ -163,4 +170,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v11;path=SKILL.md;sha256=fd5b08faed57770465e2a74ff74fc1aa34d0a5d0d57e1949ae3a19eec484747e;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=92QDYzsWSv5IVw56cIlq9l2FIGofCFLQwKwCL1j9hK74wve3WFm6f9L1pEyEOE-vw561_BqsdpC8SJ1NqVPwAw== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v12;path=SKILL.md;sha256=386ce61714c8ec6892b030fa7e1c19f400c2ea891e134ddf4bcca0bf4c108bfa;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=dj48r2pIY4Ro5Zz-njp7yET5d8CByufk4O230PNHpsymyVNHi1BFQ5NI3UsOeOrXr3RmmM3RZkrUbiOesYHuDw== -->

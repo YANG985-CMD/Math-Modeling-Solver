@@ -53,6 +53,12 @@ class WorkflowToolTests(unittest.TestCase):
             self.assertEqual(experiments["experiments"], [])
             self.assertEqual(candidate_validation["status"], "pending")
             self.assertIn("structural_validity", candidate_validation)
+            self.assertIn("reproducibility", candidate_validation)
+            self.assertIn("sensitivity", candidate_validation)
+            self.assertIn("generalization", candidate_validation)
+            self.assertEqual(
+                candidate_validation["validation_independence_level"], "pending"
+            )
 
     def test_initialized_project_fails_until_evidence_is_complete(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

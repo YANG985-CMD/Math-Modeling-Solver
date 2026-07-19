@@ -12,6 +12,16 @@ Choose the backend from the user's requirement, existing code, solver availabili
 
 Do not reimplement an authoritative MATLAB simulator in Python solely to satisfy a plotting convention.
 
+Write a backend contract before execution. Name the authoritative simulator, search controller, scoring implementation, exchanged variables, array shapes, indexing convention, tolerances, serialization format, and which backend owns the canonical result. If the user requires MATLAB-only execution, Python may not silently perform simulation, scoring, optimization, or result generation; use it only for explicitly approved orchestration or file inspection.
+
+For a mixed MATLAB-Python workflow, pass the bridge preflight before consuming the formal search budget:
+
+```text
+python scripts/preflight_matlab_python_bridge.py --out audit/matlab-python-preflight.json
+```
+
+The preflight executes MATLAB and verifies scalar, array, JSON Unicode, and Chinese-path round trips. A Python-only mock is not a passing bridge test.
+
 ## MATLAB MCP execution
 
 When a MATLAB MCP server is available:
@@ -44,3 +54,4 @@ Use `exportgraphics` for deterministic exports and save `.fig` only as an option
 - Compare solver exit flags and feasibility, not just the objective number.
 - For surrogate search or MPC, export step traces and pass the exact-transition fidelity gate.
 - Preserve MATLAB indexing, event ordering, and numeric tolerances when any cross-language comparison is used.
+- For path-dependent policies, save available actions, hard-mask survivors, the selected action, state hash, and cumulative score at every step. Compare baseline and intervention traces with `scripts/audit_decision_trace.py` before attributing a final-score change to one mechanism.

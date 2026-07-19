@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "score_direction": "max",
+  "baseline": {
+    "id": "baseline",
+    "artifact_path": "",
+    "final_score": null,
+    "steps": []
+  },
+  "intervention": {
+    "id": "intervention",
+    "artifact_path": "",
+    "final_score": null,
+    "steps": []
+  }
+}

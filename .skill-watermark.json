@@ -2,15 +2,15 @@
   "schema_version": 1,
   "watermark_type": "render-invisible-ed25519-provenance",
   "owner": "YANG985-CMD",
-  "watermark_id": "YANG985-CMD-MMS-2026-v11",
+  "watermark_id": "YANG985-CMD-MMS-2026-v12",
   "repository": "https://github.com/YANG985-CMD/Math-Modeling-Solver",
   "algorithm": "Ed25519",
   "canonical_hash": "SHA-256",
-  "signed_at_utc": "2026-07-19T13:55:06+00:00",
+  "signed_at_utc": "2026-07-19T15:26:04+00:00",
   "public_key_base64": "0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=",
-  "bundle_sha256": "d2534fb1cc6def00ca9c43648eadd8edd20e5091f468f9f0d58570ae01c93a4e",
-  "bundle_signature_base64": "jwvk2HL6h6MiEgkkxWn4W1NQUlk3IjtoP4DMZNCYZO2KquapLCNrg6O0kuedBv1zQAdYhUDPAf65UFYJOkHCCA==",
-  "file_count": 102,
+  "bundle_sha256": "a4e1e28393f76f30e3fd24466da095b4fe5d349873dbd708001ee2253cc0b680",
+  "bundle_signature_base64": "Btm2OWuXpdYB32flzwdQN0Wxmw9qkxuLWJM1wk2jNSxDCGx-0LzP3UIhWGdfNHINoJ-2BlbSX-vCMslviOruCQ==",
+  "file_count": 110,
   "signed_files": [
     {
       "path": ".gitattributes",
@@ -26,15 +26,15 @@
     },
     {
       "path": "README.md",
-      "sha256": "44d96b2490a373bd92b856bafd4b10e990e83fa056482f6ee0264a4616394542"
+      "sha256": "b2a5212b4e888d411335db3a49cac09b5afa607ea687c8718b7592ea401dc096"
     },
     {
       "path": "SKILL.md",
-      "sha256": "fd5b08faed57770465e2a74ff74fc1aa34d0a5d0d57e1949ae3a19eec484747e"
+      "sha256": "386ce61714c8ec6892b030fa7e1c19f400c2ea891e134ddf4bcca0bf4c108bfa"
     },
     {
       "path": "agents/openai.yaml",
-      "sha256": "b969e1d5a46091c81bffed729c86691a2c5b1a0651ede98c752b19cd6e70bac2"
+      "sha256": "2062f5484eb67d1c13ee1a3a6c443b8bcc49981049af9fba8c090b1012779aee"
     },
     {
       "path": "assets/code/matlab/entropy_weight.m",
@@ -182,11 +182,15 @@
     },
     {
       "path": "assets/templates/candidate-validation-template.json",
-      "sha256": "d59d67ecbcc500e222f4e0be3a4824cd61f6169229a665f8d078a68eb0410d90"
+      "sha256": "dcbac747c11425dbd3308e63316a2cb04c58263c371e89d1afd256cc40c5b75d"
     },
     {
       "path": "assets/templates/claim-evidence-ledger-template.csv",
       "sha256": "18f328879525d7223e093cdb16ba27d48d13bf9c323958c66c79f429d538ca33"
+    },
+    {
+      "path": "assets/templates/decision-trace-template.json",
+      "sha256": "e358b2c7b64b381218949e84e8f2a432831d00148a132ddd57d303103cae480d"
     },
     {
       "path": "assets/templates/figure-contract-template.json",
@@ -219,6 +223,10 @@
     {
       "path": "assets/templates/terminology-ledger-template.csv",
       "sha256": "88960f0189c81f528c32cc4eb863bf79f060fa7405f4775a5288032bc2ad9f51"
+    },
+    {
+      "path": "assets/templates/word-visual-qa-template.json",
+      "sha256": "aaec7c89c74e4aebf6b17409b0fc0ae9bd6976d4daf1ae8636131d9dd578e0c9"
     },
     {
       "path": "benchmarks/blind-pilot-baseline.json",
@@ -258,7 +266,7 @@
     },
     {
       "path": "references/candidate-validation-contract.md",
-      "sha256": "00e1faf3830b99ea99743fc863cbbcf08913175ae3cb52cfa1ac028084a399e3"
+      "sha256": "6c6c1d4aa2906023dea0b24925c3ecd1b04d2505421226685b1159ce8c2611f1"
     },
     {
       "path": "references/competition-timeline.md",
@@ -286,7 +294,7 @@
     },
     {
       "path": "references/experiment-budget-and-promotion.md",
-      "sha256": "66c5e76d93bebb4c379f42004a52046d23620f2cb41fb00bc07e3a4081e19b78"
+      "sha256": "447111f64b0b48561ffa21d248f0ab00714ed015364081b830eab488dace827b"
     },
     {
       "path": "references/figure-contract-and-qa.md",
@@ -302,7 +310,7 @@
     },
     {
       "path": "references/matlab-native-workflow.md",
-      "sha256": "1523cad536976f843f36f43ef2981573bb5295d44309ae0556736d175a2c0087"
+      "sha256": "1573c1f9f54be5ab2a383c76d23d06e599c0769f591af3d3d3f522bc03d15bd5"
     },
     {
       "path": "references/model-selection.md",
@@ -341,12 +349,16 @@
       "sha256": "27e5602750c0613c8e1ab924f84a57d173e3dbff80b37284ec0f384c3ae1815b"
     },
     {
+      "path": "references/word-omml-delivery.md",
+      "sha256": "624d3ee3362975996ab4d046bc1f3da2553220c08da0571b7ed3037d35710ea8"
+    },
+    {
       "path": "scripts/analyze_score_gap.py",
       "sha256": "e179beebf08353dc60cc02bd5a3ea696e4dfe4e9b44744fcb5e695ffbdb9159a"
     },
     {
       "path": "scripts/audit_candidate_evidence.py",
-      "sha256": "e3b20bae49936e09807a9ffc63c54bca08bd328546ec0c2a4f0aae0c08549c11"
+      "sha256": "c503e942667c083f50b43ff75a270515e9bb5582d55e741da60d30dc15a37e7c"
     },
     {
       "path": "scripts/audit_cumcm_latex.py",
@@ -357,12 +369,20 @@
       "sha256": "a81768e78b92bb6c0ca2fe87621474efabe15726e3e86cc1e2cde6fe28ec862c"
     },
     {
+      "path": "scripts/audit_decision_trace.py",
+      "sha256": "61407e46f31835afd45263cd335d338db73b907ffab052074cb9ef331a6f6cef"
+    },
+    {
       "path": "scripts/audit_figure_bundle.py",
       "sha256": "cac28e225eda142c205a62114dafac807cba339e39de1b2b080b15664c74f883"
     },
     {
       "path": "scripts/audit_modeling_project.py",
       "sha256": "223aee020d7b452d51280001a22b336f34e2c3006ab26c1513043b6e838363b4"
+    },
+    {
+      "path": "scripts/audit_word_delivery.py",
+      "sha256": "8af84625e1c212ef3a0ed7cff619fc50c6dbfbb253150aac8ea2409bb28b385b"
     },
     {
       "path": "scripts/blind_modeling_benchmark.py",
@@ -382,7 +402,11 @@
     },
     {
       "path": "scripts/init_modeling_project.py",
-      "sha256": "239ee1a2a3fec7b198d2840e6c560482263f80069973d3e8cecbae35defee0ae"
+      "sha256": "04e1dadf959e2be6b41d1576b5ce100eb0e7172cd21fee92b1a4bed223bb04c5"
+    },
+    {
+      "path": "scripts/preflight_matlab_python_bridge.py",
+      "sha256": "dce90328cab749f7ff366ffa4eebafa5c0ca3c69d990ad6122e4205f8b1beb2d"
     },
     {
       "path": "scripts/promote_validated_candidate.py",
@@ -394,7 +418,11 @@
     },
     {
       "path": "scripts/register_experiment.py",
-      "sha256": "337f6b91c44da6cf26d74340e64d7c74f3123c10990b322577123cd7a5909974"
+      "sha256": "4646800487a91868401001a746a0907820c8adabe9930c9d80ab7a6da3b22f5f"
+    },
+    {
+      "path": "scripts/render_frozen_results.py",
+      "sha256": "4c0e0499ca130abc1495d59a8a36630071b54d1c29257af6665e456846efd323"
     },
     {
       "path": "tests/test_blind_benchmark.py",
@@ -410,27 +438,31 @@
     },
     {
       "path": "tests/test_diagnostic_tools.py",
-      "sha256": "5ce71207cd98289bf9e9a618bc974f266cf997673a98ce80bc9a5a904f160ae0"
+      "sha256": "8c53d5d712539776186be3b9d30bcf68bce9cf93eab8f8003473191b92e2a112"
     },
     {
       "path": "tests/test_figure_tools.py",
       "sha256": "056737352118ec6e2e4857aa5d8ea31463eb23ac2bd2663cb2119407bd276328"
     },
     {
+      "path": "tests/test_strengthened_gates.py",
+      "sha256": "34f2ca75d540670ef56613f1e5eb9945efc0ff79c97ad745d45836d4fc78f553"
+    },
+    {
       "path": "tests/test_workflow_tools.py",
-      "sha256": "be1ec6e1a10c1da93cad71f80d9700930502e5fce51e3ed65d37d705dafffdc7"
+      "sha256": "1b9518001f022aa0e29fc378c35bd61e8e6cbbdcaa30c6dc74fe45b023dd61f6"
     }
   ],
   "marker_files": [
     {
       "path": "SKILL.md",
-      "sha256": "fd5b08faed57770465e2a74ff74fc1aa34d0a5d0d57e1949ae3a19eec484747e",
-      "signature": "92QDYzsWSv5IVw56cIlq9l2FIGofCFLQwKwCL1j9hK74wve3WFm6f9L1pEyEOE-vw561_BqsdpC8SJ1NqVPwAw=="
+      "sha256": "386ce61714c8ec6892b030fa7e1c19f400c2ea891e134ddf4bcca0bf4c108bfa",
+      "signature": "dj48r2pIY4Ro5Zz-njp7yET5d8CByufk4O230PNHpsymyVNHi1BFQ5NI3UsOeOrXr3RmmM3RZkrUbiOesYHuDw=="
     },
     {
       "path": "README.md",
-      "sha256": "44d96b2490a373bd92b856bafd4b10e990e83fa056482f6ee0264a4616394542",
-      "signature": "c6I5wUmFDVcSHzK2PgnO9f0LnAEs2sBGZwkJKKspDO7GrS1XrgFyu8aTJqUFeHNKmqLA3me98fEfOypj-9-xCA=="
+      "sha256": "b2a5212b4e888d411335db3a49cac09b5afa607ea687c8718b7592ea401dc096",
+      "signature": "fQBYzy0DUA0k842ID3JeoGRZ4I7M4UiVpf_kZQnKCg5lJpqXRK2-hpKprBiNJZNoLpZ7QPprw7gMYlXCKrm5AA=="
     }
   ],
   "private_key_committed": false
