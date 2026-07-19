@@ -1,6 +1,6 @@
 ---
 name: math-modeling-solver
-description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, and claim-to-evidence tracing. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
+description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, claim-to-evidence tracing, and CUMCM LaTeX paper production or format preflight. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
 ---
 
 # Math Modeling Solver
@@ -28,7 +28,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 
 ## Operating Workflow
 
-1. Identify the requested scope, available data, time budget, implementation language, and delivery profile: <code>word-only</code>, <code>paper-bundle</code>, <code>code-only</code>, or an explicit custom contract.
+1. Identify the requested scope, available data, time budget, implementation language, and delivery profile: <code>word-only</code>, <code>paper-bundle</code>, <code>cumcm-latex</code>, <code>code-only</code>, or an explicit custom contract.
 2. Classify each sub-question and map dependencies between them.
 3. Create or update the modeling workspace. For a new project, run:
 
@@ -83,6 +83,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
 - Combination models: read <code>references/advanced-model-combinations.md</code>.
 - Paper planning or writing: read <code>references/argument-first-paper-writing.md</code>, <code>references/paper-writing.md</code>, and the templates under <code>assets/templates/</code>.
+- CUMCM LaTeX formatting or submission preflight: read <code>references/cumcm-2026-latex.md</code>, start from <code>assets/latex/cumcm-2026/paper.tex</code>, build with <code>scripts/build_cumcm_latex.py</code>, and audit with <code>scripts/audit_cumcm_latex.py</code>. Recheck the current official notice before every formal submission.
 - Time-limited work: read <code>references/competition-timeline.md</code>.
 - Prompt design: read <code>references/ai-prompt-patterns.md</code>.
 - Skill maintenance or generalization testing on historical problems: read <code>references/blind-benchmarking.md</code>, then use <code>scripts/blind_modeling_benchmark.py</code>. Keep judge rubrics outside the evaluated agent context until responses are frozen.
@@ -144,6 +145,7 @@ Use <code>rejected_infeasible</code>, <code>rejected_no_improvement</code>, or <
 - Paper: one-sentence argument, section and paragraph jobs, terminology ledger, evidence-backed results, consistent figures/tables, limitations, and no unsupported claims.
 - Word-only: one final DOCX containing the necessary verified tables and figures; retain code, source data, and QA records in the working directory without requiring them as separate submission files.
 - Paper-bundle: manuscript, executable code, canonical data/results, complete figure bundle, and audit records.
+- CUMCM LaTeX: independently authored TeX source, compiled PDF, build manifest, format-audit JSON, supporting-material inventory, and completed page-by-page visual review.
 - Code-only: executable source, input contract, deterministic command, tests, result summary, and only validation-essential diagnostics.
 
 ## Complexity Escalation Test
@@ -161,4 +163,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v8;path=SKILL.md;sha256=8bb3029b5c437eac5c89c901d14a74f2490dc8d8956cc2cefe17dc52ab8ef360;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=AUDxfgevuCbWSZmHaqmwAFJL5Gek2EiM8OJt5RGlBPFAYogTEspEX2D6Oc_kUhv86pule6d20NGgLQaS1Ak8DA== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v9;path=SKILL.md;sha256=fd5b08faed57770465e2a74ff74fc1aa34d0a5d0d57e1949ae3a19eec484747e;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=serL4-LKtfA9iRzhQ2rocqxwBtCycZ-e5KZ7-KroivRBsYwHNq5XIOyerDlLbsiGbwxQfzv2Bh7D-jdbRSZZDQ== -->
