@@ -9,6 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from audit_candidate_evidence import audit_report
+
 
 TRANSITIONS = {
     "candidate": "independently_validated",
@@ -34,6 +36,7 @@ def promote(
     target: str,
     evidence: Path,
     approved_by: str | None,
+    project_root: Path | None = None,
 ) -> dict[str, Any]:
     registry = json.loads(registry_path.read_text(encoding="utf-8-sig"))
     experiment = find_experiment(registry, experiment_id)
@@ -59,6 +62,19 @@ def promote(
         if evidence_status not in {"passed", "validated", "independently_validated"}:
             raise ValueError(
                 "validation evidence must declare status or overall_status as passed"
+            )
+        if project_root is None:
+            project_root = (
+                registry_path.resolve().parent.parent
+                if registry_path.resolve().parent.name == "planning"
+                else registry_path.resolve().parent
+            )
+        structural_issues = audit_report(
+            evidence_report, project_root.expanduser().resolve(), experiment
+        )
+        if structural_issues:
+            raise ValueError(
+                "candidate validation contract failed: " + "; ".join(structural_issues)
             )
     if target == "frozen" and not approved_by:
         raise ValueError("promotion to frozen requires --approved-by")
@@ -91,6 +107,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--evidence", type=Path, required=True)
     parser.add_argument("--approved-by")
+    parser.add_argument("--root", type=Path)
     return parser.parse_args()
 
 
@@ -98,7 +115,12 @@ def main() -> int:
     args = parse_args()
     try:
         experiment = promote(
-            args.registry, args.id, args.target, args.evidence, args.approved_by
+            args.registry,
+            args.id,
+            args.target,
+            args.evidence,
+            args.approved_by,
+            args.root,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         print(f"Candidate promotion failed: {exc}")

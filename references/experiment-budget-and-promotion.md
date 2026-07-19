@@ -39,13 +39,22 @@ Terminal rejection states are:
 - `rejected_no_improvement` when the registered budget ends below threshold;
 - `rejected_fidelity_failure` when surrogate and exact dynamics disagree.
 
-Promote with independent evidence:
+Promote with independent evidence. The JSON must follow
+`assets/templates/candidate-validation-template.json` and pass
+`scripts/audit_candidate_evidence.py`; a bare `{"status":"passed"}` file is not
+validation evidence:
 
 ```text
 python scripts/promote_validated_candidate.py planning/experiments.json --id E01 --to independently_validated --evidence results/E01/independent-validation.json
 ```
 
 Promotion to `frozen` additionally requires a named approver. Promotion to `manuscript` requires an actual manuscript artifact.
+
+The structured validation report must align with the experiment registry's
+metric name, direction, baseline, and minimum improvement. It also records
+semantic definitions, effective support, task-specific structural checks,
+robustness, and conditional multi-objective or pipeline evidence. See
+`candidate-validation-contract.md`.
 
 ## Stop rules
 

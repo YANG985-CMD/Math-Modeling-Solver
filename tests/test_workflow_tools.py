@@ -45,9 +45,14 @@ class WorkflowToolTests(unittest.TestCase):
             state = load_json(root / "audit" / "project-state.json")
             contract = load_json(root / "planning" / "problem-contract.json")
             experiments = load_json(root / "planning" / "experiments.json")
+            candidate_validation = load_json(
+                root / "audit" / "candidate-validation.json"
+            )
             self.assertEqual(state["delivery_profile"], "word-only")
             self.assertEqual(contract["delivery_profile"], "word-only")
             self.assertEqual(experiments["experiments"], [])
+            self.assertEqual(candidate_validation["status"], "pending")
+            self.assertIn("structural_validity", candidate_validation)
 
     def test_initialized_project_fails_until_evidence_is_complete(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

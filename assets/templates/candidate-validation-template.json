@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "status": "pending",
+  "primary_metric": {
+    "name": "",
+    "direction": "min",
+    "baseline": null,
+    "proposed": null,
+    "minimum_improvement": null,
+    "artifact_path": ""
+  },
+  "feasibility": {
+    "status": "pending",
+    "checks": [],
+    "artifact_path": ""
+  },
+  "fidelity": {
+    "status": "not_required",
+    "artifact_path": ""
+  },
+  "semantic_contract": {
+    "status": "pending",
+    "definitions": [],
+    "artifact_path": ""
+  },
+  "support_and_identifiability": {
+    "status": "pending",
+    "summary": "",
+    "limitations": [],
+    "artifact_path": ""
+  },
+  "structural_validity": {
+    "status": "pending",
+    "checks": []
+  },
+  "robustness": {
+    "status": "pending",
+    "tested_cases": 0,
+    "artifact_path": ""
+  },
+  "multiobjective": {
+    "applicable": false,
+    "claim_type": "not_applicable",
+    "nondominated_points": 0,
+    "objective_spans": [],
+    "artifact_path": ""
+  },
+  "pipeline": {
+    "applicable": false,
+    "stage_checks": [],
+    "uncertainty_propagation": "",
+    "artifact_path": ""
+  },
+  "known_failure_regions": [],
+  "claim_boundary": []
+}

@@ -253,6 +253,117 @@ class DiagnosticToolTests(unittest.TestCase):
             self.assertEqual(missing.returncode, 2)
             evidence = root / "independent-validation.json"
             evidence.write_text('{"status": "passed"}\n', encoding="utf-8")
+            unstructured = subprocess.run(
+                [
+                    sys.executable,
+                    str(PROMOTE),
+                    str(registry),
+                    "--id",
+                    "E1",
+                    "--to",
+                    "independently_validated",
+                    "--evidence",
+                    str(evidence),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(unstructured.returncode, 2)
+
+            artifact = root / "validation-artifact.txt"
+            artifact.write_text("independent evidence\n", encoding="utf-8")
+            report = {
+                "schema_version": "1.0",
+                "status": "passed",
+                "primary_metric": {
+                    "name": "score",
+                    "direction": "max",
+                    "baseline": 50,
+                    "proposed": 53,
+                    "minimum_improvement": 2,
+                    "artifact_path": artifact.name,
+                },
+                "feasibility": {
+                    "status": "passed",
+                    "checks": ["all hard constraints"],
+                    "artifact_path": artifact.name,
+                },
+                "fidelity": {"status": "not_required", "artifact_path": ""},
+                "semantic_contract": {
+                    "status": "passed",
+                    "definitions": ["score is maximized on the declared test set"],
+                    "artifact_path": artifact.name,
+                },
+                "support_and_identifiability": {
+                    "status": "passed",
+                    "summary": "three independent validation cases",
+                    "limitations": [],
+                    "artifact_path": artifact.name,
+                },
+                "structural_validity": {
+                    "status": "passed",
+                    "checks": [
+                        {
+                            "name": "state invariant",
+                            "status": "passed",
+                            "artifact_path": artifact.name,
+                        }
+                    ],
+                },
+                "robustness": {
+                    "status": "passed",
+                    "tested_cases": 3,
+                    "artifact_path": artifact.name,
+                },
+                "multiobjective": {
+                    "applicable": True,
+                    "claim_type": "pareto_front",
+                    "nondominated_points": 1,
+                    "objective_spans": [[0, 1], [0, 1]],
+                    "artifact_path": artifact.name,
+                },
+                "pipeline": {
+                    "applicable": False,
+                    "stage_checks": [],
+                    "uncertainty_propagation": "",
+                    "artifact_path": "",
+                },
+                "known_failure_regions": [],
+                "claim_boundary": ["validated fixture only"],
+            }
+            evidence.write_text(
+                json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            thin_front = subprocess.run(
+                [
+                    sys.executable,
+                    str(PROMOTE),
+                    str(registry),
+                    "--id",
+                    "E1",
+                    "--to",
+                    "independently_validated",
+                    "--evidence",
+                    str(evidence),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(thin_front.returncode, 2)
+            report["multiobjective"] = {
+                "applicable": False,
+                "claim_type": "not_applicable",
+                "nondominated_points": 0,
+                "objective_spans": [],
+                "artifact_path": "",
+            }
+            evidence.write_text(
+                json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
             promoted = subprocess.run(
                 [
                     sys.executable,
