@@ -1,19 +1,16 @@
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import json
 import subprocess
 import sys
 import tempfile
 import unittest
-import zipfile
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 TRACE = REPO_ROOT / "scripts" / "audit_decision_trace.py"
-WORD = REPO_ROOT / "scripts" / "audit_word_delivery.py"
 RENDER = REPO_ROOT / "scripts" / "render_frozen_results.py"
 REGISTER = REPO_ROOT / "scripts" / "register_experiment.py"
 BRIDGE = REPO_ROOT / "scripts" / "preflight_matlab_python_bridge.py"
@@ -141,59 +138,6 @@ class StrengthenedGateTests(unittest.TestCase):
             self.assertIn("58.424", rendered)
             self.assertIn("generated from frozen-results.json", rendered)
 
-    def test_word_audit_requires_omml_and_complete_page_review(self) -> None:
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            docx = root / "report.docx"
-            document_xml = """<?xml version="1.0" encoding="UTF-8"?>
-<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
- xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">
- <w:body><w:p><m:oMath><m:r><m:t>x</m:t></m:r></m:oMath></w:p></w:body>
-</w:document>"""
-            with zipfile.ZipFile(docx, "w") as archive:
-                archive.writestr("word/document.xml", document_xml)
-            rendered_pdf = root / "report-rendered.pdf"
-            rendered_pdf.write_bytes(b"%PDF-1.4\n% visual review fixture\n")
-            digest = hashlib.sha256(docx.read_bytes()).hexdigest()
-            qa = root / "word-qa.json"
-            qa.write_text(
-                json.dumps(
-                    {
-                        "schema_version": "1.0",
-                        "docx_sha256": digest,
-                        "rendered_with": "Microsoft Word",
-                        "rendered_pdf": rendered_pdf.name,
-                        "page_count": 2,
-                        "reviewed_pages": [1, 2],
-                        "reviewed_by": "tester",
-                        "reviewed_at": "2026-07-19T00:00:00+08:00",
-                        "checks": {
-                            "formulas": "passed",
-                            "charts": "passed",
-                            "pagination": "passed",
-                            "encoding": "passed",
-                        },
-                    }
-                ),
-                encoding="utf-8",
-            )
-            completed = subprocess.run(
-                [
-                    sys.executable,
-                    str(WORD),
-                    str(docx),
-                    "--qa-manifest",
-                    str(qa),
-                    "--root",
-                    str(root),
-                ],
-                capture_output=True,
-                text=True,
-                check=False,
-            )
-            self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
-            self.assertEqual(json.loads(completed.stdout)["omml_formula_count"], 1)
-
     def test_experiment_family_budget_cannot_be_reset_by_new_id(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             registry = Path(directory) / "experiments.json"
@@ -286,25 +230,25 @@ class StrengthenedGateTests(unittest.TestCase):
                 "workflow_profile": "explore",
                 "task_family": "scheduling",
                 "features": {"path_dependent", "mixed_backend"},
-                "delivery_profile": "word-only",
+                "delivery_profile": "cumcm-latex",
             }
         )
         required = {item["gate"] for item in explore["required_gates"]}
         deferred = {item["gate"] for item in explore["deferred_gates"]}
         self.assertIn("executed_baseline", required)
-        self.assertNotIn("word_omml_and_page_review", required)
-        self.assertIn("word_omml_and_page_review", deferred)
+        self.assertNotIn("cumcm_latex_preflight", required)
+        self.assertIn("cumcm_latex_preflight", deferred)
         self.assertIn("decision_trace", deferred)
         delivery = router.resolve(
             {
                 "workflow_profile": "delivery",
                 "task_family": "prediction",
                 "features": {"tabular_data"},
-                "delivery_profile": "word-only",
+                "delivery_profile": "cumcm-latex",
             }
         )
         delivery_required = {item["gate"] for item in delivery["required_gates"]}
-        self.assertIn("word_omml_and_page_review", delivery_required)
+        self.assertIn("cumcm_latex_preflight", delivery_required)
         self.assertNotIn("decision_trace", delivery_required)
         with tempfile.TemporaryDirectory() as directory:
             state_path = Path(directory) / "project-state.json"
@@ -312,7 +256,7 @@ class StrengthenedGateTests(unittest.TestCase):
                 json.dumps(
                     {
                         "workflow_profile": "explore",
-                        "delivery_profile": "word-only",
+                        "delivery_profile": "cumcm-latex",
                     }
                 ),
                 encoding="utf-8",

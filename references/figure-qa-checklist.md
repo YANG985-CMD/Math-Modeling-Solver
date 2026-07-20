@@ -37,6 +37,6 @@ Revise before delivery if any is true:
 - a categorical x axis is connected as if continuous;
 - a truncated axis exaggerates a comparison without a visible break;
 - `jet`, rainbow, 3D bars/pies, decorative gradients, or a dual y axis create misleading structure;
-- the final figure requires shrinking in Word/LaTeX to fit.
+- the final figure requires excessive shrinking in the LaTeX paper to fit.
 
 Record each QA iteration as `issue → code change → new preview → status`. A successful export is not a pass until the preview has been inspected.

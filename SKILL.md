@@ -1,6 +1,6 @@
 ---
 name: math-modeling-solver
-description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, claim-to-evidence tracing, Word reports with native OMML formulas, and CUMCM LaTeX paper production or format preflight. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
+description: End-to-end mathematical modeling problem solver for competitions and applied projects. Use for problem decomposition, data auditing, model-family selection, executable Python or MATLAB solutions, robustness analysis, publication-grade quantitative plots and code-native modeling diagrams, argument-first competition-paper writing, reproducibility, claim-to-evidence tracing, and CUMCM LaTeX paper production or format preflight. Also use when a modeling task asks what chart to use, requests paper-ready figures, multi-panel layouts, forecasting or optimization plots, sensitivity figures, Chinese scientific plotting, vector export, or figure QA.
 ---
 
 # Math Modeling Solver
@@ -28,19 +28,18 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Give every figure one primary conclusion. Do not fill a canvas with redundant panels or decoration.
 - Record units, assumptions, random seeds, software versions, commands, and input provenance.
 - Report uncertainty, failure cases, and claim boundaries.
-- For Word reports, convert LaTeX math through Pandoc to native OMML, verify `m:oMath`, render with Microsoft Word, and inspect every page. Never downgrade formulas to text or screenshots.
 
 ## Workflow Profiles
 
 - Use <code>explore</code> while understanding the problem and finding a first feasible baseline. Require the semantic contract, executable baseline, inspectable artifacts, data audit when applicable, and hard constraints for decision problems. Defer promotion and manuscript gates.
 - Use <code>candidate</code> only for the best one or two mechanisms. Add fair comparison, experiment-family budget, exact validation, sensitivity, robustness, and only the conditional fidelity, trace, generalization, multi-objective, pipeline, or bridge gates that apply.
-- Use <code>delivery</code> after canonical numbers are approved. Add result freezing, claim-evidence consistency, figure QA, manuscript checks, and the selected Word or LaTeX delivery gate.
+- Use <code>delivery</code> after canonical numbers are approved. Add result freezing, claim-evidence consistency, figure QA, manuscript checks, and the CUMCM LaTeX delivery gate when applicable.
 
 Resolve required, deferred, and inapplicable gates with <code>scripts/resolve_required_gates.py</code>. The data truth label <code>formal</code>/<code>demo</code>/<code>blocked</code> is independent of workflow profile and must not be used as a workload switch.
 
 ## Operating Workflow
 
-1. Identify the requested scope, available data, time budget, implementation language, workflow profile, and delivery profile: <code>word-only</code>, <code>paper-bundle</code>, <code>cumcm-latex</code>, <code>code-only</code>, or an explicit custom contract.
+1. Identify the requested scope, available data, time budget, implementation language, workflow profile, and delivery profile: <code>paper-bundle</code>, <code>cumcm-latex</code>, <code>code-only</code>, or an explicit custom contract.
 2. Classify each sub-question and map dependencies between them.
 3. Create or update the modeling workspace. For a new project, run:
 
@@ -68,7 +67,7 @@ Resolve required, deferred, and inapplicable gates with <code>scripts/resolve_re
 
        python scripts/audit_modeling_project.py PROJECT_DIR
 
-12. Generate manuscript numbers and tables from <code>results/frozen-results.json</code> rather than retyping them. For Word delivery, follow <code>references/word-omml-delivery.md</code> and pass the native-formula plus page-review audit.
+12. Generate manuscript numbers and tables from <code>results/frozen-results.json</code> rather than retyping them. For CUMCM delivery, follow <code>references/cumcm-2026-latex.md</code> and pass the LaTeX/PDF preflight.
 13. Deliver only the artifacts required by the delivery profile plus unresolved risks and the audit status. Do not present a failed gate as completed work.
 
 ## Human Decision Points
@@ -100,7 +99,6 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 - Code templates: read <code>references/algorithm-templates.md</code>, then inspect only the closest file under <code>assets/code/python/</code> or <code>assets/code/matlab/</code>.
 - Combination models: read <code>references/advanced-model-combinations.md</code>.
 - Paper planning or writing: read <code>references/argument-first-paper-writing.md</code>, <code>references/paper-writing.md</code>, and the templates under <code>assets/templates/</code>.
-- Word reports: read <code>references/word-omml-delivery.md</code>. Generate frozen-number blocks with <code>scripts/render_frozen_results.py</code>, build equations through Pandoc, and audit the DOCX with <code>scripts/audit_word_delivery.py</code> after Word rendering and page-by-page inspection.
 - CUMCM LaTeX formatting or submission preflight: read <code>references/cumcm-2026-latex.md</code>, start from <code>assets/latex/cumcm-2026/paper.tex</code>, build with <code>scripts/build_cumcm_latex.py</code>, and audit with <code>scripts/audit_cumcm_latex.py</code>. Recheck the current official notice before every formal submission.
 - Time-limited work: read <code>references/competition-timeline.md</code>.
 - Prompt design: read <code>references/ai-prompt-patterns.md</code>.
@@ -108,7 +106,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 
 ## Figure Workflow
 
-Use quantitative figures for empirical evidence and code-native diagrams for mechanisms or workflows. During <code>explore</code>, create only diagnostics needed to understand model failure. During <code>delivery</code>, read the routed figure references, generate from traceable data, export editable vector plus final-size raster, run programmatic QA, and visually inspect the rendered output. For <code>word-only</code>, retain source data and code in the workspace but embed only necessary figures and tables in the DOCX.
+Use quantitative figures for empirical evidence and code-native diagrams for mechanisms or workflows. During <code>explore</code>, create only diagnostics needed to understand model failure. During <code>delivery</code>, read the routed figure references, generate from traceable data, export editable vector plus final-size raster, run programmatic QA, and visually inspect the rendered output.
 
 ## Result Lifecycle
 
@@ -126,7 +124,6 @@ Use <code>rejected_infeasible</code>, <code>rejected_no_improvement</code>, or <
 - Results: baseline comparison, semantic definitions, effective support or coverage, task-specific structural checks, uncertainty or robustness evidence, limitations, and a claim-evidence map.
 - Figure: one-sentence visual message, justified chart/diagram archetype, non-redundant panel map, source-data links, uncertainty/statistics, generating code, SVG/PDF + PNG preview, grayscale check when relevant, QA JSON, and final-size visual QA.
 - Paper: one-sentence argument, section and paragraph jobs, terminology ledger, evidence-backed results, consistent figures/tables, limitations, and no unsupported claims.
-- Word-only: one final DOCX containing the necessary verified tables and figures; retain code, source data, and QA records in the working directory without requiring them as separate submission files.
 - Paper-bundle: manuscript, executable code, canonical data/results, complete figure bundle, and audit records.
 - CUMCM LaTeX: independently authored TeX source, compiled PDF, build manifest, format-audit JSON, supporting-material inventory, and completed page-by-page visual review.
 - Code-only: executable source, input contract, deterministic command, tests, result summary, and only validation-essential diagnostics.
@@ -146,4 +143,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v13;path=SKILL.md;sha256=5a4a932ce3357b7b1a0c4fe9ff2d1d5e7209f84b7be63713b85ddc4eb9fad81d;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=Wpu715yHpT66SdT10ClnHxhkMcLzn0n3GrO3dow171t5-AVQecr3cQWyHZ2tadAZCu4DigRf7cnek11RPQYyAA== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v14;path=SKILL.md;sha256=62e1f59dd5b4d5ab3f1fb27962a6e7335e5901bf91d45891f9d95819f3a228b9;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=QJIMgrKFuNjsCOt1yLVq39wR2lS5yj6aEuT-H1l1eei3fNDLeRHhdWUFq-K9oraGnw5maxku6Un9JadsDjtPAw== -->

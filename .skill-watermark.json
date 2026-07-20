@@ -2,15 +2,15 @@
   "schema_version": 1,
   "watermark_type": "render-invisible-ed25519-provenance",
   "owner": "YANG985-CMD",
-  "watermark_id": "YANG985-CMD-MMS-2026-v13",
+  "watermark_id": "YANG985-CMD-MMS-2026-v14",
   "repository": "https://github.com/YANG985-CMD/Math-Modeling-Solver",
   "algorithm": "Ed25519",
   "canonical_hash": "SHA-256",
-  "signed_at_utc": "2026-07-20T06:39:15+00:00",
+  "signed_at_utc": "2026-07-20T06:57:56+00:00",
   "public_key_base64": "0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=",
-  "bundle_sha256": "b9a006546e8fc17c05301b36aabcc3877c2d099cd192b500f0e55eb8d7e2cabc",
-  "bundle_signature_base64": "oEXRFRXHT09PkDor4Ahlw5WWY7TFxA0YS69XWSLEE-csO_XU3S56Qy-sDEo49X_g1-fGdVSnawUsJrh-KBrGAQ==",
-  "file_count": 113,
+  "bundle_sha256": "483810c59d90a92ffce9ae7537838a9e11e4607259597139fc05117425bee383",
+  "bundle_signature_base64": "I_KCmxdN53g9mcPXZpAd1HM9qGGPahS7L15TVPxnJ-s9EP2oOcvV68MCz_XLQefCKHj9ZHwcbO8PdJlqflZoBg==",
+  "file_count": 110,
   "signed_files": [
     {
       "path": ".gitattributes",
@@ -26,15 +26,15 @@
     },
     {
       "path": "README.md",
-      "sha256": "40f2ccab39cd38a5f7ee635823ee68d661c449824cdaf8ebf0ba0e5e8d9854d8"
+      "sha256": "97cd6554b65f02c089e69fdeed4ccc129f612b3b7fb50a9d5227999782980164"
     },
     {
       "path": "SKILL.md",
-      "sha256": "5a4a932ce3357b7b1a0c4fe9ff2d1d5e7209f84b7be63713b85ddc4eb9fad81d"
+      "sha256": "62e1f59dd5b4d5ab3f1fb27962a6e7335e5901bf91d45891f9d95819f3a228b9"
     },
     {
       "path": "agents/openai.yaml",
-      "sha256": "2062f5484eb67d1c13ee1a3a6c443b8bcc49981049af9fba8c090b1012779aee"
+      "sha256": "aa74d7af5056efeadabe8a72c6c2648af9d853ca513ccdffd7641fac5941368e"
     },
     {
       "path": "assets/code/matlab/entropy_weight.m",
@@ -225,10 +225,6 @@
       "sha256": "88960f0189c81f528c32cc4eb863bf79f060fa7405f4775a5288032bc2ad9f51"
     },
     {
-      "path": "assets/templates/word-visual-qa-template.json",
-      "sha256": "aaec7c89c74e4aebf6b17409b0fc0ae9bd6976d4daf1ae8636131d9dd578e0c9"
-    },
-    {
       "path": "benchmarks/blind-pilot-baseline.json",
       "sha256": "ba345365b38a513747d6b6a9af8acd8a5bd05f1752885bbd05bb1bff747efd48"
     },
@@ -274,7 +270,7 @@
     },
     {
       "path": "references/cumcm-2026-latex.md",
-      "sha256": "3d88a888233ba04252272720e53f8d6d679269ea2c462a0e24ff25d09e4341c9"
+      "sha256": "24cbadcc9fa5e6b9f69ef45529e704aefbc6186e95037d2edc839c0340e1407f"
     },
     {
       "path": "references/data-and-reproducibility.md",
@@ -286,7 +282,7 @@
     },
     {
       "path": "references/evidence-gated-workflow.md",
-      "sha256": "30a714ee85d08a2c4ae1f280b4eaed15ff7e18db0ef587f49d1fa025678be9e6"
+      "sha256": "e2e03e7ddf84759077b6d7677b894d55f1ec2714ac2dcc7f6b2bdd7d8ebbfaf3"
     },
     {
       "path": "references/exact-simulation-contract.md",
@@ -306,7 +302,7 @@
     },
     {
       "path": "references/figure-qa-checklist.md",
-      "sha256": "1f56d422c9695062e1cb800826e990325753552cb766a3d7033f264f4ca03302"
+      "sha256": "35f959536125eb932b49d2133398f45e2c8d9b1bc64e16ca5e5b7f9d4f60891d"
     },
     {
       "path": "references/hard-constraint-action-mask.md",
@@ -338,7 +334,7 @@
     },
     {
       "path": "references/standard-workflow.md",
-      "sha256": "0eeaf38c8d954f425b6396760c0c2800c969ba2cff0e701d631132fa4074438a"
+      "sha256": "624660652f345e39ee8160d5a98963e59013ee1aa09087cedd98a609b27b6385"
     },
     {
       "path": "references/task-family-router.md",
@@ -351,10 +347,6 @@
     {
       "path": "references/when-to-upgrade-model-complexity.md",
       "sha256": "27e5602750c0613c8e1ab924f84a57d173e3dbff80b37284ec0f384c3ae1815b"
-    },
-    {
-      "path": "references/word-omml-delivery.md",
-      "sha256": "624d3ee3362975996ab4d046bc1f3da2553220c08da0571b7ed3037d35710ea8"
     },
     {
       "path": "scripts/analyze_score_gap.py",
@@ -385,10 +377,6 @@
       "sha256": "223aee020d7b452d51280001a22b336f34e2c3006ab26c1513043b6e838363b4"
     },
     {
-      "path": "scripts/audit_word_delivery.py",
-      "sha256": "8af84625e1c212ef3a0ed7cff619fc50c6dbfbb253150aac8ea2409bb28b385b"
-    },
-    {
       "path": "scripts/blind_modeling_benchmark.py",
       "sha256": "e204ea876d446d97b519fd5a226e02a74dbb95fe01c950575a0058d5d57c41ce"
     },
@@ -406,7 +394,7 @@
     },
     {
       "path": "scripts/init_modeling_project.py",
-      "sha256": "f896570376f3ab06d88f0c3d42e4e3f1bc3fde536206684a0dcc962dc12e0586"
+      "sha256": "ffcb4bb3716adb46409d3dcc58f7f1eb4b50acf9929f3c28542d3f577c19b94a"
     },
     {
       "path": "scripts/preflight_matlab_python_bridge.py",
@@ -414,7 +402,7 @@
     },
     {
       "path": "scripts/promote_validated_candidate.py",
-      "sha256": "6d35ce2eace12c751608e24d890287de8fef8107e8e91742dccfa4b9a6f7607b"
+      "sha256": "10ea242b0d16c9a9d7295cb696c718e44559310ba5c99b7c456c49d076ec0f2f"
     },
     {
       "path": "scripts/provenance_watermark.py",
@@ -430,7 +418,7 @@
     },
     {
       "path": "scripts/resolve_required_gates.py",
-      "sha256": "ee8796a30a90078819c3fff84ab3ba4cf103ef6d87e3900262378f36ccdd4e3d"
+      "sha256": "ef195625ccdcfb991b89dcdb6a2b48cb7f132622a64b88d3b518e22e38e88a35"
     },
     {
       "path": "scripts/run_experiment.py",
@@ -458,23 +446,23 @@
     },
     {
       "path": "tests/test_strengthened_gates.py",
-      "sha256": "91f439dc65ce74e080dd06358054a51713480b32ef6ea1500103ba8b16bbca74"
+      "sha256": "d4e7eca82e08e18be8bd876488d5722d9ece6d71c3961d2f92e947799d9927de"
     },
     {
       "path": "tests/test_workflow_tools.py",
-      "sha256": "22f0bc922912bfad890fa3dfed705c082adc6e327e7c59b45dd37193a7950f64"
+      "sha256": "059e67c1848062cd7099181247bac76f3109c3a2679a1fb18dba1b0e52a23b8f"
     }
   ],
   "marker_files": [
     {
       "path": "SKILL.md",
-      "sha256": "5a4a932ce3357b7b1a0c4fe9ff2d1d5e7209f84b7be63713b85ddc4eb9fad81d",
-      "signature": "Wpu715yHpT66SdT10ClnHxhkMcLzn0n3GrO3dow171t5-AVQecr3cQWyHZ2tadAZCu4DigRf7cnek11RPQYyAA=="
+      "sha256": "62e1f59dd5b4d5ab3f1fb27962a6e7335e5901bf91d45891f9d95819f3a228b9",
+      "signature": "QJIMgrKFuNjsCOt1yLVq39wR2lS5yj6aEuT-H1l1eei3fNDLeRHhdWUFq-K9oraGnw5maxku6Un9JadsDjtPAw=="
     },
     {
       "path": "README.md",
-      "sha256": "40f2ccab39cd38a5f7ee635823ee68d661c449824cdaf8ebf0ba0e5e8d9854d8",
-      "signature": "KtZcBBR0pKNWxRDAHJ5MyKTHFOI5nyvB2qmPMZ3cX1hAjRvqp5DHLxPkc6JbUSaL53GI-qdqaY4NO003D_DGCg=="
+      "sha256": "97cd6554b65f02c089e69fdeed4ccc129f612b3b7fb50a9d5227999782980164",
+      "signature": "zkTzlu-9ER4KMGgp8RyTESh0LVmHogYntN0oRDScDzGfTO8-3s3ebo8YoRHniYGxbn4h7wOx-ubKzNsx3CTrBQ=="
     }
   ],
   "private_key_committed": false

@@ -18,7 +18,7 @@ TABULAR_FAMILIES = {
     "estimation",
     "evaluation",
 }
-PAPER_DELIVERIES = {"word-only", "paper-bundle", "cumcm-latex"}
+PAPER_DELIVERIES = {"paper-bundle", "cumcm-latex"}
 
 
 def always(_: dict[str, Any]) -> bool:
@@ -184,12 +184,6 @@ GATES: list[dict[str, Any]] = [
         "reason": "Check numbers, terms, units, figures, tables, and citations together.",
     },
     {
-        "gate": "word_omml_and_page_review",
-        "minimum_profile": "delivery",
-        "applies": delivery_in("word-only"),
-        "reason": "Word formulas must be native OMML and every Word-rendered page reviewed.",
-    },
-    {
         "gate": "cumcm_latex_preflight",
         "minimum_profile": "delivery",
         "applies": delivery_in("cumcm-latex"),
@@ -265,7 +259,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--feature", action="append", default=[])
     parser.add_argument(
         "--delivery-profile",
-        choices=("word-only", "paper-bundle", "cumcm-latex", "code-only", "custom"),
+        choices=("paper-bundle", "cumcm-latex", "code-only", "custom"),
     )
     parser.add_argument("--out", type=Path)
     return parser.parse_args()

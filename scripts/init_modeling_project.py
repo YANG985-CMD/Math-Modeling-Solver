@@ -356,7 +356,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--delivery-profile",
-        choices=("word-only", "paper-bundle", "code-only", "custom"),
+        choices=("paper-bundle", "cumcm-latex", "code-only", "custom"),
         default="paper-bundle",
         help="Control the expected final artifact set without weakening evidence checks.",
     )

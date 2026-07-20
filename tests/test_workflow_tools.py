@@ -26,7 +26,7 @@ def write_json(path: Path, value: dict) -> None:
 
 
 class WorkflowToolTests(unittest.TestCase):
-    def test_word_only_delivery_profile_is_recorded(self) -> None:
+    def test_cumcm_latex_delivery_profile_is_recorded(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             result = subprocess.run(
@@ -35,7 +35,7 @@ class WorkflowToolTests(unittest.TestCase):
                     str(INIT_SCRIPT),
                     str(root),
                     "--delivery-profile",
-                    "word-only",
+                    "cumcm-latex",
                 ],
                 capture_output=True,
                 text=True,
@@ -48,9 +48,9 @@ class WorkflowToolTests(unittest.TestCase):
             candidate_validation = load_json(
                 root / "audit" / "candidate-validation.json"
             )
-            self.assertEqual(state["delivery_profile"], "word-only")
+            self.assertEqual(state["delivery_profile"], "cumcm-latex")
             self.assertEqual(state["workflow_profile"], "explore")
-            self.assertEqual(contract["delivery_profile"], "word-only")
+            self.assertEqual(contract["delivery_profile"], "cumcm-latex")
             self.assertEqual(experiments["experiments"], [])
             self.assertEqual(candidate_validation["status"], "pending")
             self.assertIn("structural_validity", candidate_validation)

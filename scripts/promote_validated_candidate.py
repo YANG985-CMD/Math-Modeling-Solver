@@ -78,8 +78,8 @@ def promote(
             )
     if target == "frozen" and not approved_by:
         raise ValueError("promotion to frozen requires --approved-by")
-    if target == "manuscript" and evidence.suffix.lower() not in {".docx", ".md", ".tex", ".pdf"}:
-        raise ValueError("manuscript promotion requires a DOCX, Markdown, TeX, or PDF artifact")
+    if target == "manuscript" and evidence.suffix.lower() not in {".md", ".tex", ".pdf"}:
+        raise ValueError("manuscript promotion requires a Markdown, TeX, or PDF artifact")
 
     experiment["status"] = target
     experiment.setdefault("decision_log", []).append(

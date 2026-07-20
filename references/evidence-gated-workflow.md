@@ -10,8 +10,8 @@ Use this protocol for end-to-end projects. A stage is not complete because prose
 
 Run mode controls evidence truthfulness. Delivery profile controls packaging:
 
-- Word-only: submit one DOCX; retain code, source data, and QA records in the workspace and embed only necessary verified tables and figures.
 - Paper-bundle: deliver manuscript, code, canonical results, figure bundle, and audit records.
+- CUMCM-LaTeX: deliver TeX source, compiled PDF, build manifest, format audit, and supporting-material inventory.
 - Code-only: deliver executable code, tests, reproducibility records, and validation-essential diagnostics.
 - Custom: record an explicit artifact contract before modeling.
 

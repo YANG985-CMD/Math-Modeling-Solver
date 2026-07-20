@@ -13,10 +13,12 @@ Verify the current notice before a formal submission. The 2026 revision publishe
 - limit the main text to 30 pages; appendix pages are not limited;
 - keep the abstract, main text, and appendix anonymous;
 - cite every external source at the point of use and list it in the references;
-- submit the electronic paper as one PDF or Word file, preferably PDF, no larger than 20 MiB;
+- submit the electronic paper as one PDF generated from the LaTeX source, no larger than 20 MiB;
 - omit the commitment and numbering pages from the electronic paper, so its first page is the abstract page;
 - submit supporting material separately as one ZIP or RAR archive no larger than 20 MiB;
 - list supporting-material files in the paper appendix and include complete runnable source code there.
+
+This skill uses the LaTeX-to-PDF route for competition delivery even when the official notice permits another electronic-paper format.
 
 Official sources:
 

@@ -8,7 +8,7 @@ Use this concise sequence for competition execution. For gate evidence and inval
 - Draw dependencies between sub-questions.
 - List deliverables, units, constraints, assumptions, and available data.
 - Select formal, demo, or blocked mode.
-- Select word-only, paper-bundle, code-only, or a custom delivery profile.
+- Select paper-bundle, cumcm-latex, code-only, or a custom delivery profile.
 
 ## 2. Audit Data
 
@@ -53,4 +53,4 @@ Use this concise sequence for competition execution. For gate evidence and inval
 - Generate tables and figures from verified artifacts.
 - Cross-check notation, units, references, and frozen numbers.
 - Run the audit script and resolve failed gates before delivery.
-- Package only the requested delivery profile; keep all supporting evidence in the workspace even for word-only submission.
+- Package only the requested delivery profile and keep all supporting evidence in the workspace.
