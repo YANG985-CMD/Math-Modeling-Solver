@@ -17,6 +17,13 @@ INDEPENDENCE_LEVELS = {
     "held_out_cases": 2,
     "external_blind_cases": 3,
 }
+EXPLICIT_FAILURE_STATUSES = {
+    "failed",
+    "invalid",
+    "infeasible",
+    "rejected_infeasible",
+    "rejected_fidelity_failure",
+}
 
 
 def nonempty_text(value: Any) -> bool:
@@ -103,6 +110,35 @@ def objective_span_is_nonzero(value: Any) -> bool:
     else:
         return False
     return finite_number(low) and finite_number(high) and float(high) > float(low)
+
+
+def contains_explicit_failure(value: Any) -> bool:
+    if isinstance(value, dict):
+        if value.get("status") in EXPLICIT_FAILURE_STATUSES:
+            return True
+        return any(contains_explicit_failure(item) for item in value.values())
+    if isinstance(value, list):
+        return any(contains_explicit_failure(item) for item in value)
+    return False
+
+
+def classify_issues(report: dict[str, Any], issues: list[str]) -> str:
+    if not issues:
+        return "passed"
+    invalid_claim_markers = (
+        "primary metric does not meet",
+        "a Pareto-front claim requires",
+        "every Pareto objective span must be non-zero",
+        "a transferable schedule-policy claim requires",
+        "does not match the experiment registry",
+    )
+    if contains_explicit_failure(report) or any(
+        marker in issue for issue in issues for marker in invalid_claim_markers
+    ):
+        return "invalid_result"
+    if report.get("schema_version") != "1.1":
+        return "legacy_schema"
+    return "incomplete_evidence"
 
 
 def audit_report(
@@ -394,9 +430,11 @@ def main() -> int:
                 raise ValueError("--experiment-registry and --id must be used together")
             experiment = load_experiment(args.experiment_registry, args.id)
         issues = audit_report(report, root, experiment)
+        classification = classify_issues(report, issues)
         output = {
             "schema_version": "1.1",
-            "status": "passed" if not issues else "failed",
+            "status": "passed" if classification == "passed" else "failed",
+            "classification": classification,
             "report": str(report_path),
             "root": str(root),
             "issue_count": len(issues),

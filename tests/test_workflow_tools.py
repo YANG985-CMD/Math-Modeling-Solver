@@ -49,6 +49,7 @@ class WorkflowToolTests(unittest.TestCase):
                 root / "audit" / "candidate-validation.json"
             )
             self.assertEqual(state["delivery_profile"], "word-only")
+            self.assertEqual(state["workflow_profile"], "explore")
             self.assertEqual(contract["delivery_profile"], "word-only")
             self.assertEqual(experiments["experiments"], [])
             self.assertEqual(candidate_validation["status"], "pending")

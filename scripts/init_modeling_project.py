@@ -22,7 +22,10 @@ def write_json(path: Path, value: Any) -> None:
 
 
 def build_files(
-    mode: str, question_count: int, delivery_profile: str = "paper-bundle"
+    mode: str,
+    question_count: int,
+    delivery_profile: str = "paper-bundle",
+    workflow_profile: str = "explore",
 ) -> dict[str, Any]:
     question_ids = [f"Q{i}" for i in range(1, question_count + 1)]
     created_at = datetime.now(timezone.utc).isoformat()
@@ -71,6 +74,7 @@ def build_files(
             "schema_version": SCHEMA_VERSION,
             "created_at": created_at,
             "mode": mode,
+            "workflow_profile": workflow_profile,
             "delivery_profile": delivery_profile,
             "status": "initialized",
             "active_gate": "intake",
@@ -84,6 +88,7 @@ def build_files(
             "decision_to_support": "TODO",
             "time_budget": "TODO",
             "delivery_profile": delivery_profile,
+            "workflow_profile": workflow_profile,
             "deliverables": [],
             "global_assumptions": [],
             "data_sources": [],
@@ -238,11 +243,14 @@ def initialize(
     question_count: int,
     force: bool,
     delivery_profile: str = "paper-bundle",
+    workflow_profile: str = "explore",
 ) -> None:
     root = root.expanduser().resolve()
     if root == Path(root.anchor):
         raise SystemExit("Refusing to initialize directly in a filesystem root")
-    structured_files = build_files(mode, question_count, delivery_profile)
+    structured_files = build_files(
+        mode, question_count, delivery_profile, workflow_profile
+    )
     text_files = {
         "planning/data-audit.csv": (
             "input_id,path,source,retrieval_date,unit,provenance_verified,"
@@ -320,7 +328,7 @@ def initialize(
 
     print(f"Initialized evidence-gated modeling project: {root}")
     print(
-        f"Mode: {mode}; delivery: {delivery_profile}; "
+        f"Mode: {mode}; workflow: {workflow_profile}; delivery: {delivery_profile}; "
         f"sub-questions: {question_count}"
     )
     print(
@@ -340,6 +348,12 @@ def parse_args() -> argparse.Namespace:
         default="formal",
     )
     parser.add_argument("--questions", type=int, default=1)
+    parser.add_argument(
+        "--workflow-profile",
+        choices=("explore", "candidate", "delivery"),
+        default="explore",
+        help="Activate only the evidence gates needed at the current project stage.",
+    )
     parser.add_argument(
         "--delivery-profile",
         choices=("word-only", "paper-bundle", "code-only", "custom"),
@@ -365,6 +379,7 @@ def main() -> None:
         args.questions,
         args.force,
         args.delivery_profile,
+        args.workflow_profile,
     )
 
 

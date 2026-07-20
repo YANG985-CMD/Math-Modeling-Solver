@@ -30,13 +30,23 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
 - Report uncertainty, failure cases, and claim boundaries.
 - For Word reports, convert LaTeX math through Pandoc to native OMML, verify `m:oMath`, render with Microsoft Word, and inspect every page. Never downgrade formulas to text or screenshots.
 
+## Workflow Profiles
+
+- Use <code>explore</code> while understanding the problem and finding a first feasible baseline. Require the semantic contract, executable baseline, inspectable artifacts, data audit when applicable, and hard constraints for decision problems. Defer promotion and manuscript gates.
+- Use <code>candidate</code> only for the best one or two mechanisms. Add fair comparison, experiment-family budget, exact validation, sensitivity, robustness, and only the conditional fidelity, trace, generalization, multi-objective, pipeline, or bridge gates that apply.
+- Use <code>delivery</code> after canonical numbers are approved. Add result freezing, claim-evidence consistency, figure QA, manuscript checks, and the selected Word or LaTeX delivery gate.
+
+Resolve required, deferred, and inapplicable gates with <code>scripts/resolve_required_gates.py</code>. The data truth label <code>formal</code>/<code>demo</code>/<code>blocked</code> is independent of workflow profile and must not be used as a workload switch.
+
 ## Operating Workflow
 
-1. Identify the requested scope, available data, time budget, implementation language, and delivery profile: <code>word-only</code>, <code>paper-bundle</code>, <code>cumcm-latex</code>, <code>code-only</code>, or an explicit custom contract.
+1. Identify the requested scope, available data, time budget, implementation language, workflow profile, and delivery profile: <code>word-only</code>, <code>paper-bundle</code>, <code>cumcm-latex</code>, <code>code-only</code>, or an explicit custom contract.
 2. Classify each sub-question and map dependencies between them.
 3. Create or update the modeling workspace. For a new project, run:
 
-       python scripts/init_modeling_project.py PROJECT_DIR --mode formal --questions N
+       python scripts/init_modeling_project.py PROJECT_DIR --mode formal --workflow-profile explore --questions N
+
+   Resolve the applicable gates for the task family and method features before loading detailed references.
 
 4. Before modeling tabular data, run the executable audit and declare any known prediction roles:
 
@@ -45,7 +55,7 @@ Turn a modeling prompt into a reproducible result and a defensible paper. Optimi
    The script supports CSV, TSV, delimited TXT/DAT, Excel, and two-dimensional MAT variables. Review its JSON, CSV, and HTML outputs; automated flags are screening evidence, not automatic deletion rules. Do not claim that leakage is absent unless feature availability at prediction time is also documented.
 5. Before comparing candidates, record the semantic contract, effective support, and task-specific state invariants. For scored optimization, compute the theoretical bound, executed baseline, reference gap, component gaps, and weighted sensitivity before tuning. Use <code>scripts/analyze_score_gap.py</code> only when its additive normalized-score assumption matches the real score contract.
 6. For discrete-event search, scheduling, Beam Search, MPC, or learned policies, construct a hard-constraint action mask and compare the surrogate with the exact simulator for at least 50 consecutive steps using <code>scripts/check_transition_fidelity.py</code>. Do this before expanding search width, horizon, population, or training budget.
-7. Register each optimization experiment with a hypothesis, primary metric, improvement threshold, local run/runtime/candidate budget, cumulative experiment-family budget, parent experiment, adaptive-search-bias note, feasibility/fidelity requirements, and stop rule. Use <code>scripts/register_experiment.py</code> where practical.
+7. Register each optimization experiment with a hypothesis, primary metric, improvement threshold, local run/runtime/candidate budget, cumulative experiment-family budget, parent experiment, adaptive-search-bias note, feasibility/fidelity requirements, and stop rule. Use <code>scripts/register_experiment.py</code>; after registration, prefer <code>scripts/run_experiment.py</code> to capture the command, runtime, logs, result hash, candidate count, environment, and registry update automatically.
 8. Before promoting a candidate, complete <code>assets/templates/candidate-validation-template.json</code> and run <code>scripts/audit_candidate_evidence.py</code>. Distinguish reproducibility, sensitivity, robustness, and generalization; declare instance-specific schedules and validation independence. A low residual, good cycle closure, high silhouette score, or improved cross-validation metric is insufficient when the reconstructed state, support, or downstream decision is invalid.
 9. Advance through the five evidence gates in order:
    - Intake: problem contract and data audit are complete.
@@ -75,7 +85,8 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 ## Reference Routing
 
 - Rapid triage: read <code>references/problem-triage.md</code> and <code>references/task-family-router.md</code>.
-- Model selection or upgrades: read <code>references/model-selection.md</code> and <code>references/when-to-upgrade-model-complexity.md</code>.
+- Model selection or upgrades: read <code>references/model-selection.md</code>, <code>references/when-to-upgrade-model-complexity.md</code>, and <code>references/failure-to-method-router.md</code> after an executed baseline exposes a named failure.
+- Workflow depth or gate applicability: run <code>scripts/resolve_required_gates.py</code> and load only the references for required gates. Do not run delivery gates during exploration.
 - Scored optimization or comparison with another result: read <code>references/score-gap-analysis.md</code>, then use <code>scripts/analyze_score_gap.py</code> when its score assumption applies.
 - Discrete-event scheduling, Beam Search, MPC, or simulator-backed search: read <code>references/discrete-event-scheduling.md</code>, <code>references/hard-constraint-action-mask.md</code>, and <code>references/exact-simulation-contract.md</code>. Use <code>scripts/check_transition_fidelity.py</code> before increasing search budget.
 - Optimization experiments or result promotion: read <code>references/experiment-budget-and-promotion.md</code> and <code>references/candidate-validation-contract.md</code>, then use <code>scripts/register_experiment.py</code>, <code>scripts/audit_candidate_evidence.py</code>, and <code>scripts/promote_validated_candidate.py</code> where practical.
@@ -97,42 +108,7 @@ If the user is unavailable and time is limited, keep the baseline, document the 
 
 ## Figure Workflow
 
-Use one of two routes and keep their evidence roles distinct.
-
-### Quantitative route
-
-Use for comparisons, distributions, forecasts, residuals, convergence, Pareto fronts, sensitivity, robustness, spatial/network results, and simulation trajectories.
-
-1. State the one-sentence conclusion and the reader question.
-2. Inspect variable types, sample sizes, grouping, uncertainty, units, and the baseline before selecting a chart.
-3. Use the native backend selected for the modeling run. Python/Matplotlib and MATLAB are both valid when their figures satisfy the same traceability, statistics, export, and visual-QA contract. Do not force a cross-language handoff that risks changing authoritative results.
-4. For Python, start from <code>assets/code/python/modeling_plotkit.py</code>. For MATLAB, follow <code>references/matlab-native-workflow.md</code> and use deterministic <code>exportgraphics</code> commands.
-5. Render at final size, run programmatic QA, open the PNG preview, revise, then export vector and raster deliverables.
-
-### Code-native diagram route
-
-Use for problem structure, algorithm pipelines, layered architectures, feedback loops, and baseline-versus-proposed mechanisms.
-
-1. Classify the argument as pipeline, layered system, closed loop, contrast, taxonomy, or decision flow.
-2. Require module and relationship detail; an abstract alone is not enough for a defensible architecture.
-3. Use flat vector structure, functional color, short labels, explicit arrows, and one visually dominant innovation.
-4. Prefer editable SVG/PDF generated from code. Start from <code>assets/templates/modeling-diagram-spec-template.json</code> and use <code>scripts/build_modeling_diagram.py</code> for supported layouts.
-5. Mark any AI-generated conceptual illustration as illustrative. Never place it in a quantitative evidence role.
-
-### Figure bundle by delivery profile
-
-For <code>paper-bundle</code>, deliver or record:
-
-- a completed figure contract with conclusion, role, panel map, final size, backend, source data, statistics, and review risks;
-- the generating script and deterministic command;
-- source data or a traceable result artifact;
-- SVG or PDF with editable text, plus a 300 dpi PNG preview;
-- a grayscale preview when color carries categories;
-- a QA JSON report and an actual visual inspection of the final-size preview.
-
-Use <code>scripts/audit_figure_bundle.py</code> to validate a completed bundle. A successful save call is not visual QA.
-
-For <code>word-only</code>, keep source data, generating code, and QA records in the workspace, but embed only the figures and tables necessary for the report in the final Word file. Do not create redundant public CSV/Excel attachments. For <code>code-only</code>, keep visual outputs limited to diagnostics needed to validate the implementation. A custom contract overrides these defaults when explicit.
+Use quantitative figures for empirical evidence and code-native diagrams for mechanisms or workflows. During <code>explore</code>, create only diagnostics needed to understand model failure. During <code>delivery</code>, read the routed figure references, generate from traceable data, export editable vector plus final-size raster, run programmatic QA, and visually inspect the rendered output. For <code>word-only</code>, retain source data and code in the workspace but embed only necessary figures and tables in the DOCX.
 
 ## Result Lifecycle
 
@@ -170,4 +146,4 @@ Add a component only when all are true:
 
 Otherwise retain the baseline and improve data quality, formulation, diagnostics, or explanation first.
 
-<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v12;path=SKILL.md;sha256=386ce61714c8ec6892b030fa7e1c19f400c2ea891e134ddf4bcca0bf4c108bfa;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=dj48r2pIY4Ro5Zz-njp7yET5d8CByufk4O230PNHpsymyVNHi1BFQ5NI3UsOeOrXr3RmmM3RZkrUbiOesYHuDw== -->
+<!-- skill-provenance:v1;owner=YANG985-CMD;id=YANG985-CMD-MMS-2026-v13;path=SKILL.md;sha256=5a4a932ce3357b7b1a0c4fe9ff2d1d5e7209f84b7be63713b85ddc4eb9fad81d;pub=0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=;sig=Wpu715yHpT66SdT10ClnHxhkMcLzn0n3GrO3dow171t5-AVQecr3cQWyHZ2tadAZCu4DigRf7cnek11RPQYyAA== -->

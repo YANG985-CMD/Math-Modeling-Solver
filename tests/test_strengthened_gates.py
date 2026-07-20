@@ -17,6 +17,9 @@ WORD = REPO_ROOT / "scripts" / "audit_word_delivery.py"
 RENDER = REPO_ROOT / "scripts" / "render_frozen_results.py"
 REGISTER = REPO_ROOT / "scripts" / "register_experiment.py"
 BRIDGE = REPO_ROOT / "scripts" / "preflight_matlab_python_bridge.py"
+CANDIDATE = REPO_ROOT / "scripts" / "audit_candidate_evidence.py"
+ROUTER = REPO_ROOT / "scripts" / "resolve_required_gates.py"
+RUN_EXPERIMENT = REPO_ROOT / "scripts" / "run_experiment.py"
 
 
 def load_module(name: str, path: Path):
@@ -253,6 +256,171 @@ class StrengthenedGateTests(unittest.TestCase):
         invalid = dict(valid)
         invalid["array"] = [[1, 2, 3]]
         self.assertIn("array round trip failed", bridge.verify_result(invalid))
+
+    def test_candidate_audit_distinguishes_legacy_incomplete_and_invalid(self) -> None:
+        candidate = load_module("candidate_audit", CANDIDATE)
+        self.assertEqual(
+            candidate.classify_issues(
+                {"schema_version": "1.0"}, ["schema_version must be 1.1"]
+            ),
+            "legacy_schema",
+        )
+        self.assertEqual(
+            candidate.classify_issues(
+                {"schema_version": "1.1"}, ["robustness artifact is missing"]
+            ),
+            "incomplete_evidence",
+        )
+        self.assertEqual(
+            candidate.classify_issues(
+                {"schema_version": "1.1", "feasibility": {"status": "failed"}},
+                ["feasibility.status must be passed"],
+            ),
+            "invalid_result",
+        )
+
+    def test_gate_router_defers_delivery_and_skips_irrelevant_checks(self) -> None:
+        router = load_module("gate_router", ROUTER)
+        explore = router.resolve(
+            {
+                "workflow_profile": "explore",
+                "task_family": "scheduling",
+                "features": {"path_dependent", "mixed_backend"},
+                "delivery_profile": "word-only",
+            }
+        )
+        required = {item["gate"] for item in explore["required_gates"]}
+        deferred = {item["gate"] for item in explore["deferred_gates"]}
+        self.assertIn("executed_baseline", required)
+        self.assertNotIn("word_omml_and_page_review", required)
+        self.assertIn("word_omml_and_page_review", deferred)
+        self.assertIn("decision_trace", deferred)
+        delivery = router.resolve(
+            {
+                "workflow_profile": "delivery",
+                "task_family": "prediction",
+                "features": {"tabular_data"},
+                "delivery_profile": "word-only",
+            }
+        )
+        delivery_required = {item["gate"] for item in delivery["required_gates"]}
+        self.assertIn("word_omml_and_page_review", delivery_required)
+        self.assertNotIn("decision_trace", delivery_required)
+        with tempfile.TemporaryDirectory() as directory:
+            state_path = Path(directory) / "project-state.json"
+            state_path.write_text(
+                json.dumps(
+                    {
+                        "workflow_profile": "explore",
+                        "delivery_profile": "word-only",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            updated = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROUTER),
+                    "--project-state",
+                    str(state_path),
+                    "--profile",
+                    "candidate",
+                    "--update-project-state",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(updated.returncode, 0, updated.stdout + updated.stderr)
+            self.assertEqual(
+                json.loads(state_path.read_text(encoding="utf-8"))[
+                    "workflow_profile"
+                ],
+                "candidate",
+            )
+
+    def test_run_experiment_records_command_and_runtime_automatically(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            registry = root / "planning" / "experiments.json"
+            registry.parent.mkdir(parents=True)
+            create = subprocess.run(
+                [
+                    sys.executable,
+                    str(REGISTER),
+                    str(registry),
+                    "create",
+                    "--id",
+                    "E1",
+                    "--experiment-family",
+                    "fixture",
+                    "--candidate-budget",
+                    "3",
+                    "--cumulative-candidate-budget",
+                    "3",
+                    "--adaptive-search-bias-notes",
+                    "No adaptive search",
+                    "--hypothesis",
+                    "wrapper records output",
+                    "--metric",
+                    "score",
+                    "--direction",
+                    "max",
+                    "--baseline",
+                    "1",
+                    "--min-improvement",
+                    "0.1",
+                    "--max-runs",
+                    "2",
+                    "--max-runtime-minutes",
+                    "5",
+                    "--stop-condition",
+                    "stop",
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(create.returncode, 0, create.stdout + create.stderr)
+            writer = root / "write_result.py"
+            writer.write_text(
+                "import json, os\n"
+                "path = os.environ['MMS_RESULT_JSON']\n"
+                "json.dump({'value': 1.5, 'feasible': True, 'fidelity': 'passed', "
+                "'candidates_evaluated': 2, 'notes': 'wrapper fixture'}, open(path, 'w'))\n",
+                encoding="utf-8",
+            )
+            result_json = root / "results" / "run.json"
+            manifest = root / "audit" / "run-manifest.json"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(RUN_EXPERIMENT),
+                    str(registry),
+                    "--id",
+                    "E1",
+                    "--result-json",
+                    str(result_json),
+                    "--manifest-out",
+                    str(manifest),
+                    "--",
+                    sys.executable,
+                    str(writer),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+            saved = json.loads(manifest.read_text(encoding="utf-8"))
+            self.assertEqual(saved["status"], "recorded")
+            self.assertGreater(saved["runtime_minutes"], 0)
+            self.assertEqual(
+                json.loads(registry.read_text(encoding="utf-8"))["experiments"][0][
+                    "runs"
+                ][0]["candidates_evaluated"],
+                2,
+            )
 
 
 if __name__ == "__main__":
