@@ -70,7 +70,8 @@ def solve_linear_program(
         method="highs",
     )
     objective_value = None if result.fun is None else float(sign * result.fun)
-    slacks = None if result.ineqlin is None else np.asarray(result.ineqlin.residual)
+    residual = None if result.ineqlin is None else result.ineqlin.residual
+    slacks = None if residual is None else np.asarray(residual)
     return {
         "status": str(result.message),
         "success": bool(result.success),

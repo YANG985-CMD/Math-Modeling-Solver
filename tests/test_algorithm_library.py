@@ -53,6 +53,18 @@ class AlgorithmLibraryTests(unittest.TestCase):
         self.assertAlmostEqual(float(result["objective_value"]), 12.0)
         self.assertTrue(result["constraint_feasible"])
 
+    def test_infeasible_linear_program_returns_structured_failure(self) -> None:
+        result = solve_linear_program(
+            [1.0],
+            sense="max",
+            lhs_ineq=[[1.0], [-1.0]],
+            rhs_ineq=[0.0, -1.0],
+        )
+        self.assertFalse(result["success"])
+        self.assertIsNone(result["objective_value"])
+        self.assertIsNone(result["solution"])
+        self.assertIsNone(result["inequality_slack"])
+
     def test_monte_carlo_is_seeded_and_reports_uncertainty(self) -> None:
         sampler = lambda rng, n: rng.normal(size=n)
         first = monte_carlo_estimate(sampler, 500, seed=7)
