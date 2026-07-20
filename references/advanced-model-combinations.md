@@ -2,6 +2,11 @@
 
 Use this file when a basic single model is not enough and you need a defensible combination route.
 
+The companion `model-catalog.md` and `model-routing-rules.json` add the
+evidence contract for forecast-to-decision, mechanism-plus-data, graph-plus-
+optimization, and uncertainty combinations. Read them before adding a
+combination that is not already described here.
+
 For each combination, check:
 
 - Primary task type

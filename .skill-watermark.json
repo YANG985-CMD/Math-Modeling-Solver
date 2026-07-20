@@ -6,11 +6,11 @@
   "repository": "https://github.com/YANG985-CMD/Math-Modeling-Solver",
   "algorithm": "Ed25519",
   "canonical_hash": "SHA-256",
-  "signed_at_utc": "2026-07-20T06:57:56+00:00",
+  "signed_at_utc": "2026-07-20T08:00:08+00:00",
   "public_key_base64": "0ofp8dKKJWMQK0LUC4dZDC8cynCRQlggy7cVeq7NfBo=",
-  "bundle_sha256": "483810c59d90a92ffce9ae7537838a9e11e4607259597139fc05117425bee383",
-  "bundle_signature_base64": "I_KCmxdN53g9mcPXZpAd1HM9qGGPahS7L15TVPxnJ-s9EP2oOcvV68MCz_XLQefCKHj9ZHwcbO8PdJlqflZoBg==",
-  "file_count": 110,
+  "bundle_sha256": "db1ea5f2d69a71eb654e39409ae84c0e72b89f9c678de90c5a6e1122c441be46",
+  "bundle_signature_base64": "GLCmFcuoArltwVjq-bXCiWJN_qOkSnTF-b-TjOmaI34XrZzjXrZnhtdHtY4Ivg48V3ZGrjDnvsZRgx_LW0BmDg==",
+  "file_count": 113,
   "signed_files": [
     {
       "path": ".gitattributes",
@@ -26,7 +26,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "97cd6554b65f02c089e69fdeed4ccc129f612b3b7fb50a9d5227999782980164"
+      "sha256": "10f5bfa5c55026ed01b20618727823e1db52715e3e5b354721cabcac963d68eb"
     },
     {
       "path": "SKILL.md",
@@ -242,7 +242,7 @@
     },
     {
       "path": "references/advanced-model-combinations.md",
-      "sha256": "dac82d8d8a2976e351e0b3e21bcb11cc258fba34bd3c8fab02770aafb2b74f1b"
+      "sha256": "bca76e213c306fa99aceab6104f27e0cf6647c8b84a9c5aea6a0751e5dd7c043"
     },
     {
       "path": "references/ai-prompt-patterns.md",
@@ -313,8 +313,16 @@
       "sha256": "1573c1f9f54be5ab2a383c76d23d06e599c0769f591af3d3d3f522bc03d15bd5"
     },
     {
+      "path": "references/model-catalog.md",
+      "sha256": "9d69a2d772542cb40b157f0ad91b932f97a14a2e464f26fb84a334eb5e8b9dc7"
+    },
+    {
+      "path": "references/model-routing-rules.json",
+      "sha256": "8c5c015eef7ba1a2275bd9d6fefc1117cf3aa274c3808b6088e521425f5db4f4"
+    },
+    {
       "path": "references/model-selection.md",
-      "sha256": "1e95caef5b6a020116ab2b814232c1ea1ff33c753000e95dcb323e9b4b6899c2"
+      "sha256": "89da00709724b9726e20a37353ca5e111f66f313b2bc16ab3c32590bbd8ba7be"
     },
     {
       "path": "references/modeling-figure-workflow.md",
@@ -338,7 +346,7 @@
     },
     {
       "path": "references/task-family-router.md",
-      "sha256": "b139ee7e73a715b420f5c979c59760102750e5a58b5af0864bc09e74d2156ee7"
+      "sha256": "a6aee7c1d7b611d26d775e1663a2a64b34d4fa1692e67de6ffc05f337153c91c"
     },
     {
       "path": "references/validation-playbook.md",
@@ -445,6 +453,10 @@
       "sha256": "056737352118ec6e2e4857aa5d8ea31463eb23ac2bd2663cb2119407bd276328"
     },
     {
+      "path": "tests/test_model_catalog.py",
+      "sha256": "93ba22e7bd6b4c814335a010ee6a1f9aa49ff7697362da5cdc40ca1bf5d77152"
+    },
+    {
       "path": "tests/test_strengthened_gates.py",
       "sha256": "d4e7eca82e08e18be8bd876488d5722d9ece6d71c3961d2f92e947799d9927de"
     },
@@ -461,8 +473,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "97cd6554b65f02c089e69fdeed4ccc129f612b3b7fb50a9d5227999782980164",
-      "signature": "zkTzlu-9ER4KMGgp8RyTESh0LVmHogYntN0oRDScDzGfTO8-3s3ebo8YoRHniYGxbn4h7wOx-ubKzNsx3CTrBQ=="
+      "sha256": "10f5bfa5c55026ed01b20618727823e1db52715e3e5b354721cabcac963d68eb",
+      "signature": "UkNxUC-Cw0qJhp9G8aQRB8tOZjAAxe0ZuvVsTuoiMOKwDlamlZ43GceO-Atch6CI9BEmF7IovzaZvDq19ZkPCg=="
     }
   ],
   "private_key_committed": false

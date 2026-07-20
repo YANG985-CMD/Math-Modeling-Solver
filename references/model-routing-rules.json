@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Evidence-aware task-family routing and candidate model selection",
+  "authority": "candidate_catalog_only",
+  "selection_policy": {
+    "semantic_contract_first": true,
+    "baseline_must_run": true,
+    "maximum_candidate_mechanisms": 2,
+    "upgrade_requires_named_failure": true,
+    "keyword_signals_are_not_sufficient": true,
+    "validation_claims_are_separate": [
+      "reproducibility",
+      "sensitivity",
+      "robustness",
+      "generalization"
+    ]
+  },
+  "task_families": [
+    {
+      "id": "forecasting_estimation",
+      "label": "预测与参数估计",
+      "observed_structure": "time-indexed outcome or parameter inference",
+      "baseline_models": ["naive_or_seasonal_naive", "linear_trend", "ARIMA"],
+      "upgrade_models": ["state_space", "tree_ensemble", "GAM", "residual_sequence_model"],
+      "required_contract": ["forecast_horizon", "information_available_at_prediction_time", "time_split"],
+      "validation": ["rolling_origin", "residual_diagnostics", "interval_or_quantile_coverage"],
+      "failure_signals": ["residual_autocorrelation", "regime_change", "nonlinear_covariate_effect", "unstable_extrapolation"],
+      "risks": ["temporal_leakage", "small_sample_deep_model", "nonstationarity", "external_data_unavailable"]
+    },
+    {
+      "id": "classification_detection",
+      "label": "分类与识别",
+      "observed_structure": "label, event, or threshold decision",
+      "baseline_models": ["class_frequency", "logistic_regression", "decision_tree"],
+      "upgrade_models": ["random_forest", "gradient_boosting", "SVM", "cost_sensitive_learning"],
+      "required_contract": ["label_definition", "decision_threshold", "class_availability"],
+      "validation": ["group_or_temporal_split", "F1_or_PR_AUC", "calibration", "threshold_sensitivity"],
+      "failure_signals": ["class_imbalance", "nonlinear_boundary", "poor_calibration", "group_shift"],
+      "risks": ["accuracy_only", "label_leakage", "threshold_overfit", "unsupported_transfer"]
+    },
+    {
+      "id": "evaluation_ranking",
+      "label": "综合评价与排序",
+      "observed_structure": "comparable alternatives and multiple indicators",
+      "baseline_models": ["equal_weight_score", "stated_weighted_sum"],
+      "upgrade_models": ["entropy_weight", "CRITIC", "AHP_fusion", "TOPSIS", "VIKOR", "DEA"],
+      "required_contract": ["indicator_direction", "normalization", "weight_source", "comparability"],
+      "validation": ["weight_perturbation", "rank_stability", "known_fact_or_expert_comparison", "redundancy_check"],
+      "failure_signals": ["unstable_rank", "weight_dispute", "indicator_redundancy", "efficiency_structure"],
+      "risks": ["wrong_indicator_direction", "opaque_weights", "normalization_artifact", "uninterpretable_rank"]
+    },
+    {
+      "id": "optimization_scheduling_routing",
+      "label": "优化、调度、选址与路径",
+      "observed_structure": "decision variables, objective, and explicit feasible set",
+      "baseline_models": ["LP_or_MILP", "dynamic_programming", "greedy", "exact_small_instance"],
+      "upgrade_models": ["decomposition", "robust_or_stochastic_programming", "GA", "SA", "PSO", "VNS"],
+      "required_contract": ["decision_variables", "objective_direction", "hard_constraints", "state_transition"],
+      "validation": ["feasibility_and_action_mask", "bound_or_reference_gap", "exact_replay", "budgeted_comparison"],
+      "failure_signals": ["feasible_score_plateau", "nonlinear_scale", "tail_risk", "surrogate_exact_mismatch"],
+      "risks": ["penalty_only_constraints", "single_seed_claim", "unbounded_search_budget", "instance_specific_policy"]
+    },
+    {
+      "id": "clustering_profiling",
+      "label": "聚类、分群与画像",
+      "observed_structure": "unlabeled observations with a meaningful grouping question",
+      "baseline_models": ["standardized_KMeans", "hierarchical_clustering"],
+      "upgrade_models": ["GMM", "DBSCAN", "spectral_clustering", "consensus_clustering"],
+      "required_contract": ["observation_unit", "feature_scaling", "cluster_use"],
+      "validation": ["resampling_stability", "internal_metrics", "cluster_profile_interpretation"],
+      "failure_signals": ["unstable_clusters", "non_spherical_shape", "noise", "empty_semantics"],
+      "risks": ["metric_only_selection", "arbitrary_cluster_count", "scale_dependence", "unsupported_labels"]
+    },
+    {
+      "id": "mechanism_simulation",
+      "label": "机理、仿真与系统动力学",
+      "observed_structure": "state evolution governed by equations, balances, or events",
+      "baseline_models": ["difference_or_ODE_model", "balance_relation", "deterministic_simulation"],
+      "upgrade_models": ["parameter_calibration", "Bayesian_estimation", "Monte_Carlo", "data_correction", "hybrid_mechanism_model"],
+      "required_contract": ["state_variables", "units", "initial_conditions", "parameter_sources", "event_order"],
+      "validation": ["historical_replay", "conservation_or_physical_invariants", "parameter_sensitivity", "extreme_scenarios"],
+      "failure_signals": ["residual_structure", "parameter_uncertainty", "scenario_tail_failure", "unit_mismatch"],
+      "risks": ["unsourced_parameters", "overstrong_assumptions", "unvalidated_scenarios", "black_box_override"]
+    },
+    {
+      "id": "network_graph",
+      "label": "网络、图论与传播",
+      "observed_structure": "nodes, edges, weights, flow, or diffusion",
+      "baseline_models": ["shortest_path", "flow_or_cut", "centrality", "PageRank", "community_detection"],
+      "upgrade_models": ["network_resilience", "diffusion_model", "graph_optimization", "multilayer_network"],
+      "required_contract": ["node_definition", "edge_rule", "weight_meaning", "time_or_direction"],
+      "validation": ["node_or_edge_removal", "connectivity", "efficiency", "propagation_comparison"],
+      "failure_signals": ["fragility", "diffusion_mismatch", "missing_weight_basis", "scale_limit"],
+      "risks": ["ambiguous_graph_construction", "unsupported_edge_weights", "metric_not_answering_question"]
+    },
+    {
+      "id": "uncertainty_risk_robustness",
+      "label": "不确定性、风险与鲁棒性",
+      "observed_structure": "uncertain inputs, scenarios, tails, or reliability targets",
+      "baseline_models": ["scenario_sweep", "bootstrap", "interval_estimation", "Monte_Carlo"],
+      "upgrade_models": ["robust_optimization", "chance_constraints", "CVaR", "minimax_regret"],
+      "required_contract": ["uncertain_quantities", "scenario_distribution", "risk_measure", "decision_timing"],
+      "validation": ["declared_scenarios", "quantiles", "worst_case", "uncertainty_propagation"],
+      "failure_signals": ["worst_case_collapse", "tail_sensitive_objective", "parameter_instability"],
+      "risks": ["unjustified_distribution", "too_few_scenarios", "mean_only_report", "double_counted_uncertainty"]
+    },
+    {
+      "id": "spatial_inverse_measurement",
+      "label": "空间过程与逆测量",
+      "observed_structure": "coordinates, spatial dependence, spectra, or latent reconstruction",
+      "baseline_models": ["coordinate_audit", "simple_interpolation", "FFT_or_periodogram", "linear_inverse_model"],
+      "upgrade_models": ["kriging", "spatial_regression", "Kalman_or_particle_filter", "sparse_recovery"],
+      "required_contract": ["coordinate_convention", "sampling_axis", "support_domain", "identifiability"],
+      "validation": ["held_out_locations_or_frames", "support_coverage", "reconstruction_invariants", "axis_consistency"],
+      "failure_signals": ["latent_state_motion", "ill_conditioning", "geometry_impossible", "missing_support"],
+      "risks": ["axis_confusion", "leakage_across_frames", "low_residual_wrong_geometry", "unsupported_extrapolation"]
+    }
+  ],
+  "combination_patterns": [
+    {
+      "id": "forecast_then_optimize",
+      "components": ["forecasting_estimation", "optimization_scheduling_routing"],
+      "entry_condition": "downstream decision depends on an estimated future quantity",
+      "required_evidence": ["forecast validation", "uncertainty propagation", "downstream feasibility", "decision utility"]
+    },
+    {
+      "id": "evaluate_then_cluster",
+      "components": ["evaluation_ranking", "clustering_profiling"],
+      "entry_condition": "a ranking and a meaningful subgroup interpretation are both required",
+      "required_evidence": ["rank stability", "cluster stability", "separate semantic interpretation"]
+    },
+    {
+      "id": "mechanism_plus_data_correction",
+      "components": ["mechanism_simulation", "forecasting_estimation"],
+      "entry_condition": "the mechanism is credible but residual structure remains after the baseline",
+      "required_evidence": ["mechanism invariants", "residual diagnostics", "held-out comparison", "parameter or uncertainty audit"]
+    },
+    {
+      "id": "graph_then_optimize",
+      "components": ["network_graph", "optimization_scheduling_routing"],
+      "entry_condition": "a graph is an input to path, flow, allocation, or resilience decisions",
+      "required_evidence": ["graph construction audit", "feasibility", "perturbation stability", "exact objective comparison"]
+    },
+    {
+      "id": "trend_plus_state_correction",
+      "components": ["forecasting_estimation", "uncertainty_risk_robustness"],
+      "entry_condition": "a small-sample trend baseline leaves identifiable state-dependent residuals",
+      "required_evidence": ["residual state identifiability", "transition stability", "rolling comparison"]
+    }
+  ]
+}

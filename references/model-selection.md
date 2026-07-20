@@ -11,6 +11,16 @@ Use this schema for every method:
 - Companion methods
 - Fallback alternatives
 
+For the expanded task-family catalog and machine-readable routing rules, read
+`model-catalog.md` and `model-routing-rules.json` after the semantic contract is
+written. Treat them as candidate sources only: the executed baseline, named
+failure, fair budget, and evidence gates in this skill remain authoritative.
+
+Do not choose a method from a keyword match or from the presence of a template.
+The catalog is useful for finding a missing candidate family, not for bypassing
+problem-specific assumptions, hard constraints, exact simulation, or
+independent validation.
+
 ## Evaluation Methods
 
 ### TOPSIS

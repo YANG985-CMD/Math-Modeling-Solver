@@ -2,6 +2,11 @@
 
 Classify each sub-question independently, then map dependencies between outputs.
 
+For the expanded baseline/upgrade/validation/risk catalog, read
+`model-catalog.md` and `model-routing-rules.json` after this semantic triage.
+Use the structured rules to check coverage, not to replace the problem
+contract.
+
 | Observable structure | Candidate baseline | Upgrade only if evidence demands it |
 | --- | --- | --- |
 | Multi-indicator ranking | equal-weight score, entropy-TOPSIS | AHP fusion, grey relation, DEA |
