@@ -11,7 +11,7 @@
 ![Figures](https://img.shields.io/badge/Figures-SVG%20%7C%20PDF%20%7C%20300dpi-2563EB)
 ![Tests](https://img.shields.io/badge/Tests-35%2F35%20passing-16A34A)
 
-面向数学建模竞赛的端到端 Agent Skill，建议搭配matlab的官方mcp使用，直接向codex发送指令：帮我配置一下这个mcp，链接：https://github.com/matlab/matlab-mcp-server
+面向数学建模竞赛的端到端 Agent Skill，最好搭配matlab的官方mcp使用，直接向codex发送指令：帮我配置一下这个mcp，链接：https://github.com/matlab/matlab-mcp-server
 
 
 </div>
