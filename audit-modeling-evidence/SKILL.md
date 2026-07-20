@@ -28,6 +28,7 @@ Audit an existing modeling project without silently repairing, rerunning, or pro
 - Hard-constraint decisions, first divergence, and surrogate/exact transition checks: `scripts/audit_decision_trace.py` and `scripts/check_transition_fidelity.py`.
 - MATLAB/Python scalar, array, JSON, and Chinese-path round trips: `scripts/preflight_matlab_python_bridge.py`.
 - Whole-project artifact, terminology, result, and manuscript consistency: `scripts/audit_modeling_project.py`.
+- Claim/result/run/figure registries, real-data PoCs, frozen hashes, and human review items: `scripts/init_evidence_bundle.py` and `scripts/audit_evidence_bundle.py`.
 - Gate applicability and deferred checks: `scripts/resolve_required_gates.py`.
 
 ## Conditional rules
@@ -36,6 +37,7 @@ Audit an existing modeling project without silently repairing, rerunning, or pro
 - Compare a surrogate with an exact simulator using predeclared coverage and independent cases. Use the repository's 50-step default only when the horizon and state space make it meaningful; otherwise document a task-specific coverage rule.
 - Separate reproducibility, sensitivity, robustness, and generalization. Same-instance replay is not evidence of transfer.
 - Do not call one trade-off point a Pareto front. Report coverage and limitations.
+- Treat a paper-ready number as frozen only when its registry row links to a passed run, validated artifact, SHA-256 hash, and human approval.
 
 ## Required audit output
 
@@ -48,4 +50,4 @@ Return:
 - paper-ready versus diagnostic-only claims;
 - the smallest next repair and its stop condition.
 
-Read only the reference needed by the lane: `references/data-and-reproducibility.md`, `references/candidate-validation-contract.md`, `references/experiment-budget-and-promotion.md`, `references/exact-simulation-contract.md`, `references/discrete-event-scheduling.md`, `references/hard-constraint-action-mask.md`, `references/score-gap-analysis.md`, `references/matlab-native-workflow.md`, or `references/validation-playbook.md`.
+Read only the reference needed by the lane: `references/data-and-reproducibility.md`, `references/candidate-validation-contract.md`, `references/experiment-budget-and-promotion.md`, `references/exact-simulation-contract.md`, `references/discrete-event-scheduling.md`, `references/hard-constraint-action-mask.md`, `references/score-gap-analysis.md`, `references/matlab-native-workflow.md`, `references/validation-playbook.md`, or `references/evidence-registry-contract.md`.

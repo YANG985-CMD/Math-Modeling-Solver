@@ -361,7 +361,12 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def run_audit(root: Path, write_report: bool = True) -> dict[str, Any]:
+def run_audit(
+    root: Path,
+    write_report: bool = True,
+    *,
+    with_evidence_bundle: bool = False,
+) -> dict[str, Any]:
     root = root.expanduser().resolve()
     audits: list[tuple[str, str, Callable[[Path], list[str]]]] = [
         ("intake", "Problem and data", audit_intake),
@@ -390,6 +395,18 @@ def run_audit(root: Path, write_report: bool = True) -> dict[str, Any]:
         "overall_status": "passed" if all(r.status == "passed" for r in results) else "failed",
         "gates": [asdict(result) for result in results],
     }
+    if with_evidence_bundle:
+        try:
+            from audit_evidence_bundle import audit as audit_registry_bundle
+        except ImportError as exc:  # pragma: no cover - only used from an installed copy
+            report["evidence_bundle"] = {
+                "status": "failed",
+                "issues": [f"cannot load evidence bundle auditor: {exc}"],
+            }
+        else:
+            report["evidence_bundle"] = audit_registry_bundle(root)
+        if report["evidence_bundle"]["status"] != "passed":
+            report["overall_status"] = "failed"
     if write_report:
         audit_dir = root / "audit"
         audit_dir.mkdir(parents=True, exist_ok=True)
@@ -430,12 +447,21 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Print the audit without writing report files.",
     )
+    parser.add_argument(
+        "--with-evidence-bundle",
+        action="store_true",
+        help="Also audit the optional result/run/figure evidence registries.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    report = run_audit(args.project_dir, write_report=not args.no_write)
+    report = run_audit(
+        args.project_dir,
+        write_report=not args.no_write,
+        with_evidence_bundle=args.with_evidence_bundle,
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2))
     raise SystemExit(0 if report["overall_status"] == "passed" else 1)
 

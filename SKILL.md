@@ -54,11 +54,15 @@ Evidence gates (`Intake`, `Method`, `Computation`, `Evidence`, `Manuscript`) ret
 
        python scripts/audit_modeling_project.py PROJECT_DIR
 
+   Add `--with-evidence-bundle` when the project uses the result/run/figure registries.
+
 9. Deliver only the requested artifacts plus audit status and unresolved risks. If a required input is missing, return `blocked` instead of silently switching to synthetic data.
 
 ## Conditional routing
 
 - Data schemas, leakage, missingness, units, and split risks: read `references/data-and-reproducibility.md`, then use `scripts/audit_dataset.py`.
+- Reusable algorithm baselines: read `references/algorithm-library.md` and inspect `assets/code/python/modeling_algorithms/` before copying a specialized template.
+- Claim/result/run/figure registries, real-data PoCs, frozen hashes, and human review items: read `references/evidence-registry-contract.md`, then use `scripts/init_evidence_bundle.py` and `scripts/audit_evidence_bundle.py`.
 - Model family selection and complexity upgrades: read `references/model-selection.md`, `references/when-to-upgrade-model-complexity.md`, and `references/failure-to-method-router.md`.
 - Validation, sensitivity, and uncertainty: read `references/validation-playbook.md`.
 - Optimization experiments, candidate promotion, action masks, score gaps, exact simulation, or MATLAB bridges: route to `audit-modeling-evidence` or read only the applicable specialized reference.
@@ -73,6 +77,11 @@ Evidence gates (`Intake`, `Method`, `Computation`, `Evidence`, `Manuscript`) ret
 - Code: input contract, executable source, deterministic command, outputs, error checks, and provenance record.
 - Results: baseline comparison, diagnostics, uncertainty or robustness evidence, limitations, and a claim-to-evidence map.
 - Integrated paper: a one-sentence argument, frozen numbers, consistent terminology, evidence-backed figures and tables, and explicit limitations.
+
+## Reusable assets
+
+- Start common baselines from `assets/code/python/modeling_algorithms/`; it exposes validated entropy weights, TOPSIS, GM(1,1), linear programming, genetic algorithm, particle swarm, GA+SA, Monte Carlo, bootstrap, and rolling-origin APIs with intermediate diagnostics.
+- For results that will enter a paper or be reused across runs, initialize the evidence registries with `python scripts/init_evidence_bundle.py PROJECT_DIR` and audit them with `python scripts/audit_evidence_bundle.py PROJECT_DIR`.
 
 ## Complexity escalation
 

@@ -10,6 +10,8 @@
 - 验证结果、绘制论文级图表；
 - 生成可复现的竞赛论文。
 
+仓库还提供一个可直接导入的常用算法库，以及结果、运行、PoC、图表和审查登记表。
+
 它强调一件事：重要结论必须有数据、代码、结果表、图、公式或可靠来源支持，不虚构结果。
 
 ## Skill 入口
@@ -82,6 +84,17 @@ python scripts/audit_dataset.py INPUT.csv \
 python scripts/audit_modeling_project.py PROJECT_DIR
 ```
 
+如果已经启用了证据登记包，可追加 `--with-evidence-bundle` 做一次总审计。
+
+创建并审计完整证据登记包：
+
+```bash
+python scripts/init_evidence_bundle.py PROJECT_DIR
+python scripts/audit_evidence_bundle.py PROJECT_DIR
+```
+
+常用算法基线位于 `assets/code/python/modeling_algorithms/`，可直接导入 TOPSIS、熵权法、GM(1,1)、线性规划、遗传算法、粒子群、GA+SA、蒙特卡罗、Bootstrap 和滚动验证。
+
 ## 结果要求
 
 - 不虚构数据、运行结果、指标、引用或图表结论；
@@ -90,7 +103,15 @@ python scripts/audit_modeling_project.py PROJECT_DIR
 - 把重要结论映射到可核验的证据；
 - 报告不确定性、失败情况和适用范围。
 
+回归盲测结果：[PNG](assets/images/blind-benchmark-dashboard.png) · [可编辑 SVG](assets/images/blind-benchmark-dashboard.svg)。这只是当前题型回归基线，不代表最终泛化能力。
+
 ## 更新日志
+
+### v2.3.0（2026-07-20）
+
+- 增加可直接导入的统一算法库，覆盖评价、预测、优化、模拟和滚动验证基线；
+- 增加结果、PoC、运行、图表、数值诊断、审查和一致性登记表；
+- 增加冻结结果哈希、人审确认和跨文件证据审计。
 
 ### v2.2.0（2026-07-20）
 

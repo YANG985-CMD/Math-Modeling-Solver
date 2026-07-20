@@ -14,6 +14,16 @@ Use this schema:
 
 ## Initial Curated Template Set
 
+For a single importable baseline, start with the unified API under
+`assets/code/python/modeling_algorithms/`. It returns diagnostics and uses
+explicit validation and seeds:
+
+- `entropy_weights` and `topsis` for decision analysis;
+- `gm11` for short positive series;
+- `solve_linear_program` for hard-constrained LPs;
+- `monte_carlo_estimate` and `bootstrap_mean_ci` for uncertainty;
+- `rolling_origin_splits` for time-aware validation.
+
 - Linear programming -> `assets/code/python/linear_programming.py`
 - Integer programming -> `assets/code/python/integer_programming.py`
 - TOPSIS -> `assets/code/python/topsis.py`

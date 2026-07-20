@@ -1,4 +1,4 @@
 interface:
   display_name: "Math Modeling Solver"
   short_description: "End-to-end modeling with routed evidence and delivery"
-  default_prompt: "Use $math-modeling-solver to solve this modeling task end to end, route evidence or delivery-only work to the specialist Skills, and return reproducible results."
+  default_prompt: "Use $math-modeling-solver to solve this modeling task end to end. Start from a validated baseline or the unified algorithm library, record evidence registries for reusable results, route evidence or delivery-only work to the specialist Skills, and return reproducible results."
