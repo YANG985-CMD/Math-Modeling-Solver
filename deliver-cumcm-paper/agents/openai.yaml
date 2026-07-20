@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver CUMCM Paper"
+  short_description: "Build and preflight evidence-backed CUMCM papers"
+  default_prompt: "Use $deliver-cumcm-paper to assemble, compile, and preflight an evidence-backed CUMCM LaTeX paper."

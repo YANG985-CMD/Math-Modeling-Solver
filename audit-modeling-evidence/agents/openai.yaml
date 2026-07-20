@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit Modeling Evidence"
+  short_description: "Audit data, experiments, results, and reproducibility"
+  default_prompt: "Use $audit-modeling-evidence to audit this modeling project and report evidence gaps, failed gates, and the smallest defensible repair."

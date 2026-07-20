@@ -227,7 +227,7 @@ class StrengthenedGateTests(unittest.TestCase):
         router = load_module("gate_router", ROUTER)
         explore = router.resolve(
             {
-                "workflow_profile": "explore",
+                "workflow_stage": "explore",
                 "task_family": "scheduling",
                 "features": {"path_dependent", "mixed_backend"},
                 "delivery_profile": "cumcm-latex",
@@ -241,7 +241,7 @@ class StrengthenedGateTests(unittest.TestCase):
         self.assertIn("decision_trace", deferred)
         delivery = router.resolve(
             {
-                "workflow_profile": "delivery",
+                "workflow_stage": "deliver",
                 "task_family": "prediction",
                 "features": {"tabular_data"},
                 "delivery_profile": "cumcm-latex",
@@ -278,9 +278,9 @@ class StrengthenedGateTests(unittest.TestCase):
             self.assertEqual(updated.returncode, 0, updated.stdout + updated.stderr)
             self.assertEqual(
                 json.loads(state_path.read_text(encoding="utf-8"))[
-                    "workflow_profile"
+                    "workflow_stage"
                 ],
-                "candidate",
+                "validate",
             )
 
     def test_run_experiment_records_command_and_runtime_automatically(self) -> None:

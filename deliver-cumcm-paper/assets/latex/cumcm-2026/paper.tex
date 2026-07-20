@@ -1,0 +1,176 @@
+% Compile with XeLaTeX. Replace every \placeholder{...} before formal use.
+\documentclass[UTF8,zihao=-4,fontset=fandol,a4paper]{ctexart}
+
+\usepackage[top=25mm,bottom=25mm,left=25mm,right=25mm]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage{graphicx,float}
+\usepackage{caption,subcaption}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\graphicspath{{figures/}{images/}}
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\linespread{1.35}
+
+\ctexset{
+  section = {
+    name = {,、},
+    number = \chinese{section},
+    format = \centering\bfseries\zihao{3},
+    beforeskip = 1.5ex,
+    afterskip = 1.2ex
+  },
+  subsection = {
+    format = \bfseries\zihao{4},
+    beforeskip = 1.2ex,
+    afterskip = 0.8ex
+  },
+  subsubsection = {
+    format = \bfseries\zihao{-4},
+    beforeskip = 1ex,
+    afterskip = 0.6ex
+  }
+}
+
+\captionsetup{font=small,labelsep=quad}
+\lstset{
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true
+}
+
+\newenvironment{cumcmabstract}
+  {\begin{center}\bfseries\zihao{4} 摘\quad 要\end{center}\noindent}
+  {\par}
+\newcommand{\keywords}[1]{\par\vspace{0.8ex}\noindent\textbf{关键词：}#1}
+\newcommand{\placeholder}[1]{\textcolor{gray}{\textit{【#1】}}}
+
+\title{\bfseries\zihao{3} \placeholder{论文题目}}
+\date{}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\vspace{-3em}
+
+\begin{cumcmabstract}
+\placeholder{用一页以内说明问题、方法、最重要的定量结果、相对基线的改进及适用边界。摘要中的数字必须来自已经冻结的结果。}
+\keywords{\placeholder{关键词1}；\placeholder{关键词2}；\placeholder{关键词3}}
+\end{cumcmabstract}
+
+\newpage
+
+\section{问题重述与任务分解}
+
+\placeholder{说明问题背景、每个子问题的交付物、变量关系和子问题之间的数据依赖。}
+
+\section{问题分析与数据说明}
+
+\placeholder{定义观测单位、字段含义、单位、缺失机制、异常处理依据和训练验证边界。}
+
+\section{模型假设}
+
+\begin{enumerate}
+  \item \placeholder{假设及其现实依据；同时说明如何检查。}
+  \item \placeholder{假设失效时对结论的影响。}
+\end{enumerate}
+
+\section{符号与单位}
+
+\begin{table}[H]
+  \centering
+  \caption{主要符号与单位}
+  \begin{tabularx}{0.88\textwidth}{>{\centering\arraybackslash}p{0.18\textwidth} X >{\centering\arraybackslash}p{0.18\textwidth}}
+    \toprule
+    符号 & 含义 & 单位 \\
+    \midrule
+    $x_i$ & \placeholder{第 $i$ 个决策变量的定义} & \placeholder{单位} \\
+    \bottomrule
+  \end{tabularx}
+  \label{tab:symbols}
+\end{table}
+
+\section{模型建立与求解}
+
+\subsection{基线模型}
+
+\placeholder{先给出透明、可执行的基线，并说明其评价指标。}
+
+\subsection{模型表述}
+
+以一般优化问题为例，目标和约束可写为
+\begin{equation}
+  \min_{\bm{x}\in\mathcal{X}} f(\bm{x})
+  \quad \text{s.t.} \quad
+  g_j(\bm{x}) \le 0,\; j=1,\ldots,m .
+  \label{eq:model}
+\end{equation}
+式\eqref{eq:model}中的每一项都应对应现实机制、数据字段或硬约束。
+
+\subsection{求解过程与复现设置}
+
+\placeholder{给出初始化、参数、停止条件、随机种子、软件版本、运行命令和计算复杂度。}
+
+\section{结果与验证}
+
+\subsection{主要结果与基线比较}
+
+\placeholder{报告数据集或场景、指标、基线、数值和条件。不要只报告一次随机运行中的最好结果。}
+
+\subsection{敏感性、稳健性与失败情形}
+
+\placeholder{给出扰动范围、不确定性、可行性检查、失败区域以及结论边界。}
+
+\section{结论与局限}
+
+\placeholder{只总结有证据支持的贡献、决策含义和最重要的局限。}
+
+\begin{thebibliography}{99}
+  \bibitem{cumcm-format-2026}
+  全国大学生数学建模竞赛组委会.
+  全国大学生数学建模竞赛论文格式规范（2026年修订稿）[EB/OL].
+  \url{https://www.mcm.edu.cn/html_cn/node/4cd596519c9eb9fbd866398f6df0caa3.html}.
+\end{thebibliography}
+
+\appendix
+\ctexset{section={name={附录~,},number=\Alph{section}}}
+
+\section{支撑材料文件清单}
+
+\begin{longtable}{p{0.08\textwidth}p{0.35\textwidth}p{0.45\textwidth}}
+  \toprule
+  序号 & 文件路径 & 内容及复现作用 \\
+  \midrule
+  \endfirsthead
+  \toprule
+  序号 & 文件路径 & 内容及复现作用 \\
+  \midrule
+  \endhead
+  1 & \placeholder{code/main.m 或 code/main.py} & \placeholder{主模型入口与运行命令} \\
+  2 & \placeholder{results/canonical.mat} & \placeholder{论文采用的冻结结果及校验方式} \\
+  \bottomrule
+\end{longtable}
+
+\section{完整源程序}
+
+\placeholder{在此附上完整、可运行的源程序；较长程序可使用 \texttt{\textbackslash lstinputlisting} 从支撑材料中的同一文件生成，确保两者内容一致。}
+
+% Example after the real file exists:
+% \lstinputlisting[language=Matlab,caption={主程序}]{code/main.m}
+
+\end{document}

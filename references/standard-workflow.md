@@ -7,7 +7,8 @@ Use this concise sequence for competition execution. For gate evidence and inval
 - Restate each question as an input-output contract.
 - Draw dependencies between sub-questions.
 - List deliverables, units, constraints, assumptions, and available data.
-- Select formal, demo, or blocked mode.
+- Select `formal` or `demo` data mode; use a blocked gate status when required inputs are missing.
+- Select `explore`, `validate`, or `deliver` workflow stage.
 - Select paper-bundle, cumcm-latex, code-only, or a custom delivery profile.
 
 ## 2. Audit Data
@@ -30,7 +31,7 @@ Use this concise sequence for competition execution. For gate evidence and inval
 - Save commands, seeds, versions, parameters, source paths, and output paths.
 - Capture errors and fixes.
 - Add complexity only after a measurable baseline failure.
-- For discrete-event or surrogate search, mask illegal actions and pass at least 50 exact-transition comparisons before expanding the budget.
+- For constructive or policy search, mask illegal actions. For surrogate-backed search, pass a predeclared exact-transition coverage rule before expanding the budget; use 50 consecutive steps only when it meaningfully covers the horizon.
 - Register the hypothesis, minimum improvement, run/runtime budget, and stop condition for each tuning campaign.
 
 ## 5. Validate

@@ -1,4 +1,4 @@
 interface:
   display_name: "Math Modeling Solver"
-  short_description: "Evidence-gated modeling with audited CUMCM LaTeX delivery"
-  default_prompt: "Use $math-modeling-solver to solve the modeling task, validate evidence, and deliver reproducible Python or MATLAB results, publication figures, or an audited CUMCM LaTeX paper."
+  short_description: "End-to-end modeling with routed evidence and delivery"
+  default_prompt: "Use $math-modeling-solver to solve this modeling task end to end, route evidence or delivery-only work to the specialist Skills, and return reproducible results."

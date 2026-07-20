@@ -49,8 +49,12 @@ class WorkflowToolTests(unittest.TestCase):
                 root / "audit" / "candidate-validation.json"
             )
             self.assertEqual(state["delivery_profile"], "cumcm-latex")
-            self.assertEqual(state["workflow_profile"], "explore")
+            self.assertEqual(state["data_mode"], "formal")
+            self.assertEqual(state["gate_status"], "pass")
+            self.assertEqual(state["workflow_stage"], "explore")
+            self.assertEqual(state["result_status"], "draft")
             self.assertEqual(contract["delivery_profile"], "cumcm-latex")
+            self.assertEqual(contract["workflow_stage"], "explore")
             self.assertEqual(experiments["experiments"], [])
             self.assertEqual(candidate_validation["status"], "pending")
             self.assertIn("structural_validity", candidate_validation)

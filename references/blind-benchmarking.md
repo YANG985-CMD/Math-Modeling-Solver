@@ -50,7 +50,7 @@ The scorer writes JSON, field-level CSV, an editable Chinese-labeled SVG dashboa
 
 ## Measure workflow burden separately
 
-Correctness and stability do not reveal whether a stricter workflow slows useful modeling. For each run, record time-to-first-feasible result, best score at a fixed wall-clock budget, executed candidate evaluations, required tool calls, audit time, and the fraction of findings classified as `legacy_schema` or `incomplete_evidence` rather than truly invalid. Compare these overhead measures across `explore`, `candidate`, and `delivery` profiles; do not weaken correctness gates merely to improve speed.
+Correctness and stability do not reveal whether a stricter workflow slows useful modeling. For each run, record time-to-first-feasible result, best score at a fixed wall-clock budget, executed candidate evaluations, required tool calls, audit time, and the fraction of findings classified as `legacy_schema` or `incomplete_evidence` rather than truly invalid. Compare these overhead measures across `explore`, `validate`, and `deliver` stages; do not weaken correctness gates merely to improve speed.
 
 The bundled pilot is a regression and workflow test, not a competition leaderboard. Add new cases from legally usable sources, keep their judge rubrics isolated, and avoid tuning the skill only to the public pilot.
 

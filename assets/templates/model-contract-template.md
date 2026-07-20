@@ -3,7 +3,9 @@
 ## Project
 
 - Title:
-- Run mode: formal / demo / blocked
+- Data mode: formal / demo
+- Gate status: pass / warn / blocked
+- Workflow stage: explore / validate / deliver
 - Time budget:
 - Required deliverables:
 - Decision maker and decision to support:

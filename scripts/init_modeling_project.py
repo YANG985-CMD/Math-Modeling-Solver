@@ -22,10 +22,11 @@ def write_json(path: Path, value: Any) -> None:
 
 
 def build_files(
-    mode: str,
+    data_mode: str,
     question_count: int,
     delivery_profile: str = "paper-bundle",
-    workflow_profile: str = "explore",
+    workflow_stage: str = "explore",
+    gate_status: str = "pass",
 ) -> dict[str, Any]:
     question_ids = [f"Q{i}" for i in range(1, question_count + 1)]
     created_at = datetime.now(timezone.utc).isoformat()
@@ -73,8 +74,10 @@ def build_files(
         "audit/project-state.json": {
             "schema_version": SCHEMA_VERSION,
             "created_at": created_at,
-            "mode": mode,
-            "workflow_profile": workflow_profile,
+            "data_mode": data_mode,
+            "gate_status": gate_status,
+            "workflow_stage": workflow_stage,
+            "result_status": "draft",
             "delivery_profile": delivery_profile,
             "status": "initialized",
             "active_gate": "intake",
@@ -88,7 +91,7 @@ def build_files(
             "decision_to_support": "TODO",
             "time_budget": "TODO",
             "delivery_profile": delivery_profile,
-            "workflow_profile": workflow_profile,
+            "workflow_stage": workflow_stage,
             "deliverables": [],
             "global_assumptions": [],
             "data_sources": [],
@@ -128,8 +131,8 @@ def build_files(
         },
         "audit/reproducibility-manifest.json": {
             "schema_version": SCHEMA_VERSION,
-            "run_mode": mode,
-            "illustrative_only": mode == "demo",
+            "data_mode": data_mode,
+            "illustrative_only": data_mode == "demo",
             "executed": False,
             "completed_at": None,
             "command": "",
@@ -239,17 +242,18 @@ def build_files(
 
 def initialize(
     root: Path,
-    mode: str,
+    data_mode: str,
     question_count: int,
     force: bool,
     delivery_profile: str = "paper-bundle",
-    workflow_profile: str = "explore",
+    workflow_stage: str = "explore",
+    gate_status: str = "pass",
 ) -> None:
     root = root.expanduser().resolve()
     if root == Path(root.anchor):
         raise SystemExit("Refusing to initialize directly in a filesystem root")
     structured_files = build_files(
-        mode, question_count, delivery_profile, workflow_profile
+        data_mode, question_count, delivery_profile, workflow_stage, gate_status
     )
     text_files = {
         "planning/data-audit.csv": (
@@ -328,7 +332,8 @@ def initialize(
 
     print(f"Initialized evidence-gated modeling project: {root}")
     print(
-        f"Mode: {mode}; workflow: {workflow_profile}; delivery: {delivery_profile}; "
+        f"Data: {data_mode}; gate: {gate_status}; stage: {workflow_stage}; "
+        f"delivery: {delivery_profile}; "
         f"sub-questions: {question_count}"
     )
     print(
@@ -346,13 +351,28 @@ def parse_args() -> argparse.Namespace:
         "--mode",
         choices=("formal", "demo", "blocked"),
         default="formal",
+        help=(
+            "Set formal or demo data mode. Legacy 'blocked' maps to "
+            "data_mode=formal and gate_status=blocked."
+        ),
+    )
+    parser.add_argument(
+        "--gate-status",
+        choices=("pass", "warn", "blocked"),
+        default="pass",
+        help="Record whether required inputs currently permit progress.",
     )
     parser.add_argument("--questions", type=int, default=1)
     parser.add_argument(
+        "--workflow-stage",
         "--workflow-profile",
-        choices=("explore", "candidate", "delivery"),
+        dest="workflow_stage",
+        choices=("explore", "validate", "deliver", "candidate", "delivery"),
         default="explore",
-        help="Activate only the evidence gates needed at the current project stage.",
+        help=(
+            "Activate gates for explore, validate, or deliver. Legacy candidate and "
+            "delivery values are normalized."
+        ),
     )
     parser.add_argument(
         "--delivery-profile",
@@ -373,13 +393,20 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    data_mode = "formal" if args.mode == "blocked" else args.mode
+    gate_status = "blocked" if args.mode == "blocked" else args.gate_status
+    workflow_stage = {
+        "candidate": "validate",
+        "delivery": "deliver",
+    }.get(args.workflow_stage, args.workflow_stage)
     initialize(
         args.project_dir,
-        args.mode,
+        data_mode,
         args.questions,
         args.force,
         args.delivery_profile,
-        args.workflow_profile,
+        workflow_stage,
+        gate_status,
     )
 
 

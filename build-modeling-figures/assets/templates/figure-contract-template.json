@@ -1,0 +1,54 @@
+{
+  "schema_version": "2.1",
+  "figures": [
+    {
+      "id": "F1",
+      "core_message": "",
+      "reader_question": "",
+      "paper_role": "",
+      "archetype": "",
+      "backend": "",
+      "source_script": "",
+      "deterministic_command": "",
+      "final_size_mm": {
+        "width": null,
+        "height": null
+      },
+      "hero_evidence": "",
+      "panels": [
+        {
+          "id": "a",
+          "job": "",
+          "metric_or_content": "",
+          "unique_evidence": ""
+        }
+      ],
+      "source_data": [],
+      "statistics": {
+        "metric": "",
+        "unit": "",
+        "baseline": "",
+        "sample_or_runs": "",
+        "uncertainty": "",
+        "test_or_validation": ""
+      },
+      "style": {
+        "target": "competition",
+        "language": "zh",
+        "color_semantics": {},
+        "minimum_text_pt": 8,
+        "grayscale_required": true
+      },
+      "exports": [
+        "results/figures/F1.svg",
+        "results/figures/F1.pdf",
+        "results/figures/F1.png",
+        "results/figures/F1_grayscale.png"
+      ],
+      "qa_report": "audit/F1-figure-qa.json",
+      "conceptual_or_ai_generated": false,
+      "qa_status": "pending",
+      "review_risks": []
+    }
+  ]
+}

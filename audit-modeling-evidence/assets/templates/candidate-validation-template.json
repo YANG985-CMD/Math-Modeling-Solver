@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.1",
+  "status": "pending",
+  "primary_metric": {
+    "name": "",
+    "direction": "min",
+    "baseline": null,
+    "proposed": null,
+    "minimum_improvement": null,
+    "artifact_path": ""
+  },
+  "feasibility": {
+    "status": "pending",
+    "checks": [],
+    "artifact_path": ""
+  },
+  "fidelity": {
+    "status": "not_required",
+    "artifact_path": ""
+  },
+  "semantic_contract": {
+    "status": "pending",
+    "definitions": [],
+    "artifact_path": ""
+  },
+  "support_and_identifiability": {
+    "status": "pending",
+    "summary": "",
+    "limitations": [],
+    "artifact_path": ""
+  },
+  "structural_validity": {
+    "status": "pending",
+    "checks": []
+  },
+  "reproducibility": {
+    "status": "pending",
+    "independent_reruns": 0,
+    "canonical_input_hashes": [],
+    "artifact_path": ""
+  },
+  "sensitivity": {
+    "status": "pending",
+    "parameters_tested": [],
+    "summary": "",
+    "not_applicable_reason": "",
+    "artifact_path": ""
+  },
+  "robustness": {
+    "status": "pending",
+    "tested_cases": 0,
+    "perturbation_families": [],
+    "artifact_path": ""
+  },
+  "generalization": {
+    "claim_type": "instance_only",
+    "status": "not_claimed",
+    "independent_cases": 0,
+    "selection_free_cases": 0,
+    "limitations": [],
+    "artifact_path": ""
+  },
+  "instance_specific_schedule": {
+    "applicable": false,
+    "declared": false,
+    "transferable_policy_claimed": false,
+    "artifact_path": ""
+  },
+  "validation_independence_level": "pending",
+  "multiobjective": {
+    "applicable": false,
+    "claim_type": "not_applicable",
+    "nondominated_points": 0,
+    "objective_spans": [],
+    "artifact_path": ""
+  },
+  "pipeline": {
+    "applicable": false,
+    "stage_checks": [],
+    "uncertainty_propagation": "",
+    "artifact_path": ""
+  },
+  "known_failure_regions": [],
+  "claim_boundary": []
+}

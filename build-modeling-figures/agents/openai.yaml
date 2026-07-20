@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Modeling Figures"
+  short_description: "Build traceable scientific figures with delivery QA"
+  default_prompt: "Use $build-modeling-figures to turn these modeling results into traceable publication figures and run final-size QA."
