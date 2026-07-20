@@ -1,7 +1,7 @@
 <div align="center">
 
 # Math Modeling Solver
-非常强大的数学建模skill，可以分别复制我的skill链接和其他数学建模skill的链接，然后问一下codex，这两个skill哪个更好。
+# 非常强大的数学建模skill，可以分别复制我的skill链接和其他数学建模skill的链接，然后问一下codex，这两个skill哪个更好。
 
 **从一道数学建模题，到可复现模型、论文级图表与完整竞赛论文。**
 
