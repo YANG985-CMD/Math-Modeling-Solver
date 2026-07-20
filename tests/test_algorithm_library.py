@@ -14,7 +14,6 @@ from modeling_algorithms import (  # noqa: E402
     bootstrap_mean_ci,
     entropy_weights,
     gm11,
-    genetic_algorithm,
     monte_carlo_estimate,
     rolling_origin_splits,
     solve_linear_program,
@@ -71,24 +70,6 @@ class AlgorithmLibraryTests(unittest.TestCase):
         second = monte_carlo_estimate(sampler, 500, seed=7)
         self.assertEqual(first["estimate"], second["estimate"])
         self.assertEqual(first["confidence_interval"].tolist(), second["confidence_interval"].tolist())
-
-    def test_genetic_algorithm_is_seeded(self) -> None:
-        objective = lambda x: float(np.sum(x**2))
-        first = genetic_algorithm(
-            objective,
-            [(-1.0, 1.0), (-1.0, 1.0)],
-            population_size=12,
-            generations=8,
-            seed=11,
-        )
-        second = genetic_algorithm(
-            objective,
-            [(-1.0, 1.0), (-1.0, 1.0)],
-            population_size=12,
-            generations=8,
-            seed=11,
-        )
-        np.testing.assert_allclose(first["best_solution"], second["best_solution"])
 
     def test_bootstrap_and_rolling_origin_are_reproducible(self) -> None:
         interval = bootstrap_mean_ci([1, 2, 3, 4], n_resamples=200, seed=4)

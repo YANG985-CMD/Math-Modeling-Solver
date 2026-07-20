@@ -6,7 +6,6 @@ entry point for common competition baselines. It currently covers:
 - decision analysis: entropy weights and TOPSIS;
 - short-series forecasting: GM(1,1) with residual diagnostics;
 - constrained optimization: linear programming through SciPy HiGHS;
-- seeded genetic algorithm, particle swarm, and GA+SA search baselines;
 - uncertainty: seeded Monte Carlo estimates and bootstrap intervals;
 - structure-aware validation: rolling-origin splits.
 
@@ -17,4 +16,6 @@ record the input, command, parameters, output hash, baseline, and validation
 boundary in the project registries.
 
 Existing specialized templates under `assets/code/python/` remain available
-for richer hybrids such as GM(1,1)+Markov, SVM+PSO, and GA+SA.
+for richer hybrids such as GM(1,1)+Markov, SVM+PSO, GA, PSO, and GA+SA. They
+are experimental starting points until the task-specific constraints and
+independent validation are recorded.

@@ -93,7 +93,7 @@ python scripts/init_evidence_bundle.py PROJECT_DIR
 python scripts/audit_evidence_bundle.py PROJECT_DIR
 ```
 
-常用算法基线位于 `assets/code/python/modeling_algorithms/`，可直接导入 TOPSIS、熵权法、GM(1,1)、线性规划、遗传算法、粒子群、GA+SA、蒙特卡罗、Bootstrap 和滚动验证。
+常用算法基线位于 `assets/code/python/modeling_algorithms/`，可直接导入 TOPSIS、熵权法、GM(1,1)、线性规划、蒙特卡罗、Bootstrap 和滚动验证。遗传算法、粒子群等旧模板仍保留，但默认视为实验起点，必须经过题目约束和独立验证。
 
 ## 结果要求
 

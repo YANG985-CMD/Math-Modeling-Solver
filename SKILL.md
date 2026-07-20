@@ -80,7 +80,7 @@ Evidence gates (`Intake`, `Method`, `Computation`, `Evidence`, `Manuscript`) ret
 
 ## Reusable assets
 
-- Start common baselines from `assets/code/python/modeling_algorithms/`; it exposes validated entropy weights, TOPSIS, GM(1,1), linear programming, genetic algorithm, particle swarm, GA+SA, Monte Carlo, bootstrap, and rolling-origin APIs with intermediate diagnostics.
+- Start common baselines from `assets/code/python/modeling_algorithms/`; it exposes validated entropy weights, TOPSIS, GM(1,1), linear programming, Monte Carlo, bootstrap, and rolling-origin APIs with intermediate diagnostics. Treat the older metaheuristic files under `assets/code/python/` as experimental templates until they pass task-specific checks.
 - For results that will enter a paper or be reused across runs, initialize the evidence registries with `python scripts/init_evidence_bundle.py PROJECT_DIR` and audit them with `python scripts/audit_evidence_bundle.py PROJECT_DIR`.
 
 ## Complexity escalation
