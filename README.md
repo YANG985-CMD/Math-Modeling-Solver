@@ -1,6 +1,5 @@
 # Math Modeling Solver
 
-非常强悍的skill，支持赛博斗蛐蛐。可以发几个数学建模的skill链接然后问问你的codex，哪个数学建模skill更好
 
 它可以帮助你完成：
 
