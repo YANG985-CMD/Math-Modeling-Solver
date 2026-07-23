@@ -22,6 +22,8 @@ Act as the end-to-end modeling orchestrator. Optimize for a defensible answer th
 - Declare the data mode: `formal` for real traceable data or `demo` for explicitly labeled synthetic data. Use a `blocked` gate outcome when a required input or authorization is missing.
 - Define the problem contract before computation: objectives, subquestions, inputs, variables, units, constraints, assumptions, and deliverables.
 - Establish and execute a simple baseline before adding model complexity.
+- Treat the baseline as a floor, not as the final model. Distinguish `sanity baseline`, `competitive baseline`, `current champion`, `challenger`, and `final frozen champion` in every model comparison.
+- When the user requests "冲上限", "冲奖", "最高水平", or equivalent, enter `ceiling` ambition mode. Execute the declared challenger families and keep challenging the current champion until the stop rule is met.
 - Keep training, validation, and test information separated; use time-, group-, or structure-aware splits when required.
 - Record input provenance, commands, parameters, seeds, software versions, and output paths for formal runs.
 - Tie every important claim to a result file, table, figure, formula, or verified source.
@@ -35,20 +37,40 @@ Keep these concepts orthogonal:
 - `workflow_stage`: `explore`, `validate`, or `deliver`.
 - `result_status`: `draft`, `validated`, `frozen`, or `manuscript`.
 - `delivery_profile`: `paper-bundle`, `cumcm-latex`, `code-only`, or `custom`.
+- `ambition_mode`: `baseline`, `competitive`, or `ceiling`.
 
 Evidence gates (`Intake`, `Method`, `Computation`, `Evidence`, `Manuscript`) return `pass`, `warn`, or `blocked`; they are checks, not additional user-managed states. A blocked gate remains blocked until the required artifact is repaired or the claim is downgraded.
+
+## Ambition modes and model roles
+
+- `baseline`: establish a correct executable floor quickly.
+- `competitive`: compare strong mainstream candidates under one validation contract.
+- `ceiling`: systematically challenge the current champion across materially different model families; do not stop at the first reliable model.
+
+For each subquestion, define:
+
+1. `sanity baseline`: the simplest model used to verify data, metrics, and implementation.
+2. `competitive baseline`: a strong mainstream model appropriate for the task.
+3. `current champion`: the best model actually executed so far.
+4. `mandatory challengers`: candidates from different model families, not only hyperparameter variants.
+5. `promotion rule`: the validation improvement required to replace the champion.
+6. `stop rule`: target reached, cumulative budget exhausted, or consecutive challengers fail to improve.
+
+A working baseline establishes the floor, not the ceiling. Never call a baseline "best" unless all mandatory challengers have executed or have a documented technical reason they cannot run.
+
+For tabular prediction in `ceiling` mode, normally cover a linear sanity baseline, bagging/random forest, boosting such as XGBoost or LightGBM (or a justified native equivalent), a kernel method when sample size permits, a tabular neural network when data volume permits, and stacking/blending of independently useful candidates. For imbalanced classification, also compare task-specific features, class weighting or resampling, threshold tuning, and balanced metrics.
 
 ## Core workflow
 
 1. Lock the problem statement, attachments, time budget, implementation language, data mode, workflow stage, and delivery profile.
 2. Decompose the statement into subquestions and map dependencies between them.
-3. Classify each subquestion, choose a conservative baseline, define its variables and validation, and record why more complex candidates may be needed.
+3. Classify each subquestion; choose the sanity and competitive baselines; declare the current champion, mandatory challenger families, promotion rule, cumulative search budget, and stop rule.
 4. Create or update the workspace. For a new project, run:
 
        python scripts/init_modeling_project.py PROJECT_DIR --mode formal --workflow-stage explore --questions N
 
 5. Run only the checks required by the current stage. Use `scripts/resolve_required_gates.py` to record required, deferred, and inapplicable gates.
-6. Execute the baseline and candidates with reproducible commands. Keep exploratory, validated, frozen, and manuscript claims separate.
+6. Execute the baseline and candidates with reproducible commands. In `competitive` or `ceiling` mode, continue after the baseline and run the declared challengers. Never reset the champion when moving to a new model family.
 7. Promote only results with fair comparison, task-appropriate validation, robustness evidence, and a clear evidence link. Freeze canonical numbers before writing.
 8. Audit the project before delivery:
 
